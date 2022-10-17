@@ -2,10 +2,12 @@ import React from "react";
 import '../../App.css';
 import css from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
+import {FriendsBar} from "./FriendsBar/FriendsBar";
+import {FriendFromBarType} from "../../redux/state";
 
 
 type NavbarPropsType = {
-
+    friendsFromBar: FriendFromBarType[]
 }
 
 export const Navbar = (props: NavbarPropsType) => {
@@ -25,6 +27,11 @@ export const Navbar = (props: NavbarPropsType) => {
             </div>
             <div className={css.item}>
                 <NavLink to='/settings' activeClassName={css.activeLink}> Settings </NavLink>
+            </div>
+
+
+            <div>
+                <FriendsBar friendsFromBar={props.friendsFromBar}/>
             </div>
         </nav>
     )
