@@ -111,7 +111,6 @@ let state:StatePropsType = {
 
 
 export const addPost = (newPostText: string) => {
-
     newPostText = state.profilePage.newPostText
 
     const newPost: PostType = {
@@ -119,11 +118,11 @@ export const addPost = (newPostText: string) => {
         message: newPostText,
         likesCount: 0,
     }
-
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ''
     rerenderEntireTree(state)
 }
+
 
 export const updateNewPostText = (updatedPostText: string) => {
     state.profilePage.newPostText = updatedPostText
@@ -132,15 +131,15 @@ export const updateNewPostText = (updatedPostText: string) => {
 
 
 export const sendMessage = (newMessageText: string) => {
-
     const newMessage: MessageType = {
         id: '4',
         message: newMessageText
     }
-
     state.dialogsPage.messages.push(newMessage)
     rerenderEntireTree(state)
 }
+
+
 
 export const updateNewMessageText = (updatedMessageText: string) => {
      state.dialogsPage.newMessageText = updatedMessageText

@@ -1,0 +1,161 @@
+import friendFromBar1 from '../assets/img/friendFromBar1.jpg'
+import friendFromBar2 from '../assets/img/friendFromBar2.jpg'
+import friendFromBar3 from '../assets/img/friendFromBar3.jpg'
+
+export type StoreType = {
+    _state: StatePropsType
+    addPost: (newPostText: string) => void
+    updateNewPostText: (updatedPostText: string) => void
+    sendMessage: (newMessageText: string) => void
+    updateNewMessageText: (updatedMessageText: string) => void
+    _rerenderEntireTree: () => void
+    subscribe: (observer: () => void) => void
+    getState: () => StatePropsType
+}
+
+
+let store: StoreType = {
+
+    _state: {
+        profilePage: {
+            posts: [
+                {
+                    id: '1',
+                    message: "Hi, how are you?",
+                    likesCount: 15
+                },
+                {
+                    id: '2',
+                    message: "It is my first post",
+                    likesCount: 5
+                },
+                {
+                    id: '3',
+                    message: "My dog is the best dog ever",
+                    likesCount: 7
+                },
+                {
+                    id: '4',
+                    message: "Such a beautiful squirrel",
+                    likesCount: 18
+                },
+            ],
+            newPostText: ''
+        },
+        dialogsPage: {
+            dialogs: [
+                {id: '1', name: "Nastassia"},
+                {id: '2', name: "Lena"},
+                {id: '3', name: "Lesya"},
+                {id: '4', name: "Olga"},
+            ],
+            messages: [
+                {id: '1', message: "Hi?"},
+                {id: '2', message: "How is your cat?"},
+                {id: '3', message: "Woof-woof"},
+            ],
+            newMessageText: ''
+        },
+        sidebar: {
+            friendsFromBar: [
+                {
+                    photo: friendFromBar1,
+                    friendName: 'Andrew'
+                },
+                {
+                    photo: friendFromBar2,
+                    friendName: 'Kate'
+                },
+                {
+                    photo: friendFromBar3,
+                    friendName: 'Lena'
+                }
+            ]
+        }
+    },
+
+    getState() {
+        return this._state
+    },
+
+    addPost(newPostText: string) {
+        newPostText = this._state.profilePage.newPostText
+
+        const newPost: PostType = {
+            id: '5',
+            message: newPostText,
+            likesCount: 5,
+        }
+        this._state.profilePage.posts.push(newPost)
+        this._state.profilePage.newPostText = ''
+        this._rerenderEntireTree()
+    },
+
+    updateNewPostText(updatedPostText: string) {
+        this._state.profilePage.newPostText = updatedPostText
+        this._rerenderEntireTree()
+    },
+
+    sendMessage(newMessageText: string) {
+        const newMessage: MessageType = {
+            id: '4',
+            message: newMessageText
+        }
+        this._state.dialogsPage.messages.push(newMessage)
+        this._rerenderEntireTree()
+    },
+
+    updateNewMessageText(updatedMessageText: string) {
+        this._state.dialogsPage.newMessageText = updatedMessageText
+        this._rerenderEntireTree()
+    },
+
+    _rerenderEntireTree() {
+        console.log('State changed')
+    },
+
+   subscribe(observer: () => void) {
+        this._rerenderEntireTree = observer
+    }
+}
+
+
+export type PostType = {
+    id: string,
+    message: string
+    likesCount: number
+}
+export type DialogType = {
+    id: string,
+    name: string
+}
+export type MessageType = {
+    id: string,
+    message: string
+}
+export type FriendFromBarType = {
+    photo: any
+    friendName: string
+}
+
+export type ProfilePageType = {
+    posts: PostType[],
+    newPostText: string
+}
+export type DialogsPageType = {
+    dialogs: DialogType[]
+    messages: MessageType[]
+    newMessageText: string
+}
+export type SidebarType = {
+    friendsFromBar: FriendFromBarType[]
+}
+
+export type StatePropsType = {
+    profilePage: ProfilePageType
+    dialogsPage: DialogsPageType
+    sidebar: SidebarType
+}
+export default store
+
+

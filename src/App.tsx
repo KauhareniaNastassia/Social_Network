@@ -8,37 +8,41 @@ import {Route} from "react-router-dom";
 import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
-import {StatePropsType, updateNewMessageText} from "./redux/state";
+import {StatePropsType, StoreType} from "./redux/store";
+
 
 
 type AppPropsType = {
-    state: StatePropsType
-    addPost: (newPostText: string) => void
+   store: StoreType
+    /*addPost: (newPostText: string) => void
     updateNewPostText: (updatedPostText: string) => void
 
     sendMessage: (newMessageText: string) => void
-    updateNewMessageText: (updatedMessageText: string) => void
+    updateNewMessageText: (updatedMessageText: string) => void*/
 }
 
 export const App = (props: AppPropsType) => {
+
+    const state = props.store.getState()
+
     return (
         <div className="app-wrapper">
             <Header/>
-            <Navbar friendsFromBar={props.state.sidebar.friendsFromBar}/>
+            <Navbar friendsFromBar={props.store.getState().sidebar.friendsFromBar}/>
 
             <div className='app-wrapper-content'>
                 <Route path='/profile'
                        render={() => <Profile
-                           profilePage={props.state.profilePage}
-                           addPost={props.addPost}
-                           updateNewPostText={props.updateNewPostText}
+                           profilePage={props.store.getState().profilePage}
+                           addPost={props.store.addPost.bind(props.store)}
+                           updateNewPostText={props.store.updateNewPostText.bind(props.store)}
                        />}/>
 
                 <Route path='/dialogs'
                        render={() => <Dialogs
-                           dialogsPage={props.state.dialogsPage}
-                           sendMessage={props.sendMessage}
-                           updateNewMessageText={props.updateNewMessageText}
+                           dialogsPage={props.store.getState().dialogsPage}
+                           sendMessage={props.store.sendMessage.bind(props.store)}
+                           updateNewMessageText={props.store.updateNewMessageText.bind(props.store)}
                        />}/>
 
                 <Route path='/care' render={() => <Care/>}/>
