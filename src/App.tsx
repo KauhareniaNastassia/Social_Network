@@ -8,8 +8,7 @@ import {Route} from "react-router-dom";
 import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
-import {StatePropsType, StoreType} from "./redux/store";
-
+import {StoreType} from "./redux/store";
 
 
 type AppPropsType = {
@@ -23,8 +22,6 @@ type AppPropsType = {
 
 export const App = (props: AppPropsType) => {
 
-    const state = props.store.getState()
-
     return (
         <div className="app-wrapper">
             <Header/>
@@ -34,15 +31,19 @@ export const App = (props: AppPropsType) => {
                 <Route path='/profile'
                        render={() => <Profile
                            profilePage={props.store.getState().profilePage}
-                           addPost={props.store.addPost.bind(props.store)}
-                           updateNewPostText={props.store.updateNewPostText.bind(props.store)}
+                           dispatch={props.store.dispatch.bind(props.store)}
+
+                           /*addPost={props.store.addPost.bind(props.store)}
+                           updateNewPostText={props.store.updateNewPostText.bind(props.store)}*/
                        />}/>
 
                 <Route path='/dialogs'
                        render={() => <Dialogs
                            dialogsPage={props.store.getState().dialogsPage}
-                           sendMessage={props.store.sendMessage.bind(props.store)}
-                           updateNewMessageText={props.store.updateNewMessageText.bind(props.store)}
+                           dispatch={props.store.dispatch.bind(props.store)}
+
+                           /*sendMessage={props.store.sendMessage.bind(props.store)}
+                           updateNewMessageText={props.store.updateNewMessageText.bind(props.store)}*/
                        />}/>
 
                 <Route path='/care' render={() => <Care/>}/>

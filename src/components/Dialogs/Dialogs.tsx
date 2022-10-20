@@ -2,26 +2,28 @@ import React, {ChangeEvent} from 'react'
 import css from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogsPageType} from "../../redux/store";
+import {ActionType, DialogsPageType} from "../../redux/store";
 
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    sendMessage: (newMessageText: string) => void
-    updateNewMessageText: (updatedMessageText: string) => void
+    dispatch: (action: ActionType) => void
+
+    /*sendMessage: (newMessageText: string) => void
+    updateNewMessageText: (updatedMessageText: string) => void*/
 }
 
 
 export const Dialogs = (props: DialogsPropsType) => {
 
     let sendMessageHandler = () => {
-        props.sendMessage(props.dialogsPage.newMessageText)
+        props.dispatch({ type: "SEND-MESSAGE", newMessageText: props.dialogsPage.newMessageText })
         props.dialogsPage.newMessageText = ''
     }
 
     let onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageText(e.currentTarget.value)
-
+        debugger
+        props.dispatch({ type: "UPDATE-NEW-MESSAGE-TEXT", updatedMessageText: e.currentTarget.value})
     }
 
 

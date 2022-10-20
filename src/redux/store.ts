@@ -4,13 +4,14 @@ import friendFromBar3 from '../assets/img/friendFromBar3.jpg'
 
 export type StoreType = {
     _state: StatePropsType
-    addPost: (newPostText: string) => void
+    /*addPost: (newPostText: string) => void
     updateNewPostText: (updatedPostText: string) => void
     sendMessage: (newMessageText: string) => void
-    updateNewMessageText: (updatedMessageText: string) => void
+    updateNewMessageText: (updatedMessageText: string) => void*/
     _rerenderEntireTree: () => void
     subscribe: (observer: () => void) => void
     getState: () => StatePropsType
+    dispatch: (action: ActionType) => void
 }
 
 
@@ -74,11 +75,20 @@ let store: StoreType = {
         }
     },
 
+    _rerenderEntireTree() {
+        console.log('State changed')
+    },
+
     getState() {
         return this._state
     },
 
-    addPost(newPostText: string) {
+    subscribe(observer: () => void) {
+        this._rerenderEntireTree = observer
+    },
+
+
+    /*addPost(newPostText: string) {
         newPostText = this._state.profilePage.newPostText
 
         const newPost: PostType = {
@@ -97,26 +107,82 @@ let store: StoreType = {
     },
 
     sendMessage(newMessageText: string) {
+        newMessageText = this._state.dialogsPage.newMessageText
+
         const newMessage: MessageType = {
             id: '4',
             message: newMessageText
         }
         this._state.dialogsPage.messages.push(newMessage)
+        this._state.dialogsPage.newMessageText = ''
         this._rerenderEntireTree()
     },
 
     updateNewMessageText(updatedMessageText: string) {
         this._state.dialogsPage.newMessageText = updatedMessageText
         this._rerenderEntireTree()
-    },
+    },*/
 
-    _rerenderEntireTree() {
-        console.log('State changed')
-    },
+   dispatch(action) {
+        if (action.type === 'ADD-POST' ) {
+            action.newPostText = this._state.profilePage.newPostText
 
-   subscribe(observer: () => void) {
-        this._rerenderEntireTree = observer
-    }
+            const newPost: PostType = {
+                id: '5',
+                message: action.newPostText,
+                likesCount: 5,
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._rerenderEntireTree()
+        }
+
+        else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.updatedPostText
+            this._rerenderEntireTree()
+        }
+
+        else if (action.type === 'SEND-MESSAGE') {
+            action.newMessageText = this._state.dialogsPage.newMessageText
+
+            const newMessage: MessageType = {
+                id: '4',
+                message: action.newMessageText
+            }
+            this._state.dialogsPage.messages.push(newMessage)
+            this._state.dialogsPage.newMessageText = ''
+            this._rerenderEntireTree()
+        }
+
+        else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessageText = action.updatedMessageText
+            this._rerenderEntireTree()
+        }
+   }
+
+}
+
+export type ActionType = AddPostActionType
+    | UpdateNewPostTextActionType
+    | SendMessageActionType
+    | UpdateNewMessageTextActionType
+
+
+export type AddPostActionType = {
+    type: 'ADD-POST',
+    newPostText: string
+}
+export type UpdateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT',
+    updatedPostText: string
+}
+export type SendMessageActionType = {
+    type: 'SEND-MESSAGE',
+    newMessageText: string
+}
+export type UpdateNewMessageTextActionType = {
+    type: 'UPDATE-NEW-MESSAGE-TEXT',
+    updatedMessageText: string
 }
 
 

@@ -122,14 +122,10 @@ export const addPost = (newPostText: string) => {
     state.profilePage.newPostText = ''
     rerenderEntireTree(state)
 }
-
-
 export const updateNewPostText = (updatedPostText: string) => {
     state.profilePage.newPostText = updatedPostText
     rerenderEntireTree(state)
 }
-
-
 export const sendMessage = (newMessageText: string) => {
     const newMessage: MessageType = {
         id: '4',
@@ -138,9 +134,6 @@ export const sendMessage = (newMessageText: string) => {
     state.dialogsPage.messages.push(newMessage)
     rerenderEntireTree(state)
 }
-
-
-
 export const updateNewMessageText = (updatedMessageText: string) => {
      state.dialogsPage.newMessageText = updatedMessageText
     rerenderEntireTree(state)
