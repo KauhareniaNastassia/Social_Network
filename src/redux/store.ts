@@ -15,8 +15,45 @@ export type StoreType = {
 }
 
 
-let store: StoreType = {
+export type PostType = {
+    id: string,
+    message: string
+    likesCount: number
+}
+export type DialogType = {
+    id: string,
+    name: string
+}
+export type MessageType = {
+    id: string,
+    message: string
+}
+export type FriendFromBarType = {
+    photo: any
+    friendName: string
+}
 
+export type ProfilePageType = {
+    posts: PostType[],
+    newPostText: string
+}
+export type DialogsPageType = {
+    dialogs: DialogType[]
+    messages: MessageType[]
+    newMessageText: string
+}
+export type SidebarType = {
+    friendsFromBar: FriendFromBarType[]
+}
+
+export type StatePropsType = {
+    profilePage: ProfilePageType
+    dialogsPage: DialogsPageType
+    sidebar: SidebarType
+}
+
+
+let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -87,7 +124,6 @@ let store: StoreType = {
         this._rerenderEntireTree = observer
     },
 
-
     /*addPost(newPostText: string) {
         newPostText = this._state.profilePage.newPostText
 
@@ -123,8 +159,8 @@ let store: StoreType = {
         this._rerenderEntireTree()
     },*/
 
-   dispatch(action) {
-        if (action.type === 'ADD-POST' ) {
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
             action.newPostText = this._state.profilePage.newPostText
 
             const newPost: PostType = {
@@ -158,15 +194,15 @@ let store: StoreType = {
             this._state.dialogsPage.newMessageText = action.updatedMessageText
             this._rerenderEntireTree()
         }
-   }
-
+    }
 }
+
+
 
 export type ActionType = AddPostActionType
     | UpdateNewPostTextActionType
     | SendMessageActionType
     | UpdateNewMessageTextActionType
-
 
 export type AddPostActionType = {
     type: 'ADD-POST',
@@ -186,42 +222,37 @@ export type UpdateNewMessageTextActionType = {
 }
 
 
-export type PostType = {
-    id: string,
-    message: string
-    likesCount: number
+
+export const addPostAC = (newPostText: string): AddPostActionType => {
+    return {
+        type: 'ADD-POST', newPostText
+    }
 }
-export type DialogType = {
-    id: string,
-    name: string
+export const updateNewPostTextAC = (updatedPostText: string): UpdateNewPostTextActionType => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT', updatedPostText
+    }
 }
-export type MessageType = {
-    id: string,
-    message: string
+export const sendMessageAC = (newMessageText: string): SendMessageActionType => {
+    return {
+        type: 'SEND-MESSAGE', newMessageText
+    }
 }
-export type FriendFromBarType = {
-    photo: any
-    friendName: string
+export const updateNewMessageTextAC = (updatedMessageText: string): UpdateNewMessageTextActionType => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-TEXT', updatedMessageText
+    }
 }
 
-export type ProfilePageType = {
-    posts: PostType[],
-    newPostText: string
-}
-export type DialogsPageType = {
-    dialogs: DialogType[]
-    messages: MessageType[]
-    newMessageText: string
-}
-export type SidebarType = {
-    friendsFromBar: FriendFromBarType[]
-}
 
-export type StatePropsType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-    sidebar: SidebarType
-}
+
+
+
+
+
+
+
+
 export default store
 
 
