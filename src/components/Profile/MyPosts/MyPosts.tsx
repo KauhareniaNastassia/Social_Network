@@ -7,10 +7,10 @@ import {ActionType, addPostAC, PostType, updateNewPostTextAC} from "../../../red
 type MyPostsPropsType = {
     posts: PostType[]
     newPostText: string
-    dispatch: (action: ActionType) => void
+    addPost: () => void
+    updateNewPostText: (e: ChangeEvent<HTMLTextAreaElement>) => void
 
-    /*addPost: (newPostText: string) => void*/
-    /*updateNewPostText: (updatedPostText: string) => void*/
+    //dispatch: (action: ActionType) => void
 }
 
 
@@ -19,13 +19,16 @@ type MyPostsPropsType = {
 export const MyPosts = (props: MyPostsPropsType) => {
 
     let addPostHandler = () => {
-        props.dispatch(addPostAC(props.newPostText) )
-        props.newPostText = ''
+        props.addPost()
+
+        /*props.dispatch(addPostAC(props.newPostText) )
+        props.newPostText = ''*/
     }
 
     let onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        debugger
-        props.dispatch(updateNewPostTextAC(e.currentTarget.value ))
+        props.updateNewPostText(e)
+
+        //props.dispatch(updateNewPostTextAC(e.currentTarget.value ))
     }
 
 

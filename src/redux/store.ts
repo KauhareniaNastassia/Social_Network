@@ -1,6 +1,9 @@
 import friendFromBar1 from '../assets/img/friendFromBar1.jpg'
 import friendFromBar2 from '../assets/img/friendFromBar2.jpg'
 import friendFromBar3 from '../assets/img/friendFromBar3.jpg'
+import {profilePageReducer} from "./profilePageReducer";
+import {dialogsPageReducer} from "./dialogsPageReducer";
+import {sidebarPageReducer} from "./sidebarPageReducer";
 
 export type StoreType = {
     _state: StatePropsType
@@ -49,7 +52,7 @@ export type SidebarType = {
 export type StatePropsType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebar: SidebarType
+    sidebarPage: SidebarType
 }
 
 
@@ -94,7 +97,7 @@ let store: StoreType = {
             ],
             newMessageText: ''
         },
-        sidebar: {
+        sidebarPage: {
             friendsFromBar: [
                 {
                     photo: friendFromBar1,
@@ -124,43 +127,15 @@ let store: StoreType = {
         this._rerenderEntireTree = observer
     },
 
-    /*addPost(newPostText: string) {
-        newPostText = this._state.profilePage.newPostText
-
-        const newPost: PostType = {
-            id: '5',
-            message: newPostText,
-            likesCount: 5,
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._rerenderEntireTree()
-    },
-
-    updateNewPostText(updatedPostText: string) {
-        this._state.profilePage.newPostText = updatedPostText
-        this._rerenderEntireTree()
-    },
-
-    sendMessage(newMessageText: string) {
-        newMessageText = this._state.dialogsPage.newMessageText
-
-        const newMessage: MessageType = {
-            id: '4',
-            message: newMessageText
-        }
-        this._state.dialogsPage.messages.push(newMessage)
-        this._state.dialogsPage.newMessageText = ''
-        this._rerenderEntireTree()
-    },
-
-    updateNewMessageText(updatedMessageText: string) {
-        this._state.dialogsPage.newMessageText = updatedMessageText
-        this._rerenderEntireTree()
-    },*/
 
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+
+        this._state.profilePage = profilePageReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsPageReducer(this._state.dialogsPage, action)
+        this._state.sidebarPage = sidebarPageReducer(this._state.sidebarPage, action)
+
+
+        /*if (action.type === 'ADD-POST') {
             action.newPostText = this._state.profilePage.newPostText
 
             const newPost: PostType = {
@@ -193,7 +168,7 @@ let store: StoreType = {
         else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
             this._state.dialogsPage.newMessageText = action.updatedMessageText
             this._rerenderEntireTree()
-        }
+        }*/
     }
 }
 
