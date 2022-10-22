@@ -21,7 +21,6 @@ let rootReducers = combineReducers({
     sidebarPage: sidebarPageReducer
 })
 
-export type AppStateType = ReturnType<typeof rootReducers>
+export const store = createStore(rootReducers)
 
-
-export let store = createStore(rootReducers)
+export type AppStateType = typeof store

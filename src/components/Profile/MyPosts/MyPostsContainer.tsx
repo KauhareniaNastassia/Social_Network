@@ -1,10 +1,12 @@
 import React, {ChangeEvent} from "react";
-import {addPostAC, StoreType, updateNewPostTextAC} from "../../../redux/store";
+
 import {MyPosts} from "./MyPosts";
+import {AppStateType} from "../../../redux/redux-store";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profilePageReducer";
 
 
 type MyPostsPropsType = {
-    store: StoreType
+    store: AppStateType
 
     /*posts: PostType[]
     newPostText: string

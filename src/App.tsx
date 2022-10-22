@@ -9,10 +9,11 @@ import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
 import {StoreType} from "./redux/store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {AppStateType} from "./redux/redux-store";
 
 
 type AppPropsType = {
-   store: StoreType
+   store: AppStateType
     /*addPost: (newPostText: string) => void
     updateNewPostText: (updatedPostText: string) => void
 

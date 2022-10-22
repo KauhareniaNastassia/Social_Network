@@ -3,10 +3,11 @@ import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {ActionType, ProfilePageType, StoreType} from "../../redux/store";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {AppStateType} from "../../redux/redux-store";
 
 
 type ProfilePropsType = {
-    store: StoreType
+    store: AppStateType
     /*profilePage: ProfilePageType
     dispatch: (action: ActionType) => void*/
     /*addPost: (newPostText: string) => void
