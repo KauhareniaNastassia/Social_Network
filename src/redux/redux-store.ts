@@ -10,10 +10,11 @@ import {
 } from "./store";
 
 
-export type ActionType = AddPostActionType
-    | UpdateNewPostTextActionType
-    | SendMessageActionType
-    | UpdateNewMessageTextActionType
+export type ActionType =
+    AddPostActionType |
+    UpdateNewPostTextActionType |
+    SendMessageActionType |
+    UpdateNewMessageTextActionType
 
 let rootReducers = combineReducers({
     profilePage: profilePageReducer,
@@ -23,4 +24,6 @@ let rootReducers = combineReducers({
 
 export const store = createStore(rootReducers)
 
-export type AppStateType = typeof store
+
+export type AppStateType = ReturnType<typeof rootReducers>
+export type AppStoreType = typeof store

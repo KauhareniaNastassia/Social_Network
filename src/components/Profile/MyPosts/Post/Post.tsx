@@ -16,6 +16,7 @@ export const Post = (props: PostPropsType) => {
             <img src={ava1}/>
             {props.message}
             <div>
+                <button> Like </button>
                 <span> {props.likesCount} </span>
             </div>
 

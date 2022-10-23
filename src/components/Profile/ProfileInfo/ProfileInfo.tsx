@@ -10,10 +10,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
     return (
         <div>
             <div>
-               {/* <img className={css.imgScreen} src={screen}/> */}
-
-
-
+                <img className={css.imgScreen} src={screen}/>
 
 
             </div>

@@ -7,16 +7,14 @@ import {Route} from "react-router-dom";
 import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
-import {StoreType} from "./redux/store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {AppStateType} from "./redux/redux-store";
+import {store} from "./redux/redux-store";
 
 
 type AppPropsType = {
-   store: AppStateType
+  // store: AppStateType
     /*addPost: (newPostText: string) => void
     updateNewPostText: (updatedPostText: string) => void
-
     sendMessage: (newMessageText: string) => void
     updateNewMessageText: (updatedMessageText: string) => void*/
 }
@@ -26,26 +24,27 @@ export const App = (props: AppPropsType) => {
     return (
         <div className="app-wrapper">
             <Header/>
-            <Navbar friendsFromBar={props.store.getState().sidebarPage.friendsFromBar}/>
+            <Navbar friendsFromBar={store.getState().sidebarPage.friendsFromBar}/>
 
             <div className='app-wrapper-content'>
                 <Route path='/profile'
                        render={() => <Profile
-                           store={props.store}
+
+
+                           //store={props.store}
                           /* profilePage={props.store.getState().profilePage}
                            dispatch={props.store.dispatch.bind(props.store)*/
-
                            /*addPost={props.store.addPost.bind(props.store)}
                            updateNewPostText={props.store.updateNewPostText.bind(props.store)}*/
                        />}/>
 
                 <Route path='/dialogs'
                        render={() => <DialogsContainer
-                           store={props.store}
 
+
+                           //store={props.store}
                           /* dialogsPage={props.store.getState().dialogsPage}
                            dispatch={props.store.dispatch.bind(props.store)}*/
-
                            /*sendMessage={props.store.sendMessage.bind(props.store)}
                            updateNewMessageText={props.store.updateNewMessageText.bind(props.store)}*/
                        />}/>

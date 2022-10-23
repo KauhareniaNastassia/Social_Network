@@ -56,7 +56,7 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
 
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE',
-    newMessageText: string
+    /*newMessageText: string*/
 }
 export type UpdateNewMessageTextActionType = {
     type: 'UPDATE-NEW-MESSAGE-TEXT',
@@ -65,9 +65,9 @@ export type UpdateNewMessageTextActionType = {
 
 
 
-export const sendMessageAC = (newMessageText: string): SendMessageActionType => {
+export const sendMessageAC = (): SendMessageActionType => {
     return {
-        type: 'SEND-MESSAGE', newMessageText
+        type: 'SEND-MESSAGE'
     }
 }
 export const updateNewMessageTextAC = (updatedMessageText: string): UpdateNewMessageTextActionType => {
