@@ -24,9 +24,9 @@ export type MessageType = {
     id: string,
     message: string
 }
-export type FriendFromBarType = {
+export type UserType = {
     photo: any
-    friendName: string
+    userName: string
 }
 
 export type ProfilePageType = {
@@ -38,14 +38,14 @@ export type DialogsPageType = {
     messages: MessageType[]
     newMessageText: string
 }
-export type SidebarType = {
-    friendsFromBar: FriendFromBarType[]
+export type usersPageType = {
+    users: UserType[]
 }
 
 export type StatePropsType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebar: SidebarType
+    usersPage: usersPageType
 }
 
 
@@ -90,19 +90,19 @@ let state:StatePropsType = {
         ],
         newMessageText: ''
     },
-    sidebar: {
-        friendsFromBar: [
+    usersPage: {
+        users: [
             {
                 photo: friendFromBar1,
-                friendName: 'Andrew'
+                userName: 'Andrew'
             },
             {
                 photo: friendFromBar2,
-                friendName: 'Kate'
+                userName: 'Kate'
             },
             {
                 photo: friendFromBar3,
-                friendName: 'Lena'
+                userName: 'Lena'
             }
         ]
     }

@@ -3,7 +3,7 @@ import friendFromBar2 from '../assets/img/friendFromBar2.jpg'
 import friendFromBar3 from '../assets/img/friendFromBar3.jpg'
 import {profilePageReducer} from "./profilePageReducer";
 import {dialogsPageReducer} from "./dialogsPageReducer";
-import {sidebarPageReducer} from "./sidebarPageReducer";
+import {usersPageReducer} from "./usersPageReducer";
 
 export type StoreType = {
     _state: StatePropsType
@@ -31,9 +31,9 @@ export type MessageType = {
     id: string,
     message: string
 }
-export type FriendFromBarType = {
+export type UserType = {
     photo: any
-    friendName: string
+    userName: string
 }
 
 export type ProfilePageType = {
@@ -45,14 +45,14 @@ export type DialogsPageType = {
     messages: MessageType[]
     newMessageText: string
 }
-export type SidebarType = {
-    friendsFromBar: FriendFromBarType[]
+export type usersPageType = {
+    users: UserType[]
 }
 
 export type StatePropsType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebarPage: SidebarType
+    usersPage: usersPageType
 }
 
 
@@ -97,19 +97,19 @@ let store: StoreType = {
             ],
             newMessageText: ''
         },
-        sidebarPage: {
-            friendsFromBar: [
+        usersPage: {
+            users: [
                 {
                     photo: friendFromBar1,
-                    friendName: 'Andrew'
+                    userName: 'Andrew'
                 },
                 {
                     photo: friendFromBar2,
-                    friendName: 'Kate'
+                    userName: 'Kate'
                 },
                 {
                     photo: friendFromBar3,
-                    friendName: 'Lena'
+                    userName: 'Lena'
                 }
             ]
         }
@@ -132,7 +132,7 @@ let store: StoreType = {
 
         this._state.profilePage = profilePageReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsPageReducer(this._state.dialogsPage, action)
-        this._state.sidebarPage = sidebarPageReducer(this._state.sidebarPage, action)
+        this._state.usersPage = usersPageReducer(this._state.usersPage, action)
 
 
         /*if (action.type === 'ADD-POST') {

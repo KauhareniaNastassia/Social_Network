@@ -2,12 +2,11 @@ import React from "react";
 import '../../App.css';
 import css from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
-import {FriendsBar} from "./FriendsBar/FriendsBar";
-import {FriendFromBarType} from "../../redux/state";
+import {UsersContainer} from "../Users/UsersContainer";
 
 
 type NavbarPropsType = {
-    friendsFromBar: FriendFromBarType[]
+   /* users: UserType[]*/
 }
 
 export const Navbar = (props: NavbarPropsType) => {
@@ -31,7 +30,7 @@ export const Navbar = (props: NavbarPropsType) => {
 
 
             <div>
-                <FriendsBar friendsFromBar={props.friendsFromBar}/>
+                <UsersContainer />
             </div>
         </nav>
     )

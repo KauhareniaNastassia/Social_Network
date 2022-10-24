@@ -2,31 +2,31 @@ import React, {ChangeEvent} from "react";
 import css from "./MyPosts.module.css"
 import {Post} from "./Post/Post";
 import {PostType} from "../../../redux/store";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
 
-type MyPostsPropsType = {
+/*type MyPostsPropsType = {
     posts: PostType[]
     newPostText: string
-    addPost: () => void
-    updateNewPostText: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    addPost: (newPostText: string) => void
+    updateNewPostText: (updatedPostText: string) => void
 
     //dispatch: (action: ActionType) => void
-}
-
-
+}*/
 
 
 export const MyPosts = (props: MyPostsPropsType) => {
 
     let addPostHandler = () => {
-        props.addPost()
+        props.addPost(props.newPostText)
+        props.newPostText = ''
 
         /*props.dispatch(addPostAC(props.newPostText) )
         props.newPostText = ''*/
     }
 
     let onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e)
+        props.updateNewPostText(e.currentTarget.value)
 
         //props.dispatch(updateNewPostTextAC(e.currentTarget.value ))
     }
@@ -54,5 +54,3 @@ export const MyPosts = (props: MyPostsPropsType) => {
     )
 }
 
-/*
-<HTMLTextAreaElement>*/

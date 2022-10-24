@@ -1,5 +1,6 @@
 import {PostType} from "./store";
 import {ActionType} from "./redux-store";
+import {ChangeEvent} from "react";
 
 
 export type ProfilePageType = {

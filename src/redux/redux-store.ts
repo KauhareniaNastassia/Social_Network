@@ -1,7 +1,7 @@
 import {combineReducers, createStore} from "redux";
 import {profilePageReducer} from "./profilePageReducer";
 import {dialogsPageReducer} from "./dialogsPageReducer";
-import {sidebarPageReducer} from "./sidebarPageReducer";
+import {usersPageReducer} from "./usersPageReducer";
 import {
     AddPostActionType,
     SendMessageActionType,
@@ -16,14 +16,14 @@ export type ActionType =
     SendMessageActionType |
     UpdateNewMessageTextActionType
 
-let rootReducers = combineReducers({
+let rootReducer = combineReducers({
     profilePage: profilePageReducer,
     dialogsPage: dialogsPageReducer,
-    sidebarPage: sidebarPageReducer
+    usersPage: usersPageReducer
 })
 
-export const store = createStore(rootReducers)
+export const store = createStore(rootReducer)
 
 
-export type AppStateType = ReturnType<typeof rootReducers>
+export type AppStateType = ReturnType<typeof rootReducer>
 export type AppStoreType = typeof store

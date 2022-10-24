@@ -8,7 +8,6 @@ import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {store} from "./redux/redux-store";
 
 
 type AppPropsType = {
@@ -24,7 +23,7 @@ export const App = (props: AppPropsType) => {
     return (
         <div className="app-wrapper">
             <Header/>
-            <Navbar friendsFromBar={store.getState().sidebarPage.friendsFromBar}/>
+            <Navbar />
 
             <div className='app-wrapper-content'>
                 <Route path='/profile'
