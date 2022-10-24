@@ -27,3 +27,4 @@ export const store = createStore(rootReducer)
 
 export type AppStateType = ReturnType<typeof rootReducer>
 export type AppStoreType = typeof store
+

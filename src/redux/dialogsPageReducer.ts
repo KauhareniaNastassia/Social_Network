@@ -35,20 +35,41 @@ let initialStateDialogsPage: initialStateDialogsPageType = {
 export const dialogsPageReducer = (state: initialStateDialogsPageType = initialStateDialogsPage, action: ActionType): initialStateDialogsPageType => {
 
     switch (action.type) {
-        case "SEND-MESSAGE":
-            action.newMessageText = state.newMessageText
+        case "SEND-MESSAGE": {
+            /* action.newMessageText = state.newMessageText
+
+             const newMessage: MessageType = {
+                 id: '4',
+                 message: action.newMessageText
+             }
+             state.messages.push(newMessage)
+             state.newMessageText = ''
+             return state*/
 
             const newMessage: MessageType = {
                 id: '4',
-                message: action.newMessageText
+                message: state.newMessageText
             }
-            state.messages.push(newMessage)
-            state.newMessageText = ''
-            return state
 
-        case "UPDATE-NEW-MESSAGE-TEXT":
-            state.newMessageText = action.updatedMessageText
-            return state
+            let stateCopy = {
+                ...state,
+                messages: [...state.messages, newMessage],
+                newMessageText: ''
+            }
+            return stateCopy
+        }
+
+        case "UPDATE-NEW-MESSAGE-TEXT": {
+            /*state.newMessageText = action.updatedMessageText
+            return state*/
+
+            let stateCopy = {
+                ...state,
+                newMessageText:  action.updatedMessageText
+            }
+            return stateCopy
+
+        }
 
         default:
             return state
@@ -59,7 +80,7 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
 
 export type SendMessageActionType = {
     type: 'SEND-MESSAGE',
-    newMessageText: string
+    /*newMessageText: string*/
 }
 export type UpdateNewMessageTextActionType = {
     type: 'UPDATE-NEW-MESSAGE-TEXT',
@@ -67,9 +88,9 @@ export type UpdateNewMessageTextActionType = {
 }
 
 
-export const sendMessageAC = (newMessageText: string): SendMessageActionType => {
+export const sendMessageAC = (): SendMessageActionType => {
     return {
-        type: 'SEND-MESSAGE', newMessageText
+        type: 'SEND-MESSAGE'
     }
 }
 export const updateNewMessageTextAC = (updatedMessageText: string): UpdateNewMessageTextActionType => {

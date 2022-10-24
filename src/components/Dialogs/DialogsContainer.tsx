@@ -11,7 +11,7 @@ export type mapStateToDialogsPropsType = {
 }
 
 export type mapDispatchToDialogsPropsType = {
-    sendMessage: (newMessageText: string) => void
+    sendMessage: () => void
     updateNewMessageText: (updatedMessageText: string) => void
 }
 
@@ -26,8 +26,8 @@ let mapStateToDialogsProps = (state: AppStateType):mapStateToDialogsPropsType  =
 
 let mapDispatchDialogsToProps = (dispatch: Dispatch): mapDispatchToDialogsPropsType => {
     return {
-        sendMessage: (newMessageText: string) => {
-            dispatch(sendMessageAC(newMessageText))
+        sendMessage: () => {
+            dispatch(sendMessageAC())
         },
         updateNewMessageText: (updatedMessageText: string) => {
             dispatch(updateNewMessageTextAC(updatedMessageText))

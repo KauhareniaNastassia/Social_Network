@@ -24,17 +24,18 @@ import {DialogsPropsType} from "./DialogsContainer";
 export const Dialogs = (props: DialogsPropsType) => {
 
     let sendMessageHandler = () => {
-        props.sendMessage(props.dialogsPage.newMessageText)
-        props.dialogsPage.newMessageText = ''
+        props.sendMessage()
+        /*props.dialogsPage.newMessageText = ''*/
 
     }
 
     let onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-debugger
+
         props.updateNewMessageText(e.currentTarget.value)
 
         //props.dispatch(updateNewMessageTextAC(e.currentTarget.value) )
     }
+
 
 
     return (

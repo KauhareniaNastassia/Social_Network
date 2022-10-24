@@ -18,8 +18,8 @@ import {MyPostsPropsType} from "./MyPostsContainer";
 export const MyPosts = (props: MyPostsPropsType) => {
 
     let addPostHandler = () => {
-        props.addPost(props.newPostText)
-        props.newPostText = ''
+        props.addPost()
+        /*props.newPostText = ''*/
 
         /*props.dispatch(addPostAC(props.newPostText) )
         props.newPostText = ''*/

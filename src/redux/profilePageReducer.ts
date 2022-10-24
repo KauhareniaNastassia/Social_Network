@@ -31,7 +31,7 @@ let initialState: initialStateProfilePageType = {
             message: "Such a beautiful squirrel",
             likesCount: 18
         },
-    ],
+    ] as PostType[],
     newPostText: ''
 }
 
@@ -40,8 +40,8 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
 
     switch (action.type) {
 
-        case "ADD-POST":
-            action.newPostText = state.newPostText
+        case "ADD-POST": {
+            /*action.newPostText = state.newPostText
             const newPost: PostType = {
                 id: '5',
                 message: action.newPostText,
@@ -49,11 +49,33 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
             }
             state.posts.push(newPost)
             state.newPostText = ''
-            return state;
+            return state;*/
 
-        case "UPDATE-NEW-POST-TEXT":
-            state.newPostText = action.updatedPostText
-            return state
+            const newPost: PostType = {
+                id: '5',
+                message: state.newPostText,
+                likesCount: 5,
+            }
+            let stateCopy = {
+                ...state,
+                posts: [newPost, ...state.posts],
+                newPostText: ''
+            }
+
+            return stateCopy;
+        }
+
+        case "UPDATE-NEW-POST-TEXT": {
+            /*state.newPostText = action.updatedPostText
+            return state*/
+
+            let stateCopy = {
+                ...state,
+                newPostText: action.updatedPostText}
+
+            return stateCopy
+        }
+
 
         default:
             return state
@@ -63,7 +85,7 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
 
 export type AddPostActionType = {
     type: 'ADD-POST',
-    newPostText: string
+    /*newPostText: string*/
 }
 export type UpdateNewPostTextActionType = {
     type: 'UPDATE-NEW-POST-TEXT',
@@ -71,9 +93,9 @@ export type UpdateNewPostTextActionType = {
 }
 
 
-export const addPostAC = (newPostText: string): AddPostActionType => {
+export const addPostAC = (): AddPostActionType => {
     return {
-        type: 'ADD-POST', newPostText
+        type: 'ADD-POST',
     }
 }
 export const updateNewPostTextAC = (updatedPostText: string): UpdateNewPostTextActionType => {
