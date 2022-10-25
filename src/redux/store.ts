@@ -130,10 +130,10 @@ let store: StoreType = {
 
     dispatch(action) {
 
-        this._state.profilePage = profilePageReducer(this._state.profilePage, action)
+        /*this._state.profilePage = profilePageReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsPageReducer(this._state.dialogsPage, action)
         this._state.usersPage = usersPageReducer(this._state.usersPage, action)
-
+*/
 
         /*if (action.type === 'ADD-POST') {
             action.newPostText = this._state.profilePage.newPostText

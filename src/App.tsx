@@ -8,6 +8,7 @@ import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 
 type AppPropsType = {
@@ -48,6 +49,7 @@ export const App = (props: AppPropsType) => {
                            updateNewMessageText={props.store.updateNewMessageText.bind(props.store)}*/
                        />}/>
 
+                <Route path='/users' render={() => <UsersContainer/>}/>
                 <Route path='/care' render={() => <Care/>}/>
                 <Route path='/forum' render={() => <Forum/>}/>
                 <Route path='/settings' render={() => <Settings/>}/>

@@ -1,4 +1,9 @@
 .usersWrapper {
-    display: flex;
-margin-top: 100px;
+    margin: 20px;
+}
+
+.userPhoto {
+    width: 150px;
+    height: 100px;
+
 }
