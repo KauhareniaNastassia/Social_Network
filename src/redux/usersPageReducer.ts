@@ -7,8 +7,8 @@ import {ActionType} from "./redux-store";
 export type UserType = {
     id: string
     followed: boolean,
-    photo: any
-    fullName: string
+    photos: any
+    name: string
     status: string
     location: {
         city: string
@@ -22,11 +22,11 @@ export type initialStateUsersPageType = {
 
 let initialStateUsersPage: initialStateUsersPageType = {
     users: [
-        {
+        /*{
             id: '1',
             followed: true,
-            photo: friendFromBar1,
-            fullName: 'Andrew',
+            photos: friendFromBar1,
+            name: 'Andrew',
             status: 'ololo',
             location:
                 {
@@ -37,8 +37,8 @@ let initialStateUsersPage: initialStateUsersPageType = {
         {
             id: '2',
             followed: true,
-            photo: friendFromBar2,
-            fullName: 'Kate',
+            photos: friendFromBar2,
+            name: 'Kate',
             status: 'ololo',
             location:
                 {
@@ -49,15 +49,15 @@ let initialStateUsersPage: initialStateUsersPageType = {
         {
             id: '3',
             followed: false,
-            photo: friendFromBar3,
-            fullName: 'Lena',
+            photos: friendFromBar3,
+            name: 'Lena',
             status: 'ololo',
             location:
                 {
                     city: 'Minsk',
                     country: 'Belarus'
                 }
-        }
+        }*/
     ]
 }
 

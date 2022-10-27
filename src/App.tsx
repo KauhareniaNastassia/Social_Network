@@ -26,7 +26,9 @@ export const App = (props: AppPropsType) => {
             <Header/>
             <Navbar />
 
+
             <div className='app-wrapper-content'>
+
                 <Route path='/profile'
                        render={() => <Profile
 

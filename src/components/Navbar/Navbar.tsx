@@ -2,10 +2,7 @@ import React from "react";
 import '../../App.css';
 import css from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
-import {UsersContainer} from "../Users/UsersContainer";
-import {UsersForNavbar} from "./UsersForNavbar/UsersForNavbar";
-import {store} from "../../redux/redux-store";
-import {UsersForNavbarContainer} from "./UsersForNavbar/UsersForNavbarContainer";
+import {SidebarPageContainer} from "./UsersForNavbar/SidebarPageContainer";
 
 
 
@@ -34,7 +31,7 @@ export const Navbar = (props: NavbarPropsType) => {
 
 
             <div>
-                <UsersForNavbarContainer />
+                <SidebarPageContainer />
             </div>
         </nav>
     )

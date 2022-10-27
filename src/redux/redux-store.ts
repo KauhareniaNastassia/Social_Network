@@ -13,6 +13,7 @@ import {
     UpdateNewMessageTextActionType,
     UpdateNewPostTextActionType
 } from "./store";
+import {siderbarPageReducer} from "./sidebarPageReducer";
 
 
 export type ActionType =
@@ -27,7 +28,8 @@ export type ActionType =
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
     dialogsPage: dialogsPageReducer,
-    usersPage: usersPageReducer
+    usersPage: usersPageReducer,
+    sidebarPage: siderbarPageReducer
 })
 
 export const store = createStore(rootReducer)

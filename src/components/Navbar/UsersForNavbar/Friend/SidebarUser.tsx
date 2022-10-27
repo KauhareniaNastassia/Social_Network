@@ -1,5 +1,5 @@
 import React from "react";
-import css from "./UserForNavbar.module.css"
+import css from "./SidebarUser.module.css"
 
 
 type UserPropsType = {
@@ -7,7 +7,7 @@ type UserPropsType = {
     fullName: string
 }
 
-export const UserForNavbar = (props: UserPropsType) => {
+export const SidebarUser = (props: UserPropsType) => {
     return (
             <div className={css.userWrapper}>
                 <div></div>

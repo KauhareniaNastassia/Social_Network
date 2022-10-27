@@ -1,6 +1,6 @@
 import React from "react";
 /*
-import css from "./User.module.css"
+import css from "./SidebarUser.module.css"
 import {UserType} from "../../../redux/usersPageReducer";
 
 
@@ -8,7 +8,7 @@ type UserPropsType = {
     user: UserType
 }
 
-export const User = (props: UserPropsType) => {
+export const SidebarUser = (props: UserPropsType) => {
     return (
         <div className={css.userWrapper}>
                 <span>

@@ -46,4 +46,3 @@ export const mapDispatchToUsersProps = (dispatch: Dispatch): mapDispatchToUsersP
 
 export type UsersPropsType = mapStateToUsersPropsType & mapDispatchToUsersPropsType
 export const UsersContainer = connect(mapStateToUsersProps, mapDispatchToUsersProps)(Users)
-
