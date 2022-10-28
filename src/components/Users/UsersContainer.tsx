@@ -9,25 +9,16 @@ import {connect} from "react-redux";
 import {Users} from "./Users";
 import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
+import {UsersPageClass} from "./UsersPageClass";
 
 
-export type mapStateToUsersPropsType = {
-    users: UserType[]
-}
 
-export type mapDispatchToUsersPropsType = {
-    follow: (userId: string) => void
-    unfollow: (userId: string) => void
-    setUsers: (users: UserType[]) => void
-
-}
 
 export const mapStateToUsersProps = (state: AppStateType): mapStateToUsersPropsType => {
     return {
         users: state.usersPage.users
     }
 }
-
 
 export const mapDispatchToUsersProps = (dispatch: Dispatch): mapDispatchToUsersPropsType => {
     return {
@@ -40,9 +31,20 @@ export const mapDispatchToUsersProps = (dispatch: Dispatch): mapDispatchToUsersP
         setUsers: (users: UserType[]) => {
             dispatch(setUsersActionCreator(users))
         }
-
     }
 }
 
+
+export type mapStateToUsersPropsType = {
+    users: UserType[]
+}
+export type mapDispatchToUsersPropsType = {
+    follow: (userId: string) => void
+    unfollow: (userId: string) => void
+    setUsers: (users: UserType[]) => void
+}
+
 export type UsersPropsType = mapStateToUsersPropsType & mapDispatchToUsersPropsType
-export const UsersContainer = connect(mapStateToUsersProps, mapDispatchToUsersProps)(Users)
+export type UsersPageClassPropsType = Readonly<UsersPropsType>
+
+export const UsersContainer = connect(mapStateToUsersProps, mapDispatchToUsersProps)(UsersPageClass)

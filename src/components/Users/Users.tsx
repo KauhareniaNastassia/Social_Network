@@ -12,17 +12,22 @@ import profileAvatar from '../../assets/img/profileAvatar.svg'
 
 export const Users = (props: UsersPropsType) => {
 
-    if(props.users.length === 0) {
-
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
-            .then( res => {
-                props.setUsers(res.data.items)
-            })
-
+    let getUsersHandler = () => {
+        if(props.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                .then( res => {
+                    props.setUsers(res.data.items)
+                })
+        }
     }
+
+
 
     return (
         <div className={css.usersWrapper}>
+
+            <button onClick={getUsersHandler}> Get Users </button>
+
             {
                 props.users.map(user =>
                     <div key={user.id}>
