@@ -1,6 +1,3 @@
-import friendFromBar1 from "../assets/img/friendFromBar1.jpg";
-import friendFromBar2 from "../assets/img/friendFromBar2.jpg";
-import friendFromBar3 from "../assets/img/friendFromBar3.jpg";
 import {ActionType} from "./redux-store";
 
 
@@ -17,7 +14,10 @@ export type UserType = {
 }
 
 export type initialStateUsersPageType = {
-    users: UserType[]
+    users: UserType[],
+    pageSize: number,
+    totalUsersCount: number
+    currentPage: number
 }
 
 let initialStateUsersPage: initialStateUsersPageType = {
@@ -58,7 +58,11 @@ let initialStateUsersPage: initialStateUsersPageType = {
                     country: 'Belarus'
                 }
         }*/
-    ]
+    ],
+    pageSize: 20,
+    totalUsersCount: 55,
+    currentPage: 1
+
 }
 
 export const usersPageReducer = (state: initialStateUsersPageType = initialStateUsersPage, action: ActionType): initialStateUsersPageType => {
@@ -92,7 +96,13 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
             }
         }
         case "SET-USERS": {
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        }
+        case "SET-CURRENT-PAGE": {
+            return {...state, currentPage: action.currentPage}
+        }
+        case "SET-USERS-TOTAL-COUNT": {
+            return {...state, totalUsersCount: action.totalUsersCount}
         }
         default:
             return state
@@ -116,6 +126,15 @@ export type SetUsersActionCreatorType = {
     users: UserType[]
 }
 
+export type setCurrentPageActionCreatorType = {
+    type: 'SET-CURRENT-PAGE',
+    currentPage: number
+}
+export type setUsersTotalCountActionCreatorType = {
+    type: 'SET-USERS-TOTAL-COUNT',
+    totalUsersCount: number
+}
+
 export const followActionCreator = (userID: string): FollowActionCreatorType => {
     return {
         type: 'FOLLOW',
@@ -134,5 +153,19 @@ export const setUsersActionCreator = (users: UserType[]): SetUsersActionCreatorT
     return {
         type: 'SET-USERS',
         users
+    }
+}
+
+export const setCurrentPageActionCreator = (currentPage: number): setCurrentPageActionCreatorType => {
+    return {
+        type: 'SET-CURRENT-PAGE',
+        currentPage
+    }
+}
+
+export const setUsersTotalCountActionCreator = (totalUsersCount: number): setUsersTotalCountActionCreatorType => {
+    return {
+        type: 'SET-USERS-TOTAL-COUNT',
+        totalUsersCount
     }
 }

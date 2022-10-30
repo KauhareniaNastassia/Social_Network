@@ -2,8 +2,8 @@ import {combineReducers, createStore} from "redux";
 import {profilePageReducer} from "./profilePageReducer";
 import {dialogsPageReducer} from "./dialogsPageReducer";
 import {
-    FollowActionCreatorType,
-    SetUsersActionCreatorType,
+    FollowActionCreatorType, setCurrentPageActionCreatorType,
+    SetUsersActionCreatorType, setUsersTotalCountActionCreatorType,
     UnfollowActionCreatorType,
     usersPageReducer
 } from "./usersPageReducer";
@@ -23,7 +23,9 @@ export type ActionType =
     UpdateNewMessageTextActionType |
     FollowActionCreatorType |
     UnfollowActionCreatorType |
-    SetUsersActionCreatorType
+    SetUsersActionCreatorType |
+    setCurrentPageActionCreatorType |
+    setUsersTotalCountActionCreatorType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,

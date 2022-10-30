@@ -11,6 +11,7 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 
 
+
 type AppPropsType = {
   // store: AppStateType
     /*addPost: (newPostText: string) => void
