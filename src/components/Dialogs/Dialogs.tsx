@@ -6,21 +6,6 @@ import {DialogType, MessageType} from "../../redux/store";
 import {DialogsPropsType} from "./DialogsContainer";
 
 
-/*type DialogsPropsType = {
-    sendMessage: () => void
-    updateNewMessageText: (e: ChangeEvent<HTMLTextAreaElement>) => void
-    dialogs: DialogType[]
-    messages: MessageType[]
-    newMessageText: string
-
-
-    /!*dialogsPage: DialogsPageType
-    dispatch: (action: ActionType) => void*!/
-    /!*sendMessage: (newMessageText: string) => void
-    updateNewMessageText: (updatedMessageText: string) => void*!/
-}*/
-
-
 export const Dialogs = (props: DialogsPropsType) => {
 
     let sendMessageHandler = () => {

@@ -1,9 +1,12 @@
 import {combineReducers, createStore} from "redux";
-import {profilePageReducer} from "./profilePageReducer";
+import {profilePageReducer, setUserProfileActionType} from "./profilePageReducer";
 import {dialogsPageReducer} from "./dialogsPageReducer";
 import {
-    FollowActionCreatorType, setCurrentPageActionCreatorType,
-    SetUsersActionCreatorType, setUsersTotalCountActionCreatorType,
+    FollowActionCreatorType,
+    setCurrentPageActionCreatorType,
+    SetUsersActionCreatorType,
+    setUsersTotalCountActionCreatorType,
+    toggleIsFetchingActionCreatorType,
     UnfollowActionCreatorType,
     usersPageReducer
 } from "./usersPageReducer";
@@ -14,6 +17,7 @@ import {
     UpdateNewPostTextActionType
 } from "./store";
 import {siderbarPageReducer} from "./sidebarPageReducer";
+import {authReducer, setUserDataACType} from "./authReducer";
 
 
 export type ActionType =
@@ -25,13 +29,17 @@ export type ActionType =
     UnfollowActionCreatorType |
     SetUsersActionCreatorType |
     setCurrentPageActionCreatorType |
-    setUsersTotalCountActionCreatorType
+    setUsersTotalCountActionCreatorType |
+    toggleIsFetchingActionCreatorType |
+    setUserProfileActionType |
+    setUserDataACType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
     dialogsPage: dialogsPageReducer,
     usersPage: usersPageReducer,
-    sidebarPage: siderbarPageReducer
+    sidebarPage: siderbarPageReducer,
+    auth: authReducer
 })
 
 export const store = createStore(rootReducer)

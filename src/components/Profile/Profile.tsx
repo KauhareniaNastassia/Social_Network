@@ -1,9 +1,11 @@
 import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ProfileType} from "../../redux/profilePageReducer";
 
 
 type ProfilePropsType = {
+    profile: ProfileType | null
     //store: AppStateType
     /*profilePage: ProfilePageType
     dispatch: (action: ActionType) => void*/
@@ -15,7 +17,7 @@ type ProfilePropsType = {
 export const Profile = (props: ProfilePropsType) => {
     return (
         <div>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer
 
 
