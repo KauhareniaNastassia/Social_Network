@@ -17,7 +17,7 @@ import {
     UpdateNewPostTextActionType
 } from "./store";
 import {siderbarPageReducer} from "./sidebarPageReducer";
-import {authReducer, setUserDataACType} from "./authReducer";
+import {authReducer, setAuthUserDataACType} from "./authReducer";
 
 
 export type ActionType =
@@ -32,7 +32,7 @@ export type ActionType =
     setUsersTotalCountActionCreatorType |
     toggleIsFetchingActionCreatorType |
     setUserProfileActionType |
-    setUserDataACType
+    setAuthUserDataACType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
