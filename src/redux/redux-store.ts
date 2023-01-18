@@ -6,6 +6,7 @@ import {
     setCurrentPageActionCreatorType,
     SetUsersActionCreatorType,
     setUsersTotalCountActionCreatorType,
+    toggleFollowingProgressActionCreatorType,
     toggleIsFetchingActionCreatorType,
     UnfollowActionCreatorType,
     usersPageReducer
@@ -31,6 +32,7 @@ export type ActionType =
     setCurrentPageActionCreatorType |
     setUsersTotalCountActionCreatorType |
     toggleIsFetchingActionCreatorType |
+    toggleFollowingProgressActionCreatorType |
     setUserProfileActionType |
     setAuthUserDataACType
 

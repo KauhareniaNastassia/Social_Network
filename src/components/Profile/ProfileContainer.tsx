@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {ProfileType, setUserProfileAC} from "../../redux/profilePageReducer";
 import state from "../../redux/state";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {profileAPI} from "../../api/api";
 
 
 
@@ -21,10 +22,12 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType>  {
         if (!userId) {
             userId = '2'
         }
-
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
+        /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
             .then(res => {
                 this.props.setUserProfile(res.data)
+            })*/
+        profileAPI.setProfile(userId).then(data => {
+                this.props.setUserProfile(data)
             })
     }
 

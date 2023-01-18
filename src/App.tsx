@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
-import {Profile} from "./components/Profile/Profile";
 import {Route, Switch} from 'react-router-dom'
 import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";

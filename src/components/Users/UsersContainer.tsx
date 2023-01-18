@@ -3,38 +3,44 @@ import {
     followActionCreator,
     setCurrentPageActionCreator,
     setUsersActionCreator,
-    setUsersTotalCountActionCreator,
+    setUsersTotalCountActionCreator, toggleFollowingProgressActionCreator,
     toggleIsFetchingActionCreator,
     unfollowActionCreator,
     UserType
 } from "../../redux/usersPageReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import axios from "axios";
 import {Users} from "./Users";
 import {PreloaderDog} from "../../common/preloader/PreloaderDog/PreloaderDog";
+import {usersAPI} from "../../api/api";
+
 
 
 export class UsersAPIContainer extends Component<UsersPageClassPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(res => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(res.data.items)
-                this.props.setTotalUsersCount(res.data.totalCount)
-            })
+        /* axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+             {
+                 withCredentials: true,
+                 })*/
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+            this.props.toggleIsFetching(false)
+            this.props.setUsers(data.items)
+            this.props.setTotalUsersCount(data.totalCount)
+        })
     }
 
     onPageChanged = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.toggleIsFetching(true)
-
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
-            .then(res => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(res.data.items)
+        /*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
+            {
+                withCredentials: true,
+            })*/
+        usersAPI.getUsers(page, this.props.pageSize).then(data => {
+            this.props.toggleIsFetching(false)
+                this.props.setUsers(data.items)
             })
     }
 
@@ -49,7 +55,8 @@ export class UsersAPIContainer extends Component<UsersPageClassPropsType> {
                 onPageChanged={this.onPageChanged}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
-
+                toggleFollowingProgress={this.props.toggleFollowingProgress}
+                followingProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -62,7 +69,8 @@ export const mapStateToUsersProps = (state: AppStateType): mapStateToUsersPropsT
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 /*export const mapDispatchToUsersProps = (dispatch: Dispatch): mapDispatchToUsersPropsType => {
@@ -95,6 +103,7 @@ export type mapStateToUsersPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: []
 }
 export type mapDispatchToUsersPropsType = {
     follow: (userId: string) => void
@@ -103,15 +112,17 @@ export type mapDispatchToUsersPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
 }
 export type UsersPropsType = mapStateToUsersPropsType & mapDispatchToUsersPropsType
 export type UsersPageClassPropsType = Readonly<UsersPropsType>
 
 export const UsersContainer = connect(mapStateToUsersProps, {
     follow: followActionCreator,
-    unfollow:unfollowActionCreator,
+    unfollow: unfollowActionCreator,
     setUsers: setUsersActionCreator,
-    setCurrentPage:setCurrentPageActionCreator,
+    setCurrentPage: setCurrentPageActionCreator,
     setTotalUsersCount: setUsersTotalCountActionCreator,
-    toggleIsFetching: toggleIsFetchingActionCreator
-    })(UsersAPIContainer)
+    toggleIsFetching: toggleIsFetchingActionCreator,
+    toggleFollowingProgress: toggleFollowingProgressActionCreator
+})(UsersAPIContainer)

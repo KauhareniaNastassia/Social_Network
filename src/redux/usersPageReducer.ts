@@ -19,6 +19,7 @@ export type initialStateUsersPageType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: []
 }
 
 let initialStateUsersPage: initialStateUsersPageType = {
@@ -63,7 +64,8 @@ let initialStateUsersPage: initialStateUsersPageType = {
     pageSize: 20,
     totalUsersCount: 55,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    followingInProgress: []
 }
 
 export const usersPageReducer = (state: initialStateUsersPageType = initialStateUsersPage, action: ActionType): initialStateUsersPageType => {
@@ -108,6 +110,14 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
         case "TOGGLE-IS-FETCHING": {
             return {...state, isFetching: action.isFetching}
         }
+        case "TOGGLE-IN-FOLLOWING-PROGRESS": {
+            return <initialStateUsersPageType>{
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id != action.userId)
+            }
+        }
         default:
             return state
     }
@@ -140,11 +150,16 @@ export type toggleIsFetchingActionCreatorType = {
     type: 'TOGGLE-IS-FETCHING',
     isFetching: boolean
 }
+export type toggleFollowingProgressActionCreatorType = {
+    type: 'TOGGLE-IN-FOLLOWING-PROGRESS',
+    isFetching: boolean,
+    userId: string
+}
 
 export const followActionCreator = (userID: string): FollowActionCreatorType => {
     return {
         type: 'FOLLOW',
-        userID
+        userID,
     }
 }
 
@@ -180,5 +195,13 @@ export const toggleIsFetchingActionCreator = (isFetching: boolean): toggleIsFetc
     return {
         type: 'TOGGLE-IS-FETCHING',
         isFetching
+    }
+}
+
+export const toggleFollowingProgressActionCreator = (isFetching: boolean, userId: string): toggleFollowingProgressActionCreatorType => {
+    return {
+        type: 'TOGGLE-IN-FOLLOWING-PROGRESS',
+        isFetching,
+        userId
     }
 }
