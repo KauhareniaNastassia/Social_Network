@@ -1,14 +1,6 @@
-import {PostType} from "./store";
-import {ActionType} from "./redux-store";
+import {ActionType, AppDispatchType} from "./redux-store";
+import {authAPI} from "../api/api";
 
-
-export type AuthType = {
-    userId: null,
-    email: null,
-    login:  null,
-    isAuth: boolean
-}
-type initialStateAuthType = AuthType
 
 let initialState: initialStateAuthType = {
     userId: null,
@@ -17,8 +9,7 @@ let initialState: initialStateAuthType = {
     isAuth: false
 }
 
-
-export const authReducer = (state:initialStateAuthType = initialState, action: ActionType): initialStateAuthType => {
+export const authReducer = (state: initialStateAuthType = initialState, action: ActionType): initialStateAuthType => {
 
     switch (action.type) {
         case "SET-USER-DATA": {
@@ -28,22 +19,13 @@ export const authReducer = (state:initialStateAuthType = initialState, action: A
                 isAuth: true
             };
         }
-
         default:
             return state
     }
 }
 
 
-export type setAuthUserDataACType = {
-    type: 'SET-USER-DATA',
-    data: {
-        userId: null,
-        email: null,
-        login:  null,
-    }
-}
-
+//=======ACTIONS======
 
 export const setAuthUserDataAC = (userId: null, email: null, login: null): setAuthUserDataACType => {
     return {
@@ -57,9 +39,44 @@ export const setAuthUserDataAC = (userId: null, email: null, login: null): setAu
 }
 
 
+//=======THUNK======
+
+export const getAuthUserThunkCreator = () => {
+    return (dispatch: AppDispatchType) => {
+        authAPI.auth().then(data => {
+                if (data.resultCode === 0) {
+                    let {id, login, email} = data.data.login
+                    dispatch(setAuthUserDataAC(id, login, email))
+                }
+            }
+        )
+    }
+}
+
+
+//=======TYPES======
+
+export type AuthType = {
+    userId: null,
+    email: null,
+    login: null,
+    isAuth: boolean
+}
+
+type initialStateAuthType = AuthType
+
+export type setAuthUserDataACType = {
+    type: 'SET-USER-DATA',
+    data: {
+        userId: null,
+        email: null,
+        login: null,
+    }
+}
 
 export type setUserDataType = {
     userId: number,
     email: string,
     login: string
 }
+

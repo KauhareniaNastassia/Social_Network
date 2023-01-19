@@ -1,17 +1,9 @@
 import React, {Component} from "react";
-import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {mapDispatchToUsersPropsType, mapStateToUsersPropsType, UsersPageClassPropsType} from "../Users/UsersContainer";
 import {Profile} from "./Profile";
-import axios from "axios";
 import {AppStateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
 import {connect} from "react-redux";
-import {ProfileType, setUserProfileAC} from "../../redux/profilePageReducer";
-import state from "../../redux/state";
-import {RouteComponentProps, withRouter} from "react-router-dom";
-import {profileAPI} from "../../api/api";
-
+import {getUserProfileThunkCreator, ProfileType} from "../../redux/profilePageReducer";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 
 
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType>  {
@@ -20,18 +12,23 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType>  {
         let userId = this.props.match.params.userId
 
         if (!userId) {
-            userId = '2'
+            userId = '5'
         }
+
+        this.props.getUserProfileTC(userId)
         /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-            .then(res => {
-                this.props.setUserProfile(res.data)
+    .then(res => {
+        this.props.setUserProfile(res.data)
+    })*/
+        /*profileAPI.setProfile(userId).then(data => {
+                this.props.setUserProfileTC(data)
             })*/
-        profileAPI.setProfile(userId).then(data => {
-                this.props.setUserProfile(data)
-            })
     }
 
     render() {
+
+        if (!this.props.isAuth) return <Redirect to={'/login'}/>
+
         return (
             <Profile
                 {...this.props}
@@ -44,15 +41,18 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType>  {
 
 export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePropsType  => {
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
     }
 }
 
 export type mapStateToProfilePropsType ={
     profile: ProfileType | null
+    isAuth: boolean
 }
 export type mapDispatchToProfilePropsType ={
-    setUserProfile: (profile: ProfileType | null) => void
+    //setUserProfile: (profile: ProfileType | null) => void
+    getUserProfileTC: (userId: string) => void
 }
 type PathParamsType = {
     userId: string
@@ -64,5 +64,6 @@ export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & Pr
 let withURLDataContainerComponent = withRouter(ProfileAPIContainer)
 
 export const ProfileContainer = connect(mapStateToProfileProps, {
-    setUserProfile: setUserProfileAC
+    //setUserProfile: setUserProfileAC,
+    getUserProfileTC: getUserProfileThunkCreator
 }) (withURLDataContainerComponent)

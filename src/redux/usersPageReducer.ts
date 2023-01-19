@@ -1,26 +1,6 @@
-import {ActionType} from "./redux-store";
+import {ActionType, AppDispatchType} from "./redux-store";
+import {usersAPI} from "../api/api";
 
-
-export type UserType = {
-    id: string
-    followed: boolean,
-    photos: any
-    name: string
-    status: string
-    location: {
-        city: string
-        country: string
-    }
-}
-
-export type initialStateUsersPageType = {
-    users: UserType[],
-    pageSize: number,
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: []
-}
 
 let initialStateUsersPage: initialStateUsersPageType = {
     users: [
@@ -69,7 +49,6 @@ let initialStateUsersPage: initialStateUsersPageType = {
 }
 
 export const usersPageReducer = (state: initialStateUsersPageType = initialStateUsersPage, action: ActionType): initialStateUsersPageType => {
-
     switch (action.type) {
         case "FOLLOW": {
             return {
@@ -81,7 +60,6 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
                     return user
                 })
             }
-
         }
         case "UNFOLLOW": {
             /*return {
@@ -124,37 +102,7 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
 }
 
 
-export type FollowActionCreatorType = {
-    type: 'FOLLOW',
-    userID: string
-}
-export type UnfollowActionCreatorType = {
-    type: 'UNFOLLOW',
-    userID: string
-}
-
-export type SetUsersActionCreatorType = {
-    type: 'SET-USERS',
-    users: UserType[]
-}
-
-export type setCurrentPageActionCreatorType = {
-    type: 'SET-CURRENT-PAGE',
-    currentPage: number
-}
-export type setUsersTotalCountActionCreatorType = {
-    type: 'SET-USERS-TOTAL-COUNT',
-    totalUsersCount: number
-}
-export type toggleIsFetchingActionCreatorType = {
-    type: 'TOGGLE-IS-FETCHING',
-    isFetching: boolean
-}
-export type toggleFollowingProgressActionCreatorType = {
-    type: 'TOGGLE-IN-FOLLOWING-PROGRESS',
-    isFetching: boolean,
-    userId: string
-}
+//=======ACTIONS======
 
 export const followActionCreator = (userID: string): FollowActionCreatorType => {
     return {
@@ -204,4 +152,103 @@ export const toggleFollowingProgressActionCreator = (isFetching: boolean, userId
         isFetching,
         userId
     }
+}
+
+//=======THUNK======
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: AppDispatchType) => {
+        dispatch(toggleIsFetchingActionCreator(true))
+
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetchingActionCreator(false))
+            dispatch(setUsersActionCreator(data.items))
+            dispatch(setUsersTotalCountActionCreator(data.totalCount))
+        })
+    }
+}
+
+export const unFollowUsersThunkCreator = (userId: string) => {
+    return (dispatch: AppDispatchType) => {
+        dispatch(toggleFollowingProgressActionCreator(true, userId))
+
+        usersAPI.unFollowUser(userId).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(unfollowActionCreator(userId))
+            }
+            dispatch(toggleFollowingProgressActionCreator(false, userId))
+        })
+    }
+}
+
+export const followUsersThunkCreator = (userId: string) => {
+    return (dispatch: AppDispatchType) => {
+        dispatch(toggleFollowingProgressActionCreator(true, userId))
+
+        usersAPI.followUser(userId).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(followActionCreator(userId))
+            }
+            dispatch(toggleFollowingProgressActionCreator(false, userId))
+        })
+    }
+}
+
+
+//=======ACTION TYPES======
+
+export type FollowActionCreatorType = {
+    type: 'FOLLOW',
+    userID: string
+}
+export type UnfollowActionCreatorType = {
+    type: 'UNFOLLOW',
+    userID: string
+}
+
+export type SetUsersActionCreatorType = {
+    type: 'SET-USERS',
+    users: UserType[]
+}
+
+export type setCurrentPageActionCreatorType = {
+    type: 'SET-CURRENT-PAGE',
+    currentPage: number
+}
+export type setUsersTotalCountActionCreatorType = {
+    type: 'SET-USERS-TOTAL-COUNT',
+    totalUsersCount: number
+}
+export type toggleIsFetchingActionCreatorType = {
+    type: 'TOGGLE-IS-FETCHING',
+    isFetching: boolean
+}
+export type toggleFollowingProgressActionCreatorType = {
+    type: 'TOGGLE-IN-FOLLOWING-PROGRESS',
+    isFetching: boolean,
+    userId: string
+}
+
+
+//=======TYPES======
+
+export type UserType = {
+    id: string
+    followed: boolean,
+    photos: any
+    name: string
+    status: string
+    location: {
+        city: string
+        country: string
+    }
+}
+
+export type initialStateUsersPageType = {
+    users: UserType[],
+    pageSize: number,
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+    followingInProgress: []
 }

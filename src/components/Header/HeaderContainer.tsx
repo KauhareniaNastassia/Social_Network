@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import {AppStateType} from "../../redux/redux-store";
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {setAuthUserDataAC} from "../../redux/authReducer";
-import {authAPI} from "../../api/api";
+import {getAuthUserThunkCreator} from "../../redux/authReducer";
 
 export class HeaderAPIContainer extends Component<HeaderContainerPropsType> {
 
     componentDidMount() {
+        this.props.getAuthUserTC()
         /*axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
             withCredentials: true
         })
@@ -17,13 +17,13 @@ export class HeaderAPIContainer extends Component<HeaderContainerPropsType> {
                     this.props.setAuthUserData(id, login, email)
                 }
             })*/
-        authAPI.auth().then(data => {
+        /* authAPI.auth().then(data => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data.login
                     this.props.setAuthUserData(id, login, email)
                 }
             }
-        )
+        )*/
     }
 
     render() {
@@ -46,12 +46,14 @@ type mapStateToHeaderPropsType = {
 }
 
 type MapDispatchToHeaderPropsType = {
-    setAuthUserData: (userId: null, login: null, email: null) => void
+    //setAuthUserData: (userId: null, login: null, email: null) => void
+    getAuthUserTC: () => void
 }
 
 export type HeaderPropsType = mapStateToHeaderPropsType & MapDispatchToHeaderPropsType
 export type HeaderContainerPropsType = Readonly<HeaderPropsType>
 
 export const HeaderContainer = connect(mapStateToHeaderProps, {
-    setAuthUserData: setAuthUserDataAC
+    //setAuthUserData: setAuthUserDataAC,
+    getAuthUserTC: getAuthUserThunkCreator
 })(HeaderAPIContainer)

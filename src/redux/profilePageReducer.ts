@@ -1,13 +1,6 @@
 import {PostType} from "./store";
-import {ActionType} from "./redux-store";
-
-
-export type ProfilePageType = {
-    posts: PostType[],
-    newPostText: string,
-    profile: ProfileType | null
-}
-type initialStateProfilePageType = ProfilePageType
+import {ActionType, AppDispatchType} from "./redux-store";
+import {profileAPI} from "../api/api";
 
 let initialState: initialStateProfilePageType = {
     posts: [
@@ -36,11 +29,8 @@ let initialState: initialStateProfilePageType = {
     profile: null
 }
 
-
 export const profilePageReducer = (state:initialStateProfilePageType = initialState, action: ActionType): initialStateProfilePageType => {
-
     switch (action.type) {
-
         case "ADD-POST": {
             const newPost: PostType = {
                 id: '5',
@@ -55,7 +45,6 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
 
             return stateCopy;
         }
-
         case "UPDATE-NEW-POST-TEXT": {
             let stateCopy = {
                 ...state,
@@ -63,30 +52,16 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
 
             return stateCopy
         }
-
         case 'SET-USER-PROFILE': {
             return {...state, profile: action.profile}
         }
-
         default:
             return state
     }
 }
 
 
-export type AddPostActionType = {
-    type: 'ADD-POST',
-    /*newPostText: string*/
-}
-export type UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT',
-    updatedPostText: string
-}
-export type setUserProfileActionType = {
-    type: 'SET-USER-PROFILE',
-    profile: ProfileType | null
-}
-
+//===========ACTIONS=========
 
 export const addPostAC = (): AddPostActionType => {
     return {
@@ -105,6 +80,42 @@ export const setUserProfileAC = (profile: ProfileType | null): setUserProfileAct
     }
 }
 
+
+//===========ACTION TYPES=========
+
+export type AddPostActionType = {
+    type: 'ADD-POST',
+    /*newPostText: string*/
+}
+export type UpdateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT',
+    updatedPostText: string
+}
+export type setUserProfileActionType = {
+    type: 'SET-USER-PROFILE',
+    profile: ProfileType | null
+}
+
+
+//===========THUNK=========
+
+export const getUserProfileThunkCreator = (userId: string) => {
+    return (dispatch: AppDispatchType) => {
+        profileAPI.getProfile(userId).then(data => {
+            dispatch(setUserProfileAC(data))
+        })
+    }
+}
+
+//===========TYPES=========
+
+export type ProfilePageType = {
+    posts: PostType[],
+    newPostText: string,
+    profile: ProfileType | null
+}
+
+type initialStateProfilePageType = ProfilePageType
 
 export type ProfileType = {
     aboutMe: string
