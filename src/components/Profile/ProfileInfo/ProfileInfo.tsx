@@ -4,6 +4,7 @@ import css from "./ProfileInfo.module.css"
 import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat";
 import {ProfileType} from "../../../redux/profilePageReducer";
 import userImg from '../../../assets/img/ava1.jpg'
+import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: ProfileType | null
@@ -20,13 +21,13 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
         <div>
             <div>
                 {/*<img className={css.imgScreen} src={screen}/>*/}
-
             </div>
             <div className={css.descriptionBlock}>
                 <img src={props.profile?.photos.large ? props.profile.photos.large : userImg}/>
                 <div>
                     {props.profile.fullName}
                 </div>
+                <ProfileStatus status={'Bla-Bla-Bla'}/>
             </div>
 
         </div>
