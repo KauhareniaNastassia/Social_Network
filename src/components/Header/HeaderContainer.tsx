@@ -45,19 +45,10 @@ export const mapStateToHeaderProps = (state: AppStateType): mapStateToHeaderProp
 
 
 
-export const HeaderContainer = compose<React.ComponentType>(
-    connect(mapStateToHeaderProps, {
-        getAuthUserTC: getAuthUserThunkCreator
-    }),
-    withRouter,
-    withAuthRedirect
-)(HeaderAPIContainer)
-
-/*
 export const HeaderContainer = connect(mapStateToHeaderProps, {
     //setAuthUserData: setAuthUserDataAC,
     getAuthUserTC: getAuthUserThunkCreator
-})(HeaderAPIContainer)*/
+})(HeaderAPIContainer)
 
 //===========TYPE================
 
