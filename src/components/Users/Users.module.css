@@ -1,5 +1,6 @@
 .usersWrapper {
     margin: 20px;
+
 }
 
 .userPhoto {
@@ -10,4 +11,15 @@
 
 .selectedPage {
     font-weight: bold;
+}
+
+.usersBlock {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.user {
+    margin: 30px 10px;
+    width: 20%;
 }

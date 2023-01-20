@@ -3,16 +3,18 @@ import {Profile} from "./Profile";
 import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {getUserProfileThunkCreator, ProfileType} from "../../redux/profilePageReducer";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
-export class ProfileAPIContainer extends Component<ProfilePageClassPropsType>  {
+export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
 
         if (!userId) {
-            userId = '5'
+            userId = '2'
         }
 
         this.props.getUserProfileTC(userId)
@@ -26,44 +28,51 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType>  {
     }
 
     render() {
-
-        if (!this.props.isAuth) return <Redirect to={'/login'}/>
-
         return (
             <Profile
                 {...this.props}
                 profile={this.props.profile}
-
             />
         )
     }
 }
 
-export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePropsType  => {
+
+export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePropsType => {
     return {
         profile: state.profilePage.profile,
-        isAuth: state.auth.isAuth
+        //isAuth: state.auth.isAuth
     }
 }
 
-export type mapStateToProfilePropsType ={
+/*let AuthRedirectComponent = withAuthRedirect(ProfileAPIContainer);
+let withURLDataContainerComponent = withRouter(AuthRedirectComponent)
+
+export const ProfileContainer = connect(mapStateToProfileProps, {
+    //setUserProfile: setUserProfileAC,
+    getUserProfileTC: getUserProfileThunkCreator
+}) (withURLDataContainerComponent)*/
+
+export const ProfileContainer = compose<React.ComponentType>(
+    connect(mapStateToProfileProps,
+        {getUserProfileTC: getUserProfileThunkCreator}),
+    withRouter,
+    withAuthRedirect
+)(ProfileAPIContainer)
+
+
+//===========TYPE================
+
+export type ProfilePropsType = mapStateToProfilePropsType & mapDispatchToProfilePropsType
+export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
+export type mapStateToProfilePropsType = {
     profile: ProfileType | null
-    isAuth: boolean
+    //isAuth: boolean
 }
-export type mapDispatchToProfilePropsType ={
+export type mapDispatchToProfilePropsType = {
     //setUserProfile: (profile: ProfileType | null) => void
     getUserProfileTC: (userId: string) => void
 }
 type PathParamsType = {
     userId: string
 }
-
-export type ProfilePropsType = mapStateToProfilePropsType & mapDispatchToProfilePropsType
-export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
-
-let withURLDataContainerComponent = withRouter(ProfileAPIContainer)
-
-export const ProfileContainer = connect(mapStateToProfileProps, {
-    //setUserProfile: setUserProfileAC,
-    getUserProfileTC: getUserProfileThunkCreator
-}) (withURLDataContainerComponent)

@@ -11,6 +11,9 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {PreloaderDog} from "../../common/preloader/PreloaderDog/PreloaderDog";
+import {compose} from "redux";
+import {withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 export class UsersAPIContainer extends Component<UsersPageClassPropsType> {
@@ -32,15 +35,15 @@ export class UsersAPIContainer extends Component<UsersPageClassPropsType> {
     onPageChanged = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.getUsersTC(page, this.props.pageSize)
-       /* this.props.toggleIsFetching(true)
-        /!*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
-            {
-                withCredentials: true,
-            })*!/
-        usersAPI.getUsers(page, this.props.pageSize).then(data => {
-            this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-            })*/
+        /* this.props.toggleIsFetching(true)
+         /!*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
+             {
+                 withCredentials: true,
+             })*!/
+         usersAPI.getUsers(page, this.props.pageSize).then(data => {
+             this.props.toggleIsFetching(false)
+                 this.props.setUsers(data.items)
+             })*/
     }
 
     render() {
@@ -62,7 +65,6 @@ export class UsersAPIContainer extends Component<UsersPageClassPropsType> {
         </>
     }
 }
-
 
 export const mapStateToUsersProps = (state: AppStateType): mapStateToUsersPropsType => {
     return {
@@ -97,6 +99,36 @@ export const mapStateToUsersProps = (state: AppStateType): mapStateToUsersPropsT
     }
 }*/
 
+export const UsersContainer = compose<React.ComponentType>(
+    connect(mapStateToUsersProps, {
+        follow: followActionCreator,
+        unfollow: unfollowActionCreator,
+        setCurrentPage: setCurrentPageActionCreator,
+        toggleFollowingProgress: toggleFollowingProgressActionCreator,
+        getUsersTC: getUsersThunkCreator,
+        unFollowUsersTC: unFollowUsersThunkCreator,
+        followUsersTC: followUsersThunkCreator
+    }),
+    withRouter,
+    withAuthRedirect
+)(UsersAPIContainer)
+
+
+/*export const UsersContainer = connect(mapStateToUsersProps, {
+    follow: followActionCreator,
+    unfollow: unfollowActionCreator,
+    setCurrentPage: setCurrentPageActionCreator,
+    //setUsers: setUsersActionCreator,
+    //setTotalUsersCount: setUsersTotalCountActionCreator,
+    //toggleIsFetching: toggleIsFetchingActionCreator,
+    toggleFollowingProgress: toggleFollowingProgressActionCreator,
+    getUsersTC: getUsersThunkCreator,
+    unFollowUsersTC: unFollowUsersThunkCreator,
+    followUsersTC: followUsersThunkCreator
+})(UsersAPIContainer)*/
+
+
+//===========TYPE================
 
 export type mapStateToUsersPropsType = {
     users: UserType[],
@@ -120,16 +152,3 @@ export type mapDispatchToUsersPropsType = {
 }
 export type UsersPropsType = mapStateToUsersPropsType & mapDispatchToUsersPropsType
 export type UsersPageClassPropsType = Readonly<UsersPropsType>
-
-export const UsersContainer = connect(mapStateToUsersProps, {
-    follow: followActionCreator,
-    unfollow: unfollowActionCreator,
-    setCurrentPage: setCurrentPageActionCreator,
-    //setUsers: setUsersActionCreator,
-    //setTotalUsersCount: setUsersTotalCountActionCreator,
-    //toggleIsFetching: toggleIsFetchingActionCreator,
-    toggleFollowingProgress: toggleFollowingProgressActionCreator,
-    getUsersTC: getUsersThunkCreator,
-    unFollowUsersTC: unFollowUsersThunkCreator,
-    followUsersTC: followUsersThunkCreator
-})(UsersAPIContainer)

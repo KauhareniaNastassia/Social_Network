@@ -3,26 +3,13 @@ import {Dialogs} from "./Dialogs";
 import {initialStateDialogsPageType, sendMessageAC, updateNewMessageTextAC} from "../../redux/dialogsPageReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
-export type mapStateToDialogsPropsType = {
-    dialogsPage: initialStateDialogsPageType
-    isAuth: boolean
-}
-
-export type mapDispatchToDialogsPropsType = {
-    sendMessage: () => void
-    updateNewMessageText: (updatedMessageText: string) => void
-}
-
-export type DialogsPropsType = mapStateToDialogsPropsType & mapDispatchToDialogsPropsType
-
-
-let mapStateToDialogsProps = (state: AppStateType):mapStateToDialogsPropsType  => {
+let mapStateToDialogsProps = (state: AppStateType): mapStateToDialogsPropsType => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
     }
 }
 
@@ -37,11 +24,28 @@ let mapDispatchDialogsToProps = (dispatch: Dispatch): mapDispatchToDialogsPropsT
     }
 }
 
-export const DialogsContainer = connect(mapStateToDialogsProps, mapDispatchDialogsToProps)(Dialogs)
+export const DialogsContainer = compose<React.ComponentType>(
+    connect(mapStateToDialogsProps, mapDispatchDialogsToProps),
+    withAuthRedirect
+)(Dialogs)
+
+/*let AuthRedirectComponent = withAuthRedirect(Dialogs)
+
+export const DialogsContainer = connect(mapStateToDialogsProps, mapDispatchDialogsToProps)(AuthRedirectComponent)*/
 
 
+//===========TYPE================
 
+export type mapStateToDialogsPropsType = {
+    dialogsPage: initialStateDialogsPageType
+}
 
+export type mapDispatchToDialogsPropsType = {
+    sendMessage: () => void
+    updateNewMessageText: (updatedMessageText: string) => void
+}
+
+export type DialogsPropsType = mapStateToDialogsPropsType & mapDispatchToDialogsPropsType
 
 /*type DialogsPropsType = {
     //store: AppStateType
@@ -50,8 +54,6 @@ export const DialogsContainer = connect(mapStateToDialogsProps, mapDispatchDialo
     /!*sendMessage: (newMessageText: string) => void
     updateNewMessageText: (updatedMessageText: string) => void*!/
 }*/
-
-
 /*export const DialogsContainer = (props: DialogsPropsType) => {
 
     return <StoreContext.Consumer>
@@ -80,13 +82,6 @@ export const DialogsContainer = connect(mapStateToDialogsProps, mapDispatchDialo
         }
     </StoreContext.Consumer>
 }*/
-
-
-
-
-
-
-
 /*
 export const DialogsContainer = (props: DialogsPropsType) => {
 

@@ -3,6 +3,9 @@ import {AppStateType} from "../../redux/redux-store";
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {getAuthUserThunkCreator} from "../../redux/authReducer";
+import {compose} from "redux";
+import {withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export class HeaderAPIContainer extends Component<HeaderContainerPropsType> {
 
@@ -40,6 +43,24 @@ export const mapStateToHeaderProps = (state: AppStateType): mapStateToHeaderProp
     }
 }
 
+
+
+export const HeaderContainer = compose<React.ComponentType>(
+    connect(mapStateToHeaderProps, {
+        getAuthUserTC: getAuthUserThunkCreator
+    }),
+    withRouter,
+    withAuthRedirect
+)(HeaderAPIContainer)
+
+/*
+export const HeaderContainer = connect(mapStateToHeaderProps, {
+    //setAuthUserData: setAuthUserDataAC,
+    getAuthUserTC: getAuthUserThunkCreator
+})(HeaderAPIContainer)*/
+
+//===========TYPE================
+
 type mapStateToHeaderPropsType = {
     isAuth: boolean
     login: null
@@ -52,8 +73,3 @@ type MapDispatchToHeaderPropsType = {
 
 export type HeaderPropsType = mapStateToHeaderPropsType & MapDispatchToHeaderPropsType
 export type HeaderContainerPropsType = Readonly<HeaderPropsType>
-
-export const HeaderContainer = connect(mapStateToHeaderProps, {
-    //setAuthUserData: setAuthUserDataAC,
-    getAuthUserTC: getAuthUserThunkCreator
-})(HeaderAPIContainer)
