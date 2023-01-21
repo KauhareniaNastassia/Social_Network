@@ -26,7 +26,8 @@ let initialState: initialStateProfilePageType = {
         },
     ] as PostType[],
     newPostText: '',
-    profile: null
+    profile: null,
+    status: ''
 }
 
 export const profilePageReducer = (state:initialStateProfilePageType = initialState, action: ActionType): initialStateProfilePageType => {
@@ -55,6 +56,12 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
         case 'SET-USER-PROFILE': {
             return {...state, profile: action.profile}
         }
+        case 'SET-STATUS': {
+            return {...state, status: action.status}
+        }
+        /*case 'UPDATE-STATUS': {
+            return {...state, status: action.status}
+        }*/
         default:
             return state
     }
@@ -79,6 +86,18 @@ export const setUserProfileAC = (profile: ProfileType | null): setUserProfileAct
         profile
     }
 }
+export const setStatusAC = (status: string): setStatusActionType => {
+    return {
+        type: 'SET-STATUS',
+        status
+    }
+}
+/*export const updateStatusAC = (status: string): updateStatusActionType => {
+    return {
+        type: 'UPDATE-STATUS',
+        status
+    }
+}*/
 
 
 //===========ACTION TYPES=========
@@ -95,7 +114,14 @@ export type setUserProfileActionType = {
     type: 'SET-USER-PROFILE',
     profile: ProfileType | null
 }
-
+export type setStatusActionType = {
+    type: 'SET-STATUS',
+    status: string
+}
+/*export type updateStatusActionType = {
+    type: 'UPDATE-STATUS',
+    status: string
+}*/
 
 //===========THUNK=========
 
@@ -107,12 +133,30 @@ export const getUserProfileThunkCreator = (userId: string) => {
     }
 }
 
+export const getStatusThunkCreator = (userId: string) => {
+    return (dispatch: AppDispatchType) => {
+        profileAPI.getStatus(userId).then(data => {
+            dispatch(setStatusAC(data))
+        })
+    }
+}
+
+export const updateStatusThunkCreator = (status: string) => {
+    return (dispatch: AppDispatchType) => {
+        profileAPI.updateStatus(status).then(data => {
+            if(data.resultCode == 0)
+            dispatch(setStatusAC(data))
+        })
+    }
+}
+
 //===========TYPES=========
 
 export type ProfilePageType = {
     posts: PostType[],
     newPostText: string,
     profile: ProfileType | null
+    status: string
 }
 
 type initialStateProfilePageType = ProfilePageType

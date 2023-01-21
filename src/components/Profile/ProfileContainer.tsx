@@ -2,7 +2,12 @@ import React, {Component} from "react";
 import {Profile} from "./Profile";
 import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
-import {getUserProfileThunkCreator, ProfileType} from "../../redux/profilePageReducer";
+import {
+    getStatusThunkCreator,
+    getUserProfileThunkCreator,
+    ProfileType,
+    updateStatusThunkCreator
+} from "../../redux/profilePageReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
@@ -14,10 +19,11 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
         let userId = this.props.match.params.userId
 
         if (!userId) {
-            userId = '2'
+            userId = '24911'
         }
 
         this.props.getUserProfileTC(userId)
+        this.props.getUserStatusTC(userId)
         /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
     .then(res => {
         this.props.setUserProfile(res.data)
@@ -32,6 +38,8 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
             <Profile
                 {...this.props}
                 profile={this.props.profile}
+                status={this.props.status}
+                updateStatus={this.props.updateStatusTC}
             />
         )
     }
@@ -41,6 +49,7 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePropsType => {
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status
         //isAuth: state.auth.isAuth
     }
 }
@@ -55,7 +64,11 @@ export const ProfileContainer = connect(mapStateToProfileProps, {
 
 export const ProfileContainer = compose<React.ComponentType>(
     connect(mapStateToProfileProps,
-        {getUserProfileTC: getUserProfileThunkCreator}),
+        {
+            getUserProfileTC: getUserProfileThunkCreator,
+            getUserStatusTC: getStatusThunkCreator,
+            updateStatusTC: updateStatusThunkCreator
+        }),
     withRouter,
     withAuthRedirect
 )(ProfileAPIContainer)
@@ -67,11 +80,14 @@ export type ProfilePropsType = mapStateToProfilePropsType & mapDispatchToProfile
 export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 export type mapStateToProfilePropsType = {
     profile: ProfileType | null
+    status: string
     //isAuth: boolean
 }
 export type mapDispatchToProfilePropsType = {
     //setUserProfile: (profile: ProfileType | null) => void
     getUserProfileTC: (userId: string) => void
+    getUserStatusTC: (status: string) => void
+    updateStatusTC: (status: string) => void
 }
 type PathParamsType = {
     userId: string

@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {profilePageReducer, setUserProfileActionType} from "./profilePageReducer";
+import {profilePageReducer, setStatusActionType, setUserProfileActionType} from "./profilePageReducer";
 import {dialogsPageReducer} from "./dialogsPageReducer";
 import {
     FollowActionCreatorType,
@@ -35,7 +35,9 @@ export type ActionType =
     toggleIsFetchingActionCreatorType |
     toggleFollowingProgressActionCreatorType |
     setUserProfileActionType |
-    setAuthUserDataACType
+    setAuthUserDataACType |
+    setStatusActionType
+    /*updateStatusActionType*/
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,

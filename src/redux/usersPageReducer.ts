@@ -173,7 +173,7 @@ export const unFollowUsersThunkCreator = (userId: string) => {
         dispatch(toggleFollowingProgressActionCreator(true, userId))
 
         usersAPI.unFollowUser(userId).then(data => {
-            if (data.resultCode == 0) {
+            if (data.resultCode === 0) {
                 dispatch(unfollowActionCreator(userId))
             }
             dispatch(toggleFollowingProgressActionCreator(false, userId))
