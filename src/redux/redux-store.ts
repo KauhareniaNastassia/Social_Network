@@ -3,7 +3,7 @@ import {profilePageReducer, setStatusActionType, setUserProfileActionType} from 
 import {dialogsPageReducer} from "./dialogsPageReducer";
 import {
     FollowActionCreatorType,
-    setCurrentPageActionCreatorType,
+    setCurrentPageActionCreatorType, setFilterActionCreatorType,
     SetUsersActionCreatorType,
     setUsersTotalCountActionCreatorType,
     toggleFollowingProgressActionCreatorType,
@@ -18,7 +18,7 @@ import {
     UpdateNewPostTextActionType
 } from "./store";
 import {siderbarPageReducer} from "./sidebarPageReducer";
-import {authReducer, setAuthUserDataACType} from "./authReducer";
+import {authReducer, loginACType, setAuthUserDataACType} from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 
 
@@ -36,15 +36,16 @@ export type ActionType =
     toggleFollowingProgressActionCreatorType |
     setUserProfileActionType |
     setAuthUserDataACType |
-    setStatusActionType
-    /*updateStatusActionType*/
+    setStatusActionType |
+    setFilterActionCreatorType |
+    loginACType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
     dialogsPage: dialogsPageReducer,
     usersPage: usersPageReducer,
     sidebarPage: siderbarPageReducer,
-    auth: authReducer
+    auth: authReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))

@@ -1,9 +1,9 @@
 import React from "react";
 import css from './Users.module.css'
 import profileAvatar from '../../assets/img/profileAvatar.svg'
-import {unFollowUsersThunkCreator, UserType} from "../../redux/usersPageReducer";
+import {FilterType, UserType} from "../../redux/usersPageReducer";
 import {Link} from "react-router-dom";
-import {usersAPI} from "../../api/api";
+import {UsersSearchForm} from "../Forms/UsersSearchForm/UsersSearchForm";
 
 
 type UsersPropsType = {
@@ -12,8 +12,7 @@ type UsersPropsType = {
     pageSize: number
     currentPage: number
     onPageChanged: (page: number) => void
-    //unfollow: (userId: string) => void
-    //follow: (userId: string) => void
+    onFilterChanged: (filter: FilterType) => void
     followingProgress: []
     toggleFollowingProgress: (isFetching: boolean, userId: string) => void
     unFollowUsersTC: (userId: string) => void
@@ -34,6 +33,9 @@ export const Users = (props: UsersPropsType) => {
     return (
 
         <div className={css.usersWrapper}>
+            <div>
+                <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
+            </div>
             <div>
                 {pages.map(page => {
                     return <span
@@ -119,10 +121,10 @@ export const Users = (props: UsersPropsType) => {
                                     <div>{user.name}</div>
                                     <div>{user.status}</div>
                                 </span>
-                                <span>
+                                {/*<span>
                                     <div>{'user.location.country'}</div>
                                     <div>{'user.location.city'}</div>
-                                </span>
+                                </span>*/}
                             </span>
                         </div>
                     )
