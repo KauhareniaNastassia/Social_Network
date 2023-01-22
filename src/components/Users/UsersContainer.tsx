@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {
+    FilterType,
     followActionCreator, followUsersThunkCreator,
     getUsersThunkCreator,
     setCurrentPageActionCreator, setUsersTotalCountActionCreator,
@@ -19,32 +20,21 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 export class UsersAPIContainer extends Component<UsersPageClassPropsType> {
 
     componentDidMount() {
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
-        /*this.props.toggleIsFetching(true)
-        /!* axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-             {
-                 withCredentials: true,
-                 })*!/
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-            this.props.toggleIsFetching(false)
-            this.props.setUsers(data.items)
-            this.props.setTotalUsersCount(data.totalCount)
-        })*/
+        const {currentPage, pageSize, filter} = this.props
+        this.props.getUsersTC(currentPage, pageSize, filter)
     }
 
     onPageChanged = (page: number) => {
+        const {pageSize, filter} = this.props
         this.props.setCurrentPage(page)
-        this.props.getUsersTC(page, this.props.pageSize)
-        /* this.props.toggleIsFetching(true)
-         /!*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
-             {
-                 withCredentials: true,
-             })*!/
-         usersAPI.getUsers(page, this.props.pageSize).then(data => {
-             this.props.toggleIsFetching(false)
-                 this.props.setUsers(data.items)
-             })*/
+        this.props.getUsersTC(page, pageSize, filter)
     }
+
+    onFilterChanged = (filter: FilterType) => {
+        const {pageSize} = this.props
+        this.props.getUsersTC(1, pageSize, filter)
+    }// for user search button
+
 
     render() {
         return <>
@@ -55,8 +45,7 @@ export class UsersAPIContainer extends Component<UsersPageClassPropsType> {
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanged={this.onPageChanged}
-                //unfollow={this.props.unfollow}
-                //follow={this.props.follow}
+                onFilterChanged={this.onFilterChanged}
                 toggleFollowingProgress={this.props.toggleFollowingProgress}
                 followingProgress={this.props.followingInProgress}
                 unFollowUsersTC={this.props.unFollowUsersTC}
@@ -73,31 +62,10 @@ export const mapStateToUsersProps = (state: AppStateType): mapStateToUsersPropsT
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
+        filter: state.usersPage.filter
     }
 }
-/*export const mapDispatchToUsersProps = (dispatch: Dispatch): mapDispatchToUsersPropsType => {
-    return {
-        follow: (userId: string) => {
-            dispatch(followActionCreator(userId))
-        },
-        unfollow: (userId: string) => {
-            dispatch(unfollowActionCreator(userId))
-        },
-        setUsers: (users: UserType[]) => {
-            dispatch(setUsersActionCreator(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageActionCreator(currentPage))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setUsersTotalCountActionCreator(totalCount))
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetchingActionCreator(isFetching))
-        }
-    }
-}*/
 
 export const UsersContainer = compose<React.ComponentType>(
     connect(mapStateToUsersProps, {
@@ -137,16 +105,12 @@ export type mapStateToUsersPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: []
+    filter: FilterType
 }
 export type mapDispatchToUsersPropsType = {
-    //follow: (userId: string) => void
-    //unfollow: (userId: string) => void
-    //setUsers: (users: UserType[]) => void
     setCurrentPage: (currentPage: number) => void
-    //setTotalUsersCount: (totalCount: number) => void
-    //toggleIsFetching: (isFetching: boolean) => void
     toggleFollowingProgress: (isFetching: boolean, userId: string) => void
-    getUsersTC: (currentPage: number, pageSize: number) => void
+    getUsersTC: (currentPage: number, pageSize: number, filter: FilterType) => void
     unFollowUsersTC: (userId: string) => void
     followUsersTC: (userId: string) => void
 }

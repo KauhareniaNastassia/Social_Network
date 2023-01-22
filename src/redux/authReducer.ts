@@ -1,5 +1,5 @@
 import {ActionType, AppDispatchType} from "./redux-store";
-import {authAPI} from "../api/api";
+import {authAPI, LoginDataType} from "../api/api";
 
 
 let initialState: initialStateAuthType = {
@@ -18,6 +18,9 @@ export const authReducer = (state: initialStateAuthType = initialState, action: 
                 ...action.data,
                 isAuth: true
             };
+        }
+        case "LOGIN": {
+return {... state, isAuth: action.value}
         }
         default:
             return state
@@ -38,6 +41,13 @@ export const setAuthUserDataAC = (userId: null, email: null, login: null): setAu
     }
 }
 
+export const loginAC = (value: boolean): loginACType => {
+    return {
+        type: 'LOGIN',
+        value
+    }
+}
+
 
 //=======THUNK======
 
@@ -53,6 +63,33 @@ export const getAuthUserThunkCreator = () => {
     }
 }
 
+export const loginThunkCreator = (data: LoginDataType) => {
+    return (dispatch: AppDispatchType) => {
+        authAPI.login(data).then(data => {
+            if (data.resultCode === 0) {
+                let {id, login, email} = data.data.login
+                dispatch(loginAC(true))
+                dispatch(setAuthUserDataAC(id, login, email))
+            }
+        })
+    }
+}
+
+//=======ACTION TYPES======
+
+export type setAuthUserDataACType = {
+    type: 'SET-USER-DATA',
+    data: {
+        userId: null,
+        email: null,
+        login: null,
+    }
+}
+
+export type loginACType = {
+    type: 'LOGIN',
+    value: boolean
+}
 
 //=======TYPES======
 
@@ -65,18 +102,5 @@ export type AuthType = {
 
 type initialStateAuthType = AuthType
 
-export type setAuthUserDataACType = {
-    type: 'SET-USER-DATA',
-    data: {
-        userId: null,
-        email: null,
-        login: null,
-    }
-}
 
-export type setUserDataType = {
-    userId: number,
-    email: string,
-    login: string
-}
 

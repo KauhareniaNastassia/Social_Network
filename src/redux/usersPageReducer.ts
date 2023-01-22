@@ -45,7 +45,11 @@ let initialStateUsersPage: initialStateUsersPageType = {
     totalUsersCount: 55,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [],
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 
 export const usersPageReducer = (state: initialStateUsersPageType = initialStateUsersPage, action: ActionType): initialStateUsersPageType => {
@@ -95,6 +99,9 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id != action.userId)
             }
+        }
+        case "SET-FILTER": {
+            return {...state, filter: action.payload}
         }
         default:
             return state
@@ -154,13 +161,21 @@ export const toggleFollowingProgressActionCreator = (isFetching: boolean, userId
     }
 }
 
+export const setFilterActionCreator = (filter: FilterType):setFilterActionCreatorType => {
+    return {
+        type: 'SET-FILTER',
+        payload: filter
+    }
+}
+
 //=======THUNK======
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType) => {
     return (dispatch: AppDispatchType) => {
         dispatch(toggleIsFetchingActionCreator(true))
+        dispatch(setFilterActionCreator(filter))
 
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
+        usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend).then(data => {
             dispatch(toggleIsFetchingActionCreator(false))
             dispatch(setUsersActionCreator(data.items))
             dispatch(setUsersTotalCountActionCreator(data.totalCount))
@@ -228,6 +243,12 @@ export type toggleFollowingProgressActionCreatorType = {
     isFetching: boolean,
     userId: string
 }
+export type setFilterActionCreatorType = {
+    type: 'SET-FILTER',
+    payload: FilterType
+
+
+}
 
 
 //=======TYPES======
@@ -251,4 +272,10 @@ export type initialStateUsersPageType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: []
+    filter: {
+        term: string
+        friend: null | boolean
+    }
 }
+
+export type FilterType = typeof initialStateUsersPage.filter

@@ -12,6 +12,10 @@ export const authAPI = {
     auth() {
         return instance.get(`auth/me`)
             .then(res => res.data)
+    },
+    login(data: LoginDataType) {
+        return instance.post('auth/login' + {data})
+            .then(res => res.data)
     }
 }
 
@@ -31,8 +35,8 @@ export const profileAPI = {
 }
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers(currentPage: number, pageSize: number, term: string, friend: null | boolean ) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null ? '' : `&friend=${friend}`))
             .then(res => res.data)
     },
     unFollowUser(userId: string) {
@@ -45,7 +49,14 @@ export const usersAPI = {
     }
 }
 
+//=============TYPES======================
 
+export type LoginDataType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: boolean
+}
 
 
 
