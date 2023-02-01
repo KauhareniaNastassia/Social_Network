@@ -36,6 +36,8 @@ export const MyPosts = (props: MyPostsPropsType) => {
         <div className={css.postsBlock}>
             <h3>My posts</h3>
             <div>
+
+
                 <div>
                     <textarea
                         onChange={onPostChangeHandler}
@@ -45,6 +47,8 @@ export const MyPosts = (props: MyPostsPropsType) => {
                 <div>
                     <button onClick={addPostHandler}> Add post</button>
                 </div>
+
+
 
             </div>
             <div className={css.posts}>

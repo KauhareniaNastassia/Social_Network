@@ -1,24 +1,22 @@
-import React, {ChangeEvent} from 'react'
+import React from 'react'
 import css from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogType, MessageType} from "../../redux/store";
 import {DialogsPropsType} from "./DialogsContainer";
-import {Redirect} from "react-router-dom";
-
+import {MessageForm} from "./MessageForm/MessageForm";
 
 
 export const Dialogs = (props: DialogsPropsType) => {
 
-    let sendMessageHandler = () => {
+    /*let sendMessageHandler = () => {
         props.sendMessage()
-        /*props.dialogsPage.newMessageText = ''*/
+        /!*props.dialogsPage.newMessageText = ''*!/
     }
 
     let onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageText(e.currentTarget.value)
         //props.dispatch(updateNewMessageTextAC(e.currentTarget.value) )
-    }
+    }*/
 
     return (
         <div className={css.dialogs}>
@@ -30,14 +28,17 @@ export const Dialogs = (props: DialogsPropsType) => {
                 {props.dialogsPage.messages.map(message => <Message message={message.message}/>)}
             </div>
 
-            <div>
+            {/*<div>
                 <textarea value={props.dialogsPage.newMessageText}
                           onChange={onMessageChange}
                           />
             </div>
             <div>
                 <button onClick={sendMessageHandler}> Send</button>
-            </div>
+            </div>*/}
+
+            <MessageForm sendMessage={props.sendMessage}
+                         updateNewMessageText={props.updateNewMessageText}/>
 
         </div>
     )

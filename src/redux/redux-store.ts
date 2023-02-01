@@ -20,6 +20,7 @@ import {
 import {siderbarPageReducer} from "./sidebarPageReducer";
 import {authReducer, loginACType, setAuthUserDataACType} from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {formControllerReducer} from "react-redux-hook-form";
 
 
 export type ActionType =
