@@ -3,6 +3,7 @@ import css from "./MyPosts.module.css"
 import {Post} from "./Post/Post";
 import {PostType} from "../../../redux/store";
 import {MyPostsPropsType} from "./MyPostsContainer";
+import {PostForm} from "./PostForm/PostForm";
 
 
 /*type MyPostsPropsType = {
@@ -38,17 +39,19 @@ export const MyPosts = (props: MyPostsPropsType) => {
             <div>
 
 
-                <div>
+                {/*<div>
                     <textarea
                         onChange={onPostChangeHandler}
                         value={props.newPostText}
-                        />
+                    />
                 </div>
                 <div>
                     <button onClick={addPostHandler}> Add post</button>
-                </div>
+                </div>*/}
 
-
+                <PostForm newPostText={props.newPostText}
+                          addPost={props.addPost}
+                          updateNewPostText={props.updateNewPostText}/>
 
             </div>
             <div className={css.posts}>
