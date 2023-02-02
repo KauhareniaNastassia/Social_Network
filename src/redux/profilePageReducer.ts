@@ -1,6 +1,7 @@
-import {PostType} from "./store";
+
 import {ActionType, AppDispatchType} from "./redux-store";
 import {profileAPI} from "../api/api";
+
 
 let initialState: initialStateProfilePageType = {
     posts: [
@@ -144,13 +145,18 @@ export const getStatusThunkCreator = (userId: string) => {
 export const updateStatusThunkCreator = (status: string) => {
     return (dispatch: AppDispatchType) => {
         profileAPI.updateStatus(status).then(data => {
-            if(data.resultCode == 0)
+            if(data.resultCode === 0)
             dispatch(setStatusAC(data))
         })
     }
 }
 
 //===========TYPES=========
+export type PostType = {
+    id: string,
+    message: string
+    likesCount: number
+}
 
 export type ProfilePageType = {
     posts: PostType[],

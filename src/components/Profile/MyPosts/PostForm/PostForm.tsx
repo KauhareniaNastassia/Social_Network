@@ -15,7 +15,7 @@ type PostFormPropsType = {
 
 export const PostForm = (props: PostFormPropsType) =>  {
 
-    const[post, setPost] = useState(props.newPostText)
+    const[post, setPost] = useState('')
 
     const { register, handleSubmit } = useForm<PostData>({
         defaultValues: {
@@ -37,6 +37,7 @@ export const PostForm = (props: PostFormPropsType) =>  {
 
     const onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setPost(e.currentTarget.value)
+        props.updateNewPostText(e.currentTarget.value)
     }
 
 
@@ -51,15 +52,15 @@ export const PostForm = (props: PostFormPropsType) =>  {
                     <textarea
                         placeholder="What are you thinking about?)"
                         {...register("post")}
+                        onChange={onPostChangeHandler}
                         value={post}
 
-                        onChange={onPostChangeHandler}
-                        />
+                    />
                 </div>
 
                 <div className={css.dialogsFormSendButton}>
                     <label></label>
-                    <button
+                    <button disabled={ post=== ''}
                         type="submit"
                     >Add post</button>
                 </div>
