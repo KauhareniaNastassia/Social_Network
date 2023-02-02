@@ -48,10 +48,11 @@ export class ProfileStatus extends Component<ProfileStatusClassPropsType> {
                 {this.state.editMode &&
                     <div>
                         <input
+                            value={this.state.status}
                             onChange={this.onStatusChange}
                             autoFocus={true}
                             onBlur={this.deactivateEditMode}
-                            value={this.state.status}>
+                            >
                         </input>
                     </div>}
             </div>

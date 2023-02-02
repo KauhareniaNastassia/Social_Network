@@ -12,11 +12,11 @@ type MessageFormPropsType = {
     updateNewMessageText: (updatedMessageText: string) => void
 }
 
-export const MessageForm = (props: MessageFormPropsType) =>  {
+export const MessageForm = (props: MessageFormPropsType) => {
 
-    const[message, setMessage] = useState('')
+    const [message, setMessage] = useState('')
 
-    const { register, handleSubmit } = useForm<MessageData>({
+    const {register, handleSubmit, formState: {errors}} = useForm<MessageData>({
         defaultValues: {
             message: '',
         },
@@ -36,6 +36,7 @@ export const MessageForm = (props: MessageFormPropsType) =>  {
 
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.currentTarget.value)
+        props.updateNewMessageText(e.currentTarget.value)
     }
 
 
@@ -44,22 +45,34 @@ export const MessageForm = (props: MessageFormPropsType) =>  {
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
-            onKeyPress={(e) => onEnterPress(e.key)}>
+                onKeyPress={(e) => onEnterPress(e.key)}>
 
                 <div className={css.dialogsFormMessage}>
                     <textarea
-                        value={message}
+
                         placeholder="Write you want to say"
-                        {...register("message")}
+                        {...register("message", {
+                            required: {
+                                value: true,
+                                message: "Write something)"
+                            }
+                        })}
                         onChange={onMessageChange}
-                        />
+                        value={message}
+                    />
                 </div>
+
+                {errors.message && <div> {Object.values(errors).map((e, idx) => {
+                    return (<p key={idx}>{e.message}</p>)
+                })
+                } </div>}
 
                 <div className={css.dialogsFormSendButton}>
                     <label></label>
                     <button
                         type="submit"
-                    >Send</button>
+                    >Send
+                    </button>
                 </div>
             </form>
         </div>

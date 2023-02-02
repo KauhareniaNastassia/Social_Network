@@ -17,7 +17,7 @@ export const PostForm = (props: PostFormPropsType) =>  {
 
     const[post, setPost] = useState('')
 
-    const { register, handleSubmit } = useForm<PostData>({
+    const { register, handleSubmit, formState: {errors} } = useForm<PostData>({
         defaultValues: {
             post: '',
         },
@@ -51,16 +51,27 @@ export const PostForm = (props: PostFormPropsType) =>  {
                 <div className={css.postFormMessage}>
                     <textarea
                         placeholder="What are you thinking about?)"
-                        {...register("post")}
+                        {...register("post", {
+                            required: {
+                                value: true,
+                                message: "Your friends really wanna know what you think, so leave a comment please!"
+                            },
+                            maxLength: {
+                                value: 280,
+                                message: "But don't overdo it, 280 characters should be more than enough!"
+                            }}) }
                         onChange={onPostChangeHandler}
                         value={post}
-
                     />
                 </div>
 
+                {errors.post && <div>{Object.values(errors).map( (e,idx) => {
+                    return (<p key={idx}>{e.message}</p>)
+                })}</div>}
+
                 <div className={css.dialogsFormSendButton}>
                     <label></label>
-                    <button disabled={ post=== ''}
+                    <button
                         type="submit"
                     >Add post</button>
                 </div>

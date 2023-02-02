@@ -20,13 +20,16 @@ export const App = () => {
             <HeaderContainer/>
             <Navbar/>
 
-
             <div className='app-wrapper-content'>
                 <Switch>
                     <Route path='/profile/:userId?'
                            render={() => <ProfileContainer
                            />}/>
 
+                    {/*<Route path='/profile/'
+                           render={() => <ProfileContainer
+                           />}/>
+*/}
                     <Route path='/dialogs'
                            render={() => <DialogsContainer
                            />}/>
