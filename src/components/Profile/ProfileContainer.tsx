@@ -24,13 +24,6 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
         this.props.getUserProfileTC(userId)
         this.props.getUserStatusTC(userId)
-        /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-    .then(res => {
-        this.props.setUserProfile(res.data)
-    })*/
-        /*profileAPI.setProfile(userId).then(data => {
-                this.props.setUserProfileTC(data)
-            })*/
     }
 
     render() {
@@ -54,13 +47,6 @@ export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePr
     }
 }
 
-/*let AuthRedirectComponent = withAuthRedirect(ProfileAPIContainer);
-let withURLDataContainerComponent = withRouter(AuthRedirectComponent)
-
-export const ProfileContainer = connect(mapStateToProfileProps, {
-    //setUserProfile: setUserProfileAC,
-    getUserProfileTC: getUserProfileThunkCreator
-}) (withURLDataContainerComponent)*/
 
 export const ProfileContainer = compose<React.ComponentType>(
     connect(mapStateToProfileProps,
@@ -84,7 +70,6 @@ export type mapStateToProfilePropsType = {
     //isAuth: boolean
 }
 export type mapDispatchToProfilePropsType = {
-    //setUserProfile: (profile: ProfileType | null) => void
     getUserProfileTC: (userId: string) => void
     getUserStatusTC: (status: string) => void
     updateStatusTC: (status: string) => void

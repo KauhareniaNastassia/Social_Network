@@ -65,9 +65,10 @@ export const PostForm = (props: PostFormPropsType) =>  {
                     />
                 </div>
 
-                {errors.post && <div>{Object.values(errors).map( (e,idx) => {
+                {errors.post ? <div>{Object.values(errors).map( (e,idx) => {
+                    // @ts-ignore
                     return (<p key={idx}>{e.message}</p>)
-                })}</div>}
+                })}</div> : null}
 
                 <div className={css.dialogsFormSendButton}>
                     <label></label>

@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
 import css from "./LoginForm.module.css"
 import {loginThunkCreator} from "../../../redux/authReducer";
+import {LoginPropsType} from "../LoginContainer";
 
 
 export type LoginDataType = {
@@ -18,7 +19,9 @@ export type LoginErrorType = {
     rememberMe?: boolean
 }
 
-let isAuthForLogin
+type LoginFormPropsType = {
+    loginThunkCreator: (data: LoginDataType) => void
+}
 
 const validate = (values: LoginDataType) => {
     const errors: LoginErrorType = {};
@@ -37,7 +40,7 @@ const validate = (values: LoginDataType) => {
     return errors;
 };
 
-export const LoginForm = () => {
+export const LoginForm = (props: LoginFormPropsType) => {
     const dispatch = useDispatch()
     const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
 
@@ -50,15 +53,15 @@ export const LoginForm = () => {
         },
         validate,
         onSubmit: (values: LoginDataType) => {
-            alert(JSON.stringify(values))
-dispatch(loginThunkCreator(values))
+            props.loginThunkCreator(values)
+            /*dispatch(loginThunkCreator(values))*/
             formik.resetForm()
         },
     });
 
-    if (isAuth) {
+   /* if (isAuth) {
         return <Redirect to={'/profile'}/>
-    }
+    }*/
 
     return (
         <form onSubmit={formik.handleSubmit} className={css.loginForm}>

@@ -6,7 +6,7 @@ let initialState: initialStateAuthType = {
     userId: null,
     email: null,
     login: null,
-    isAuth: true
+    isAuth: false
 }
 
 export const authReducer = (state: initialStateAuthType = initialState, action: ActionType): initialStateAuthType => {
@@ -16,11 +16,10 @@ export const authReducer = (state: initialStateAuthType = initialState, action: 
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
             };
         }
         case "LOGIN": {
-return {... state, isAuth: action.value}
+            return {...state, isAuth: action.value}
         }
         default:
             return state
@@ -30,13 +29,14 @@ return {... state, isAuth: action.value}
 
 //=======ACTIONS======
 
-export const setAuthUserDataAC = (userId: null, email: null, login: null): setAuthUserDataACType => {
+export const setAuthUserDataAC = (userId: null, email: null, login: null, isAuth: boolean): setAuthUserDataACType => {
     return {
         type: 'SET-USER-DATA',
         data: {
             userId,
             email,
-            login
+            login,
+            isAuth
         }
     }
 }
@@ -56,7 +56,7 @@ export const getAuthUserThunkCreator = () => {
         authAPI.auth().then(data => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data.login
-                    dispatch(setAuthUserDataAC(id, login, email))
+                    dispatch(setAuthUserDataAC(id, login, email, true))
                 }
             }
         )
@@ -67,9 +67,19 @@ export const loginThunkCreator = (data: LoginDataType) => {
     return (dispatch: AppDispatchType) => {
         authAPI.login(data).then(data => {
             if (data.resultCode === 0) {
-                let {id, login, email} = data.data.login
-                dispatch(loginAC(true))
-                dispatch(setAuthUserDataAC(id, login, email))
+                dispatch(getAuthUserThunkCreator())
+            }
+        })
+    }
+}
+
+export const logoutThunkCreator = () => {
+    return (dispatch: AppDispatchType) => {
+        authAPI.logout().then(data => {
+            if (data.resultCode === 0) {
+
+                dispatch(setAuthUserDataAC(null, null, null, false))
+
             }
         })
     }
@@ -83,6 +93,7 @@ export type setAuthUserDataACType = {
         userId: null,
         email: null,
         login: null,
+        isAuth: boolean
     }
 }
 
@@ -100,7 +111,12 @@ export type AuthType = {
     isAuth: boolean
 }
 
-type initialStateAuthType = AuthType
+export type initialStateAuthType = {
+    userId: null,
+    email: null,
+    login: null,
+    isAuth: boolean
+}
 
 
 

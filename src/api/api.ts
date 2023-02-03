@@ -14,22 +14,26 @@ export const authAPI = {
             .then(res => res.data)
     },
     login(data: LoginDataType) {
-        return instance.post('auth/login' + {data})
+        return instance.post('auth/login', data)
+            .then(res => res.data)
+    },
+    logout() {
+        return instance.delete('auth/login')
             .then(res => res.data)
     }
 }
 
 export const profileAPI = {
     getProfile(userId: string) {
-        return instance.get(`profile/` + userId)
+        return instance.get(`profile/${userId}`)
             .then(res => res.data)
     },
     getStatus(userId: string) {
-        return instance.get(`profile/status/` + userId)
+        return instance.get(`profile/status/${userId}`)
             .then(res => res.data)
     },
     updateStatus(status: string) {
-        return instance.put(`profile/status`, {status})
+        return instance.put(`profile/status`, {status: status})
             .then(res => res.data)
     }
 }
