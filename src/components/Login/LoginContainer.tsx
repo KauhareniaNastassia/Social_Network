@@ -26,7 +26,7 @@ type mapStateToLoginPropsType = {
 }
 
 type MapDispatchToLoginPropsType = {
-    loginThunkCreator: (data: LoginDataType) => void
+    loginThunkCreator: (data: LoginDataType, setStatus: any) => void
 }
 
 export type LoginPropsType = mapStateToLoginPropsType & MapDispatchToLoginPropsType

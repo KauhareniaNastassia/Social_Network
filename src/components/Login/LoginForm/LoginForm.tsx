@@ -20,7 +20,7 @@ export type LoginErrorType = {
 }
 
 type LoginFormPropsType = {
-    loginThunkCreator: (data: LoginDataType) => void
+    loginThunkCreator: (data: LoginDataType, setStatus: any) => void
 }
 
 const validate = (values: LoginDataType) => {
@@ -52,59 +52,74 @@ export const LoginForm = (props: LoginFormPropsType) => {
             //login: '',
         },
         validate,
-        onSubmit: (values: LoginDataType) => {
-            props.loginThunkCreator(values)
+        onSubmit: (values: LoginDataType, {setStatus}) => {
+            props.loginThunkCreator(values, setStatus)
             /*dispatch(loginThunkCreator(values))*/
-            formik.resetForm()
+
+            /*  formik.resetForm()*/
         },
+
     });
 
-   /* if (isAuth) {
-        return <Redirect to={'/profile'}/>
-    }*/
+    /* if (isAuth) {
+         return <Redirect to={'/profile'}/>
+     }*/
+
 
     return (
         <form onSubmit={formik.handleSubmit} className={css.loginForm}>
-            <div className={css.emailBlock}>
-                <label className={css.emailLabel} htmlFor="Email">Email</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="text"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                />
+
+            <div>
+                <div className={css.emailBlock}>
+                    <label className={css.emailLabel} htmlFor="Email">Email</label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
+                    />
+                </div>
+                {/*{formik.errors.email ? <div>{formik.errors.email}</div> : null}*/}
+                {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
+
+                <div className={css.passwordBlock}>
+                    <label className={css.passwordLabel} htmlFor="Password">Password</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                    />
+                </div>
+                {/*{formik.errors.password ? <div>{formik.errors.password}</div> : null}*/}
+                {formik.touched.password && formik.errors.password &&
+                    <div style={{color: 'red'}}>{formik.errors.password}</div>}
+
+                <div className={css.rememberMeBlock}>
+                    <input
+                        id="rememberMe"
+                        name="rememberMe"
+                        type="checkbox"
+                        onChange={formik.handleChange}
+                        checked={formik.values.rememberMe}
+                    />
+                    <label htmlFor="rememberMe">Remember me</label>
+                </div>
+
+                {/* <button disabled={formik.isSubmitting} className={css.submitBtn} type="submit">Sign In</button>*/}
+                <button type="submit">Login</button>
+                {/*{formik.status && <div>{formik.status}</div>}*/}
+
+
+                {
+                    formik.status ? <div>{formik.errors}</div> : null
+                }
+
             </div>
-            {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-            {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
-
-            <div className={css.passwordBlock}>
-                <label className={css.passwordLabel} htmlFor="Password">Password</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                />
-            </div>
-            {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-            {formik.touched.password && formik.errors.password &&
-                <div style={{color: 'red'}}>{formik.errors.password}</div>}
-
-            <div className={css.rememberMeBlock}>
-                <input
-                    id="rememberMe"
-                    name="rememberMe"
-                    type="checkbox"
-                    onChange={formik.handleChange}
-                    checked={formik.values.rememberMe}
-                />
-                <label htmlFor="rememberMe">Remember me</label>
-            </div>
 
 
-            <button className={css.submitBtn} type="submit">Sign In</button>
         </form>
     );
 };

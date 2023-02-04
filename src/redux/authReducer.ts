@@ -1,5 +1,6 @@
 import {ActionType, AppDispatchType} from "./redux-store";
 import {authAPI, LoginDataType} from "../api/api";
+import {setAppErrorAC} from "./appReducer";
 
 
 let initialState: initialStateAuthType = {
@@ -63,12 +64,17 @@ export const getAuthUserThunkCreator = () => {
     }
 }
 
-export const loginThunkCreator = (data: LoginDataType) => {
+export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) => void) => {
     return (dispatch: AppDispatchType) => {
         authAPI.login(data).then(data => {
             if (data.resultCode === 0) {
                 dispatch(getAuthUserThunkCreator())
+            } else {
+                dispatch(setAppErrorAC(data.data.messages[0]))
+                /*setError({error: data.data.messages})*/
+                /*setError({apiError: data.data.messages[0]})*/
             }
+
         })
     }
 }
