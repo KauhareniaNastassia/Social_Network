@@ -4,6 +4,7 @@ import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat"
 import {ProfileType} from "../../../redux/profilePageReducer";
 import userImg from '../../../assets/img/ava1.jpg'
 import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
+import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
 
 
 type ProfileInfoPropsType = {
@@ -28,7 +29,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <div>
                     {props.profile.fullName}
                 </div>
-                <ProfileStatus
+                <ProfileStatusWithHooks
                     status={props.status}
                     updateStatus={props.updateStatus}
                 />
@@ -46,7 +47,7 @@ import React, {useState} from 'react';
 import classes from './ProfileInfo.module.css';
 import Preloader from "../../Common/Preloader/Preloader";
 import defaultAvatar from './../../../assets/images/cat_ava.jpg'
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
 
@@ -78,7 +79,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                     : null
                 }
 
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                 <div>
                     {props.profile.fullName}
                 </div>

@@ -95,7 +95,7 @@ export type ProfileStatusPropsType = {
     updateStatus: (status: string) => void
 }
 
-export const ProfileStatus = (props: ProfileStatusPropsType) => {
+export const ProfileStatusWithHooks = (props: ProfileStatusPropsType) => {
 
     useEffect(() => {
         setStatus(props.status)
