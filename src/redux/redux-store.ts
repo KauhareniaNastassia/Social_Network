@@ -21,7 +21,7 @@ import {siderbarPageReducer} from "./sidebarPageReducer";
 import {authReducer, loginACType, setAuthUserDataACType} from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {formControllerReducer} from "react-redux-hook-form";
-import {appReducer, setAppErrorACType} from "./appReducer";
+import {appReducer, setAppErrorACType, setInitializedSuccessAType} from "./appReducer";
 
 
 export type ActionType =
@@ -41,7 +41,8 @@ export type ActionType =
     setStatusActionType |
     setFilterActionCreatorType |
     loginACType |
-    setAppErrorACType
+    setAppErrorACType |
+    setInitializedSuccessAType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,

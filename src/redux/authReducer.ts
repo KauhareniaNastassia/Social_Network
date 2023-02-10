@@ -54,7 +54,7 @@ export const loginAC = (value: boolean): loginACType => {
 
 export const getAuthUserThunkCreator = () => {
     return (dispatch: AppDispatchType) => {
-        authAPI.auth().then(data => {
+        return authAPI.auth().then(data => {
                 if (data.resultCode === 0) {
                     let {id, login, email} = data.data.login
                     dispatch(setAuthUserDataAC(id, login, email, true))

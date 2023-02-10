@@ -20,6 +20,10 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
         if (!userId) {
             userId = '24911'
+            /*userId = this.props.autorizedUserId as unknown as string*/
+            if(!userId) {
+                this.props.history.push('/login')
+            }
         }
 
         this.props.getUserProfileTC(userId)
@@ -42,7 +46,9 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePropsType => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        autorizedUserId: state.auth.userId,
+        isAuth: state.auth.isAuth
         //isAuth: state.auth.isAuth
     }
 }
@@ -67,6 +73,8 @@ export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & Pr
 export type mapStateToProfilePropsType = {
     profile: ProfileType | null
     status: string
+    autorizedUserId:  null
+    isAuth:boolean
     //isAuth: boolean
 }
 export type mapDispatchToProfilePropsType = {

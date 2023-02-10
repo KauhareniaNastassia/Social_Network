@@ -10,13 +10,14 @@ type HeaderPropsType = {
 }
 
 export const Header = (props: HeaderPropsType) => {
+
     return (
         <header className={css.header}>
             <img src={logo}/>
 
             <div className={css.loginBlock}>
                 {props.isAuth ?
-                    <div> {props.login}  -  <button onClick={props.logoutTC}>Log Out</button> </div>
+                    <div> {props.login} - <button onClick={props.logoutTC}>Log Out</button></div>
                     : <NavLink to={'/login'}>
                         Login
                     </NavLink>
@@ -24,4 +25,4 @@ export const Header = (props: HeaderPropsType) => {
             </div>
         </header>
     )
-}
+};

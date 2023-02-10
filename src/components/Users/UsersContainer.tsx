@@ -77,8 +77,7 @@ export const UsersContainer = compose<React.ComponentType>(
         unFollowUsersTC: unFollowUsersThunkCreator,
         followUsersTC: followUsersThunkCreator
     }),
-    withRouter,
-    withAuthRedirect
+    withRouter
 )(UsersAPIContainer)
 
 
