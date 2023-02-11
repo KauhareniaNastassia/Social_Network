@@ -1,4 +1,4 @@
-import {ActionType, AppDispatchType} from "./redux-store";
+import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
 import {authAPI, LoginDataType} from "../api/api";
 import {setAppErrorAC} from "./appReducer";
 
@@ -13,13 +13,13 @@ let initialState: initialStateAuthType = {
 export const authReducer = (state: initialStateAuthType = initialState, action: ActionType): initialStateAuthType => {
 
     switch (action.type) {
-        case "SET-USER-DATA": {
+        case "auth/SET-USER-DATA": {
             return {
                 ...state,
                 ...action.data,
             };
         }
-        case "LOGIN": {
+        case "auth/LOGIN": {
             return {...state, isAuth: action.value}
         }
         default:
@@ -32,7 +32,7 @@ export const authReducer = (state: initialStateAuthType = initialState, action: 
 
 export const setAuthUserDataAC = (userId: null, email: null, login: null, isAuth: boolean): setAuthUserDataACType => {
     return {
-        type: 'SET-USER-DATA',
+        type: 'auth/SET-USER-DATA',
         data: {
             userId,
             email,
@@ -44,7 +44,7 @@ export const setAuthUserDataAC = (userId: null, email: null, login: null, isAuth
 
 export const loginAC = (value: boolean): loginACType => {
     return {
-        type: 'LOGIN',
+        type: 'auth/LOGIN',
         value
     }
 }
@@ -52,6 +52,7 @@ export const loginAC = (value: boolean): loginACType => {
 
 //=======THUNK======
 
+/*
 export const getAuthUserThunkCreator = () => {
     return (dispatch: AppDispatchType) => {
         return authAPI.auth().then(data => {
@@ -63,6 +64,17 @@ export const getAuthUserThunkCreator = () => {
         )
     }
 }
+*/
+
+export const getAuthUserThunkCreator = () =>
+    async (dispatch: AppDispatchType) => {
+        let data = await authAPI.auth()
+
+        if (data.resultCode === 0) {
+            let {id, login, email} = data.data.login
+            dispatch(setAuthUserDataAC(id, login, email, true))
+        }
+    }
 
 export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) => void) => {
     return (dispatch: AppDispatchType) => {
@@ -78,6 +90,19 @@ export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) =
         })
     }
 }
+/*export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) => void) =>
+    async (dispatch: AppDispatchType) => {
+        let res = await authAPI.login(data)
+
+        if (res.data.resultCode === 0) {
+            dispatch(getAuthUserThunkCreator())
+        } else {
+            dispatch(setAppErrorAC(res.data.data.messages[0]))
+            /!*setError({error: data.data.messages})*!/
+            /!*setError({apiError: data.data.messages[0]})*!/
+        }
+    }*/
+
 
 export const logoutThunkCreator = () => {
     return (dispatch: AppDispatchType) => {
@@ -91,10 +116,21 @@ export const logoutThunkCreator = () => {
     }
 }
 
+/*export const logoutThunkCreator = () =>
+    async (dispatch: AppDispatchType) => {
+        let res = await authAPI.logout()
+
+        if (res.data.resultCode === 0) {
+            dispatch(setAuthUserDataAC(null, null, null, false))
+
+        }
+    }*/
+
+
 //=======ACTION TYPES======
 
 export type setAuthUserDataACType = {
-    type: 'SET-USER-DATA',
+    type: 'auth/SET-USER-DATA',
     data: {
         userId: null,
         email: null,
@@ -104,7 +140,7 @@ export type setAuthUserDataACType = {
 }
 
 export type loginACType = {
-    type: 'LOGIN',
+    type: 'auth/LOGIN',
     value: boolean
 }
 

@@ -28,7 +28,7 @@ export const Profile = (props: ProfilePropsType) => {
             <MyPostsContainer
 
 
-                //store={props.store}
+                //store={props .store}
                 /*posts={props.store.getState().profilePage.posts}
                 newPostText={props.store.getState().profilePage.newPostText}
                 dispatch={props.store.dispatch}*/

@@ -1,4 +1,3 @@
-
 import {ActionType, AppDispatchType} from "./redux-store";
 import {profileAPI} from "../api/api";
 
@@ -31,7 +30,7 @@ let initialState: initialStateProfilePageType = {
     status: ''
 }
 
-export const profilePageReducer = (state:initialStateProfilePageType = initialState, action: ActionType): initialStateProfilePageType => {
+export const profilePageReducer = (state: initialStateProfilePageType = initialState, action: ActionType): initialStateProfilePageType => {
     switch (action.type) {
         case "ADD-POST": {
             const newPost: PostType = {
@@ -50,7 +49,8 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
         case "UPDATE-NEW-POST-TEXT": {
             let stateCopy = {
                 ...state,
-                newPostText: action.updatedPostText}
+                newPostText: action.updatedPostText
+            }
 
             return stateCopy
         }
@@ -59,6 +59,9 @@ export const profilePageReducer = (state:initialStateProfilePageType = initialSt
         }
         case 'SET-STATUS': {
             return {...state, status: action.status}
+        }
+        case 'DELETE-POST': {
+            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         }
         /*case 'UPDATE-STATUS': {
             return {...state, status: action.status}
@@ -93,6 +96,12 @@ export const setStatusAC = (status: string): setStatusActionType => {
         status
     }
 }
+export const deletePostAC = (postId: string): deletePostActionType => {
+    return {
+        type: 'DELETE-POST',
+        postId
+    }
+}
 /*export const updateStatusAC = (status: string): updateStatusActionType => {
     return {
         type: 'UPDATE-STATUS',
@@ -119,6 +128,10 @@ export type setStatusActionType = {
     type: 'SET-STATUS',
     status: string
 }
+export type deletePostActionType = {
+    type: 'DELETE-POST',
+    postId: string
+}
 /*export type updateStatusActionType = {
     type: 'UPDATE-STATUS',
     status: string
@@ -126,30 +139,52 @@ export type setStatusActionType = {
 
 //===========THUNK=========
 
-export const getUserProfileThunkCreator = (userId: string) => {
+/*export const getUserProfileThunkCreator = (userId: string) => {
     return (dispatch: AppDispatchType) => {
         profileAPI.getProfile(userId).then(data => {
             dispatch(setUserProfileAC(data))
         })
     }
-}
+}*/
 
-export const getStatusThunkCreator = (userId: string) => {
+export const getUserProfileThunkCreator = (userId: string) =>
+    async (dispatch: AppDispatchType) => {
+        let res = await profileAPI.getProfile(userId)
+        dispatch(setUserProfileAC(res))
+    }
+
+
+/*export const getStatusThunkCreator = (userId: string) => {
     return (dispatch: AppDispatchType) => {
         profileAPI.getStatus(userId).then(data => {
             dispatch(setStatusAC(data))
         })
     }
-}
+}*/
 
-export const updateStatusThunkCreator = (status: string) => {
+export const getStatusThunkCreator = (userId: string) =>
+    async (dispatch: AppDispatchType) => {
+        let res = await profileAPI.getStatus(userId)
+        dispatch(setStatusAC(res))
+
+    }
+
+/*export const updateStatusThunkCreator = (status: string) => {
     return (dispatch: AppDispatchType) => {
         profileAPI.updateStatus(status).then(data => {
-            if(data.resultCode === 0)
-            dispatch(setStatusAC(data))
+            if (data.resultCode === 0)
+                dispatch(setStatusAC(data))
         })
     }
-}
+}*/;
+export const updateStatusThunkCreator = (status: string) =>
+    async (dispatch: AppDispatchType) => {
+        let res = await profileAPI.updateStatus(status)
+            if (res.resultCode === 0)
+                dispatch(setStatusAC(res))
+
+    }
+
 
 //===========TYPES=========
 export type PostType = {

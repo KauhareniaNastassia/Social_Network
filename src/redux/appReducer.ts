@@ -11,10 +11,10 @@ let initialAppState: InitialAppStateType = {
 export const appReducer = (state: InitialAppStateType = initialAppState, action: ActionType): InitialAppStateType => {
 
     switch (action.type) {
-        case 'SET-INITIALIZED':
+        case 'app/SET-INITIALIZED':
             return {...state, initialized: true}
 
-        case 'SET-ERROR':
+        case 'app/SET-ERROR':
             return {...state, error: action.error}
 
         default:
@@ -27,13 +27,13 @@ export const appReducer = (state: InitialAppStateType = initialAppState, action:
 
 export const setInitializedSuccessAC = (): setInitializedSuccessAType => {
     return {
-        type: 'SET-INITIALIZED',
+        type: 'app/SET-INITIALIZED',
     }
 }
 
 export const setAppErrorAC = (error: string | null): setAppErrorACType => {
     return {
-        type: 'SET-ERROR',
+        type: 'app/SET-ERROR',
         error
     }
 }
@@ -45,10 +45,10 @@ export const initializeAppThunkCreator = () => {
     return (dispatch: AppDispatchType) => {
         let promise = dispatch(getAuthUserThunkCreator())
 
-        promise.then( () => {
-            dispatch(setInitializedSuccessAC())
-        } )
-
+        Promise.all([promise])
+            .then(() => {
+                dispatch(setInitializedSuccessAC())
+            })
 
     }
 }
@@ -58,10 +58,10 @@ export const initializeAppThunkCreator = () => {
 //=======ACTION TYPES======
 
 export type setInitializedSuccessAType = {
-    type: 'SET-INITIALIZED',
+    type: 'app/SET-INITIALIZED',
 }
 export type setAppErrorACType = {
-    type: 'SET-ERROR',
+    type: 'app/SET-ERROR',
     error: string | null
 }
 

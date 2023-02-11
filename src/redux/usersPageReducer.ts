@@ -1,5 +1,6 @@
 import {ActionType, AppDispatchType} from "./redux-store";
 import {usersAPI} from "../api/api";
+import {updateObjectInArray} from "../utils/helpers/object-helper";
 
 
 let initialStateUsersPage: initialStateUsersPageType = {
@@ -57,27 +58,30 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
         case "FOLLOW": {
             return {
                 ...state,
-                users: state.users.map(user => {
+
+                users: updateObjectInArray(state.users, action.userID, 'id', {followed: true})
+
+                /*users: state.users.map(user => {
                     if (user.id === action.userID) {
                         return {...user, followed: true}
                     }
                     return user
-                })
+
+                })*/
             }
         }
         case "UNFOLLOW": {
-            /*return {
-                ...state,
-                users: state.users.map(user => user.id === action.userID ? {...user, followed: false} : user)
-            }*/
             return {
                 ...state,
-                users: state.users.map(user => {
+
+                users: updateObjectInArray(state.users, action.userID, 'id', {followed: false})
+
+                /*users: state.users.map(user => {
                     if (user.id === action.userID) {
                         return {...user, followed: false}
                     }
                     return user
-                })
+                })*/
             }
         }
         case "SET-USERS": {
@@ -170,7 +174,9 @@ export const setFilterActionCreator = (filter: FilterType):setFilterActionCreato
 
 //=======THUNK======
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType) => {
+
+
+/*export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType) => {
     return (dispatch: AppDispatchType) => {
         dispatch(toggleIsFetchingActionCreator(true))
         dispatch(setFilterActionCreator(filter))
@@ -181,9 +187,22 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number, filt
             dispatch(setUsersTotalCountActionCreator(data.totalCount))
         })
     }
+}*/
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType) => {
+    return async (dispatch: AppDispatchType) => {
+        dispatch(toggleIsFetchingActionCreator(true))
+        dispatch(setFilterActionCreator(filter))
+
+        let data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
+            dispatch(toggleIsFetchingActionCreator(false))
+            dispatch(setUsersActionCreator(data.items))
+            dispatch(setUsersTotalCountActionCreator(data.totalCount))
+
+    }
 }
 
-export const unFollowUsersThunkCreator = (userId: string) => {
+/*export const unFollowUsersThunkCreator = (userId: string) => {
     return (dispatch: AppDispatchType) => {
         dispatch(toggleFollowingProgressActionCreator(true, userId))
 
@@ -194,9 +213,39 @@ export const unFollowUsersThunkCreator = (userId: string) => {
             dispatch(toggleFollowingProgressActionCreator(false, userId))
         })
     }
+}*/
+
+const followUnfollowFlow = async (dispatch: AppDispatchType, userId: string, apiMethod: (arg0: string) => any, actionCreator: (arg0: string) => any) => {
+
+    dispatch(toggleFollowingProgressActionCreator(true, userId))
+
+    let res = await apiMethod(userId)
+
+    if (res.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(toggleFollowingProgressActionCreator(false, userId))
 }
 
-export const followUsersThunkCreator = (userId: string) => {
+export const unFollowUsersThunkCreator = (userId: string) => {
+    return async (dispatch: AppDispatchType) => {
+
+        /*let apiMethod = usersAPI.unFollowUser.bind(usersAPI)
+        let actionCreator = unfollowActionCreator*/
+
+        followUnfollowFlow(dispatch, userId,  usersAPI.unFollowUser.bind(usersAPI), unfollowActionCreator)
+
+       /* dispatch(toggleFollowingProgressActionCreator(true, userId))
+
+        let res = await apiMethod(userId)
+            if (res.resultCode === 0) {
+                dispatch(actionCreator(userId))
+            }
+            dispatch(toggleFollowingProgressActionCreator(false, userId))*/
+    }
+}
+
+/*export const followUsersThunkCreator = (userId: string) => {
     return (dispatch: AppDispatchType) => {
         dispatch(toggleFollowingProgressActionCreator(true, userId))
 
@@ -206,6 +255,24 @@ export const followUsersThunkCreator = (userId: string) => {
             }
             dispatch(toggleFollowingProgressActionCreator(false, userId))
         })
+    }
+}*/
+
+export const followUsersThunkCreator = (userId: string) => {
+    return async (dispatch: AppDispatchType) => {
+
+        /*let apiMethod = usersAPI.followUser.bind(usersAPI)
+        let actionCreator = followActionCreator*/
+
+        followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), followActionCreator)
+
+        /*dispatch(toggleFollowingProgressActionCreator(true, userId))
+
+        let res  = await apiMethod(userId)
+            if (res.resultCode == 0) {
+                dispatch(actionCreator(userId))
+            }
+            dispatch(toggleFollowingProgressActionCreator(false, userId))*/
     }
 }
 

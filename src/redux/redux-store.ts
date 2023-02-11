@@ -1,5 +1,10 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {profilePageReducer, setStatusActionType, setUserProfileActionType} from "./profilePageReducer";
+import {
+    deletePostActionType,
+    profilePageReducer,
+    setStatusActionType,
+    setUserProfileActionType
+} from "./profilePageReducer";
 import {dialogsPageReducer} from "./dialogsPageReducer";
 import {
     FollowActionCreatorType,
@@ -42,7 +47,8 @@ export type ActionType =
     setFilterActionCreatorType |
     loginACType |
     setAppErrorACType |
-    setInitializedSuccessAType
+    setInitializedSuccessAType |
+    deletePostActionType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
