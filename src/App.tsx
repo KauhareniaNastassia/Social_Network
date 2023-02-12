@@ -7,20 +7,11 @@ import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
-import {
-    mapStateToProfileProps,
-    mapStateToProfilePropsType,
-    ProfileAPIContainer,
-    ProfileContainer
-} from "./components/Profile/ProfileContainer";
-import {HeaderAPIContainer, HeaderContainer, mapStateToHeaderProps} from "./components/Header/HeaderContainer";
-import {Login} from "./components/Login/Login";
+import {ProfileContainer} from "./components/Profile/ProfileContainer";
+import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {LoginContainer} from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
-import {getAuthUserThunkCreator, logoutThunkCreator} from "./redux/authReducer";
 import {compose} from "redux";
-import {getStatusThunkCreator, getUserProfileThunkCreator, updateStatusThunkCreator} from "./redux/profilePageReducer";
-import {withAuthRedirect} from "./hoc/withAuthRedirect";
 import {initializeAppThunkCreator} from "./redux/appReducer";
 import {AppStateType} from "./redux/redux-store";
 import {PreloaderDog} from "./common/preloader/PreloaderDog/PreloaderDog";
@@ -49,10 +40,6 @@ export class App extends Component<AppContainerPropsType> {
                                render={() => <ProfileContainer
                                />}/>
 
-                        {/*<Route path='/profile/'
-                           render={() => <ProfileContainer
-                           />}/>
-*/}
                         <Route path='/dialogs'
                                render={() => <DialogsContainer
                                />}/>

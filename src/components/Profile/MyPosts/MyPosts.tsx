@@ -55,7 +55,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
             </div>
             <div className={css.posts}>
-                {props.posts.map(post => <Post message={post.message} likesCount={post.likesCount}/>)}
+                {props.posts.map(post => <Post key={post.id} message={post.message} likesCount={post.likesCount}/>)}
             </div>
         </div>
     )

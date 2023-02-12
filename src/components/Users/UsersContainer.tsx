@@ -91,20 +91,6 @@ export const UsersContainer = compose<React.ComponentType>(
 )(UsersAPIContainer)
 
 
-/*export const UsersContainer = connect(mapStateToUsersProps, {
-    follow: followActionCreator,
-    unfollow: unfollowActionCreator,
-    setCurrentPage: setCurrentPageActionCreator,
-    //setUsers: setUsersActionCreator,
-    //setTotalUsersCount: setUsersTotalCountActionCreator,
-    //toggleIsFetching: toggleIsFetchingActionCreator,
-    toggleFollowingProgress: toggleFollowingProgressActionCreator,
-    getUsersTC: getUsersThunkCreator,
-    unFollowUsersTC: unFollowUsersThunkCreator,
-    followUsersTC: followUsersThunkCreator
-})(UsersAPIContainer)*/
-
-
 //===========TYPE================
 
 export type mapStateToUsersPropsType = {

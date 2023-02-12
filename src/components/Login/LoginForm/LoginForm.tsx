@@ -1,11 +1,6 @@
 import React from 'react';
 import {useFormik} from 'formik';
-import {Redirect} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../../redux/redux-store";
 import css from "./LoginForm.module.css"
-import {loginThunkCreator} from "../../../redux/authReducer";
-import {LoginPropsType} from "../LoginContainer";
 
 
 export type LoginDataType = {
@@ -41,8 +36,6 @@ const validate = (values: LoginDataType) => {
 };
 
 export const LoginForm = (props: LoginFormPropsType) => {
-    const dispatch = useDispatch()
-    const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
 
     const formik = useFormik({
         initialValues: {
@@ -61,10 +54,6 @@ export const LoginForm = (props: LoginFormPropsType) => {
 
     });
 
-    /* if (isAuth) {
-         return <Redirect to={'/profile'}/>
-     }*/
-
 
     return (
         <form onSubmit={formik.handleSubmit} className={css.loginForm}>
@@ -80,7 +69,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
                         value={formik.values.email}
                     />
                 </div>
-                {/*{formik.errors.email ? <div>{formik.errors.email}</div> : null}*/}
+
                 {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
 
                 <div className={css.passwordBlock}>
@@ -93,7 +82,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
                         value={formik.values.password}
                     />
                 </div>
-                {/*{formik.errors.password ? <div>{formik.errors.password}</div> : null}*/}
+
                 {formik.touched.password && formik.errors.password &&
                     <div style={{color: 'red'}}>{formik.errors.password}</div>}
 
@@ -112,14 +101,11 @@ export const LoginForm = (props: LoginFormPropsType) => {
                 <button type="submit">Login</button>
                 {/*{formik.status && <div>{formik.status}</div>}*/}
 
-
                 {
                     formik.status ? <div>{formik.errors}</div> : null
                 }
 
             </div>
-
-
         </form>
     );
 };

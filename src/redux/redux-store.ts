@@ -59,6 +59,7 @@ let rootReducer = combineReducers({
     app: appReducer
 })
 
+
 export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 

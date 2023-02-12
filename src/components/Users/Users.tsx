@@ -1,9 +1,8 @@
 import React from "react";
 import css from './Users.module.css'
-import profileAvatar from '../../assets/img/profileAvatar.svg'
 import {FilterType, UserType} from "../../redux/usersPageReducer";
-import {Link} from "react-router-dom";
-import {UsersSearchForm} from "../Forms/UsersSearchForm/UsersSearchForm";
+import {Pagination} from "../../common/Pagination/Pagination";
+import {User} from "./User/User";
 
 
 type UsersPropsType = {
@@ -21,116 +20,28 @@ type UsersPropsType = {
 
 
 export const Users = (props: UsersPropsType) => {
-
-    let pagesCount = Math.min(20, Math.ceil(props.totalUsersCount / props.pageSize))
-    //let pagesCount =Math.ceil(props.totalUsersCount / props.pageSize) если реализовать норм пагинацию, то использовать это
-
-    let pages = []
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
-
     return (
-
         <div className={css.usersWrapper}>
-            <div>
-                <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
-            </div>
-            <div>
-                {pages.map(page => {
-                    return <span
-                        onClick={(e) => {
-                            props.onPageChanged(page)
-                        }}
-                        className={props.currentPage === page ? css.selectedPage : ''}>
-                            {page} </span>
-                })}
-            </div>
+            <Pagination
+                totalUsersCount={props.totalUsersCount}
+                pageSize={props.pageSize}
+                currentPage={props.currentPage}
+                onPageChanged={props.onPageChanged}
+                onFilterChanged={props.onFilterChanged}
+            />
 
             <div className={css.usersBlock}>
-                {
-                    props.users.map(user =>
-                        <div key={user.id} className={css.user}>
-                            <span>
-                                <div>
-                                    <Link to={'/profile' + user.id}>
-                                        <img className={css.userPhoto}
-                                             src={user.photos.small != null
-                                                 ? user.photos.small
-                                                 : profileAvatar}/>
-                                    </Link>
-
-                                </div>
-                                <div>
-                                    {user.followed
-                                        ? <button disabled={props.followingProgress.some(id => id === user.id)}
-                                                  onClick={() => {
-                                                      props.unFollowUsersTC(user.id)
-                                                      /*props.toggleFollowingProgress(true, user.id)
-
-                                                      usersAPI.unFollowUser(user.id).then(data => {
-                                                          if (data.resultCode == 0) {
-                                                              props.unfollow(user.id)
-                                                          }
-                                                          props.toggleFollowingProgress(false, user.id)
-                                                      })*/
-                                                      /*axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
-                                                          {
-                                                              withCredentials: true,
-                                                              headers: {
-                                                                  "API-KEY": "29ceddd9-9101-4a31-9b64-db4216d3334c"
-                                                              }
-                                                          })
-                                                          .then(res => {
-                                                              if (res.data.resultCode == 0) {
-                                                                  props.unfollow(user.id)
-                                                              }
-                                                              props.toggleFollowingProgress(false)
-                                                          })*/
-                                                  }}> Unfollow</button>
-
-                                        : <button disabled={props.followingProgress.some(id => id === user.id)}
-                                                  onClick={() => {
-                                                      props.followUsersTC(user.id)
-                                                      /*props.toggleFollowingProgress(true, user.id)
-
-                                                      usersAPI.followUser(user.id).then(data => {
-                                                          if (data.resultCode == 0) {
-                                                              props.follow(user.id)
-                                                          }
-                                                          props.toggleFollowingProgress(false, user.id)
-                                                      })*/
-                                                      /*axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
-                                                          {},
-                                                          {withCredentials: true,
-                                                              headers: {
-                                                                  "API-KEY": "29ceddd9-9101-4a31-9b64-db4216d3334c"
-                                                              }})
-                                                          .then(res => {
-                                                              if (res.data.resultCode == 0) {
-                                                                  props.follow(user.id)
-                                                              }
-                                                              props.toggleFollowingProgress(false)
-                                                          })*/
-                                                  }}> Follow</button>}
-                                </div>
-                            </span>
-
-                            <span>
-                                <span>
-                                    <div>{user.name}</div>
-                                    <div>{user.status}</div>
-                                </span>
-                                {/*<span>
-                                    <div>{'user.location.country'}</div>
-                                    <div>{'user.location.city'}</div>
-                                </span>*/}
-                            </span>
-                        </div>
-                    )
-                }
+                {props.users.map(user =>
+                    <User
+                        key={user.id}
+                        user={user}
+                        followingProgress={props.followingProgress}
+                        toggleFollowingProgress={props.toggleFollowingProgress}
+                        unFollowUsersTC={props.unFollowUsersTC}
+                        followUsersTC={props.followUsersTC}
+                    />
+                )}
             </div>
-
         </div>
     )
 }
