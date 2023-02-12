@@ -8,6 +8,8 @@ type ProfilePropsType = {
     profile: ProfileType | null
     status: string
     updateStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (file: File) => void
     //store: AppStateType
     /*profilePage: ProfilePageType
     dispatch: (action: ActionType) => void*/
@@ -23,7 +25,8 @@ export const Profile = (props: ProfilePropsType) => {
                 profile={props.profile}
                 status={props.status}
                 updateStatus={props.updateStatus}
-
+                isOwner={props.isOwner}
+                savePhoto={props.savePhoto}
             />
             <MyPostsContainer
 

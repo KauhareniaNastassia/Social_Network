@@ -63,9 +63,10 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
         case 'DELETE-POST': {
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         }
-        /*case 'UPDATE-STATUS': {
-            return {...state, status: action.status}
-        }*/
+        case 'SAVE-PHOTO': {
+            // @ts-ignore
+            return {...state, profile: {...state.profile, photos: action.data}}
+        }
         default:
             return state
     }
@@ -102,6 +103,12 @@ export const deletePostAC = (postId: string): deletePostActionType => {
         postId
     }
 }
+export const savePhotoAC = (photo: PhotosType): savePhotoActionType => {
+    return {
+        type: 'SAVE-PHOTO',
+        photo
+    }
+}
 /*export const updateStatusAC = (status: string): updateStatusActionType => {
     return {
         type: 'UPDATE-STATUS',
@@ -131,6 +138,10 @@ export type setStatusActionType = {
 export type deletePostActionType = {
     type: 'DELETE-POST',
     postId: string
+}
+export type savePhotoActionType = {
+    type: 'SAVE-PHOTO',
+    photo: PhotosType
 }
 /*export type updateStatusActionType = {
     type: 'UPDATE-STATUS',
@@ -185,6 +196,14 @@ export const updateStatusThunkCreator = (status: string) =>
 
     }
 
+
+export const savePhotoThunkCreator = (file: File) =>
+    async (dispatch: AppDispatchType) => {
+        let res = await profileAPI.savePhoto(file)
+        if (res.resultCode === 0)
+            dispatch(savePhotoAC(res.data.photos))
+        /*dispatch(getUserProfileThunkCreator(userId))*/
+    }
 
 //===========TYPES=========
 export type PostType = {

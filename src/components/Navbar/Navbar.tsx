@@ -5,12 +5,7 @@ import {NavLink} from "react-router-dom";
 import {SidebarPageContainer} from "./UsersForNavbar/SidebarPageContainer";
 
 
-
-type NavbarPropsType = {
-   /* users: UserType[]*/
-}
-
-export const Navbar = (props: NavbarPropsType) => {
+export const Navbar = () => {
     return (
         <nav className={css.nav}>
             <div className={css.item}>
@@ -28,10 +23,6 @@ export const Navbar = (props: NavbarPropsType) => {
             <div className={css.item}>
                 <NavLink to='/forum' activeClassName={css.activeLink}> Forum </NavLink>
             </div>
-            <div className={css.item}>
-                <NavLink to='/settings' activeClassName={css.activeLink}> Settings </NavLink>
-            </div>
-
 
             <div>
                 <SidebarPageContainer />

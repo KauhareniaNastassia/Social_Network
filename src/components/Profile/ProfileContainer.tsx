@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {
     getStatusThunkCreator,
     getUserProfileThunkCreator,
-    ProfileType,
+    ProfileType, savePhotoThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profilePageReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -15,7 +15,7 @@ import {compose} from "redux";
 
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.match.params.userId
 
         if (!userId) {
@@ -30,13 +30,26 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
         this.props.getUserStatusTC(userId)
     }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate() {
+
+        if (this.props.match.params.userId != this.props.match.params.userId)
+
+        this.refreshProfile()
+    }
+
     render() {
         return (
             <Profile
                 {...this.props}
+                isOwner={!this.props.match.params.userId}
                 profile={this.props.profile}
                 status={this.props.status}
                 updateStatus={this.props.updateStatusTC}
+                savePhoto={this.props.savePhotoTC}
             />
         )
     }
@@ -59,7 +72,8 @@ export const ProfileContainer = compose<React.ComponentType>(
         {
             getUserProfileTC: getUserProfileThunkCreator,
             getUserStatusTC: getStatusThunkCreator,
-            updateStatusTC: updateStatusThunkCreator
+            updateStatusTC: updateStatusThunkCreator,
+            savePhotoTC: savePhotoThunkCreator
         }),
     withRouter,
     withAuthRedirect
@@ -81,6 +95,7 @@ export type mapDispatchToProfilePropsType = {
     getUserProfileTC: (userId: string) => void
     getUserStatusTC: (status: string) => void
     updateStatusTC: (status: string) => void
+    savePhotoTC: (file: File) => void
 }
 type PathParamsType = {
     userId: string

@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component, Suspense} from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
 import {Route, Switch, withRouter} from 'react-router-dom'
 import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";
 import {Settings} from "./components/Settings/Settings";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+//import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
-import {ProfileContainer} from "./components/Profile/ProfileContainer";
+//import {ProfileContainer} from "./components/Profile/ProfileContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {LoginContainer} from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
@@ -15,6 +15,11 @@ import {compose} from "redux";
 import {initializeAppThunkCreator} from "./redux/appReducer";
 import {AppStateType} from "./redux/redux-store";
 import {PreloaderDog} from "./common/preloader/PreloaderDog/PreloaderDog";
+
+
+const DialogsContainer = React.lazy(async () => ({default: (await import('./components/Dialogs/DialogsContainer')).DialogsContainer}))
+
+const ProfileContainer = React.lazy(async () => ({default: (await import('./components/Profile/ProfileContainer')).ProfileContainer}))
 
 
 export class App extends Component<AppContainerPropsType> {
@@ -35,23 +40,25 @@ export class App extends Component<AppContainerPropsType> {
                 <Navbar/>
 
                 <div className='app-wrapper-content'>
-                    <Switch>
-                        <Route path='/profile/:userId?'
-                               render={() => <ProfileContainer
-                               />}/>
+                    <Suspense fallback={<div>< PreloaderDog/></div>}>
+                        <Switch>
 
-                        <Route path='/dialogs'
-                               render={() => <DialogsContainer
-                               />}/>
+                            <Route path='/profile/:userId?'
+                                   render={() => <ProfileContainer
+                                   />}/>
 
-                        <Route path='/users' render={() => <UsersContainer/>}/>
-                        <Route path='/care' render={() => <Care/>}/>
-                        <Route path='/forum' render={() => <Forum/>}/>
-                        <Route path='/settings' render={() => <Settings/>}/>
+                            <Route path='/dialogs'
+                                   render={() => <DialogsContainer
+                                   />}/>
 
-                        <Route path='/login' render={() => <LoginContainer/>}/>
-                    </Switch>
+                            <Route path='/users' render={() => <UsersContainer/>}/>
+                            <Route path='/care' render={() => <Care/>}/>
+                            <Route path='/forum' render={() => <Forum/>}/>
 
+                            <Route path='/login' render={() => <LoginContainer/>}/>
+
+                        </Switch>
+                    </Suspense>
                 </div>
             </div>
         );
@@ -59,10 +66,9 @@ export class App extends Component<AppContainerPropsType> {
 }
 
 
-
 export const mapStateToAppPropsType = (state: AppStateType): mapStateToAppPropsType => {
     return {
-       initialized: state.app.initialized
+        initialized: state.app.initialized
     }
 }
 

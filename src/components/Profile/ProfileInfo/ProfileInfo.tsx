@@ -1,8 +1,8 @@
-import React from "react";
+import React, {ChangeEvent, useRef} from "react";
 import css from "./ProfileInfo.module.css"
 import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat";
 import {ProfileType} from "../../../redux/profilePageReducer";
-import userImg from '../../../assets/img/ava1.jpg'
+import userImg from '../../../assets/img/profileAvatar.svg'
 import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
 
@@ -11,21 +11,32 @@ type ProfileInfoPropsType = {
     profile: ProfileType | null
     status: string
     updateStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (file: File) => void
 }
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
+
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.currentTarget.files) {
+            props.savePhoto(e.currentTarget.files[0])
+        }
+    }
 
     if (!props.profile) {
         return <PreloaderCat/>
     }
 
-
     return (
         <div>
-            <div>
-                {/*<img className={css.imgScreen} src={screen}/>*/}
-            </div>
             <div className={css.descriptionBlock}>
                 <img src={props.profile?.photos.large ? props.profile.photos.large : userImg} className={css.userImg}/>
+
+                {props.isOwner &&
+                    <input
+                        type='file'
+                        onChange={onMainPhotoSelected}
+                    />}
+
                 <div>
                     {props.profile.fullName}
                 </div>
@@ -38,8 +49,6 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
         </div>
     )
 }
-
-
 
 
 /*

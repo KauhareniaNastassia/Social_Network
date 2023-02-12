@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {
     deletePostActionType,
-    profilePageReducer,
+    profilePageReducer, savePhotoActionType,
     setStatusActionType,
     setUserProfileActionType
 } from "./profilePageReducer";
@@ -48,7 +48,8 @@ export type ActionType =
     loginACType |
     setAppErrorACType |
     setInitializedSuccessAType |
-    deletePostActionType
+    deletePostActionType |
+    savePhotoActionType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
