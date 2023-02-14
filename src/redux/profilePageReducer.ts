@@ -1,5 +1,7 @@
 import {ActionType, AppDispatchType} from "./redux-store";
 import {profileAPI} from "../api/api";
+import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm/ProfileDataForm";
+import state from "./state";
 
 
 let initialState: initialStateProfilePageType = {
@@ -109,12 +111,7 @@ export const savePhotoAC = (photo: PhotosType): savePhotoActionType => {
         photo
     }
 }
-/*export const updateStatusAC = (status: string): updateStatusActionType => {
-    return {
-        type: 'UPDATE-STATUS',
-        status
-    }
-}*/
+
 
 
 //===========ACTION TYPES=========
@@ -143,10 +140,7 @@ export type savePhotoActionType = {
     type: 'SAVE-PHOTO',
     photo: PhotosType
 }
-/*export type updateStatusActionType = {
-    type: 'UPDATE-STATUS',
-    status: string
-}*/
+
 
 //===========THUNK=========
 
@@ -174,25 +168,25 @@ export const getUserProfileThunkCreator = (userId: string) =>
 }*/
 
 export const getStatusThunkCreator = (userId: string) =>
-    async (dispatch: AppDispatchType) => {
-        let res = await profileAPI.getStatus(userId)
-        dispatch(setStatusAC(res))
+        async (dispatch: AppDispatchType) => {
+            let res = await profileAPI.getStatus(userId)
+            dispatch(setStatusAC(res))
 
-    }
+        }
 
-/*export const updateStatusThunkCreator = (status: string) => {
-    return (dispatch: AppDispatchType) => {
-        profileAPI.updateStatus(status).then(data => {
-            if (data.resultCode === 0)
-                dispatch(setStatusAC(data))
-        })
-    }
-}*/;
+    /*export const updateStatusThunkCreator = (status: string) => {
+        return (dispatch: AppDispatchType) => {
+            profileAPI.updateStatus(status).then(data => {
+                if (data.resultCode === 0)
+                    dispatch(setStatusAC(data))
+            })
+        }
+    }*/;
 export const updateStatusThunkCreator = (status: string) =>
     async (dispatch: AppDispatchType) => {
         let res = await profileAPI.updateStatus(status)
-            if (res.resultCode === 0)
-                dispatch(setStatusAC(res))
+        if (res.resultCode === 0)
+            dispatch(setStatusAC(res))
 
     }
 
@@ -202,6 +196,16 @@ export const savePhotoThunkCreator = (file: File) =>
         let res = await profileAPI.savePhoto(file)
         if (res.resultCode === 0)
             dispatch(savePhotoAC(res.data.photos))
+        /*dispatch(getUserProfileThunkCreator(userId))*/
+    }
+
+export const saveProfileThunkCreator = (profile: ProfileType) =>
+    async (dispatch: AppDispatchType) => {
+
+        let res = await profileAPI.saveProfile(profile)
+        if (res.resultCode === 0) {
+            dispatch(getUserProfileThunkCreator(profile.userId))
+        }
         /*dispatch(getUserProfileThunkCreator(userId))*/
     }
 
@@ -223,7 +227,7 @@ type initialStateProfilePageType = ProfilePageType
 
 export type ProfileType = {
     aboutMe: string
-    userId: number
+    userId: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string

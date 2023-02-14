@@ -11,7 +11,7 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
     const [editMode, setEditMode] = useState(false)
     const [inputValue, setInputValue] = useState(props.status)
 
-    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) =>  {
+    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.currentTarget.value)
     }
 
@@ -20,16 +20,17 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
         props.updateStatus(inputValue)
     }
 
-    useEffect( () => {
+    useEffect(() => {
         setInputValue(props.status)
-    }, [props.status] )
+    }, [props.status])
 
     return (
         <div>
             {!editMode &&
                 <div>
-                        <span
-                            onDoubleClick={() => setEditMode(true)}>
+                    <b>Status: </b>
+                    <span
+                        onDoubleClick={() => setEditMode(true)}>
                             {props.status || 'Tell everyone what happened!'}
                         </span>
                 </div>

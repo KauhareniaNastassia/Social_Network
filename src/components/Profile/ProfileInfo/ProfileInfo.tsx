@@ -1,10 +1,11 @@
-import React, {ChangeEvent, useRef} from "react";
+import React, {ChangeEvent, useState} from "react";
 import css from "./ProfileInfo.module.css"
 import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat";
 import {ProfileType} from "../../../redux/profilePageReducer";
 import userImg from '../../../assets/img/profileAvatar.svg'
-import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
+import ProfileData from "./ProfileData/ProfileData";
+import {ProfileDataForm, ProfileFormDataType} from "./ProfileDataForm/ProfileDataForm";
 
 
 type ProfileInfoPropsType = {
@@ -13,13 +14,22 @@ type ProfileInfoPropsType = {
     updateStatus: (status: string) => void
     isOwner: boolean
     savePhoto: (file: File) => void
+    saveProfile: (formData: ProfileFormDataType) => void
 }
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
+
+    const [editMode, setEditMode] = useState(false)
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files) {
             props.savePhoto(e.currentTarget.files[0])
         }
+    }
+
+    const onSubmitData = (formData: ProfileFormDataType) => {
+        props.saveProfile(formData)
+
+        setEditMode(false)
     }
 
     if (!props.profile) {
@@ -37,9 +47,23 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                         onChange={onMainPhotoSelected}
                     />}
 
-                <div>
-                    {props.profile.fullName}
-                </div>
+                {
+                    editMode
+                        ? <ProfileDataForm
+                            profile={props.profile}
+                            contacts={props.profile.contacts}
+                            isOwner={props.isOwner}
+                            onSubmitData={onSubmitData}
+                        />
+                        : <ProfileData
+                            profile={props.profile}
+                            contacts={props.profile.contacts}
+                            isOwner={props.isOwner}
+                            goToEditMode={() => setEditMode(true)}
+                        />
+                }
+
+
                 <ProfileStatusWithHooks
                     status={props.status}
                     updateStatus={props.updateStatus}

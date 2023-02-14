@@ -8,7 +8,8 @@ import {LoginDataType} from "../../api/api";
 
 const mapStateToLoginPropsType = (state: AppStateType): mapStateToLoginPropsType => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaURL: state.auth.captcha
     }
 }
 
@@ -21,6 +22,7 @@ export const LoginContainer = connect(mapStateToLoginPropsType, {
 
 type mapStateToLoginPropsType = {
     isAuth: boolean
+    captchaURL: null
 }
 
 type MapDispatchToLoginPropsType = {

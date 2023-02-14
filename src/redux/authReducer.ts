@@ -1,13 +1,15 @@
 import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
-import {authAPI, LoginDataType} from "../api/api";
+import {authAPI, LoginDataType, profileAPI, securityAPI} from "../api/api";
 import {setAppErrorAC} from "./appReducer";
+import {savePhotoAC} from "./profilePageReducer";
 
 
 let initialState: initialStateAuthType = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    captcha: null
 }
 
 export const authReducer = (state: initialStateAuthType = initialState, action: ActionType): initialStateAuthType => {
@@ -21,6 +23,10 @@ export const authReducer = (state: initialStateAuthType = initialState, action: 
         }
         case "auth/LOGIN": {
             return {...state, isAuth: action.value}
+        }
+        case "auth/GET-CAPTCHA-URL": {
+
+            return {...state, ...action.payload}
         }
         default:
             return state
@@ -46,6 +52,15 @@ export const loginAC = (value: boolean): loginACType => {
     return {
         type: 'auth/LOGIN',
         value
+    }
+}
+
+export const getCaptchaURLSuccessAC = (captchaUrl: string): getCaptchaURLSuccessACType => {
+    return {
+        type: 'auth/GET-CAPTCHA-URL',
+        payload: {
+            captchaUrl
+        }
     }
 }
 
@@ -81,7 +96,12 @@ export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) =
         authAPI.login(data).then(data => {
             if (data.resultCode === 0) {
                 dispatch(getAuthUserThunkCreator())
-            } else {
+            }
+            else {
+                if(data.resultCode === 10) {
+                    dispatch(getCaptchaURLThunkCreator())
+                }
+
                 dispatch(setAppErrorAC(data.data.messages[0]))
                 /*setError({error: data.data.messages})*/
                 /*setError({apiError: data.data.messages[0]})*/
@@ -102,6 +122,7 @@ export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) =
             /!*setError({apiError: data.data.messages[0]})*!/
         }
     }*/
+
 
 
 export const logoutThunkCreator = () => {
@@ -126,6 +147,17 @@ export const logoutThunkCreator = () => {
         }
     }*/
 
+export const getCaptchaURLThunkCreator = () =>
+    async (dispatch: AppDispatchType) => {
+        let res = await securityAPI.getCaptchaUrl()
+        let captchaURL = res.data.url
+
+        dispatch(getCaptchaURLSuccessAC(captchaURL))
+
+        }
+
+
+
 
 //=======ACTION TYPES======
 
@@ -144,13 +176,22 @@ export type loginACType = {
     value: boolean
 }
 
+export type getCaptchaURLSuccessACType = {
+    type: 'auth/GET-CAPTCHA-URL',
+    payload: {
+        captchaUrl: string
+    }
+
+}
+
 //=======TYPES======
 
 export type AuthType = {
     userId: null,
     email: null,
     login: null,
-    isAuth: boolean
+    isAuth: boolean,
+
 }
 
 export type initialStateAuthType = {
@@ -158,6 +199,7 @@ export type initialStateAuthType = {
     email: null,
     login: null,
     isAuth: boolean
+    captcha: null
 }
 
 

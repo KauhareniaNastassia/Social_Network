@@ -7,15 +7,17 @@ export type LoginDataType = {
     email: string,
     password: string,
     rememberMe: boolean
+
 }
 export type LoginErrorType = {
     email?: string,
     password?: string,
-    rememberMe?: boolean
+    rememberMe?: boolean,
 }
 
 type LoginFormPropsType = {
     loginThunkCreator: (data: LoginDataType, setStatus: any) => void
+    captchaURL: null
 }
 
 const validate = (values: LoginDataType) => {
@@ -41,8 +43,8 @@ export const LoginForm = (props: LoginFormPropsType) => {
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
-            //login: '',
+            rememberMe: false,
+
         },
         validate,
         onSubmit: (values: LoginDataType, {setStatus}) => {
@@ -96,6 +98,8 @@ export const LoginForm = (props: LoginFormPropsType) => {
                     />
                     <label htmlFor="rememberMe">Remember me</label>
                 </div>
+
+                {props.captchaURL && <img src={props.captchaURL}/>}
 
                 {/* <button disabled={formik.isSubmitting} className={css.submitBtn} type="submit">Sign In</button>*/}
                 <button type="submit">Login</button>

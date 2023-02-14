@@ -23,7 +23,7 @@ import {
     UpdateNewPostTextActionType
 } from "./store";
 import {siderbarPageReducer} from "./sidebarPageReducer";
-import {authReducer, loginACType, setAuthUserDataACType} from "./authReducer";
+import {authReducer, getCaptchaURLSuccessACType, loginACType, setAuthUserDataACType} from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {formControllerReducer} from "react-redux-hook-form";
 import {appReducer, setAppErrorACType, setInitializedSuccessAType} from "./appReducer";
@@ -49,7 +49,8 @@ export type ActionType =
     setAppErrorACType |
     setInitializedSuccessAType |
     deletePostActionType |
-    savePhotoActionType
+    savePhotoActionType |
+    getCaptchaURLSuccessACType
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,

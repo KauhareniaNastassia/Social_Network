@@ -14,7 +14,8 @@ export const Login = (props: LoginPropsType) => {
     return (
         <div>
             <h1>LOGIN</h1>
-            <LoginForm loginThunkCreator ={props.loginThunkCreator}/>
+            <LoginForm loginThunkCreator ={props.loginThunkCreator}
+                       captchaURL={props.captchaURL}/>
 
             <div>
                 <div>For test use this=)</div>
