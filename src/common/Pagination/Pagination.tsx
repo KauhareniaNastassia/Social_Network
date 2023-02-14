@@ -4,22 +4,9 @@ import {FilterType} from "../../redux/usersPageReducer";
 import {UsersSearchForm} from "../../components/Forms/UsersSearchForm/UsersSearchForm";
 
 
-type UsersPropsType = {
-
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
-    onPageChanged: (page: number) => void
-    onFilterChanged: (filter: FilterType) => void
-}
-
-
 export const Pagination = (props: UsersPropsType) => {
 
     let portionSize = 10
-
-    /*let pagesCount = Math.min(20, Math.ceil(props.totalUsersCount / props.pageSize))*/
-    //let pagesCount =Math.ceil(props.totalUsersCount / props.pageSize) если реализовать норм пагинацию, то использовать это
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
@@ -62,4 +49,15 @@ export const Pagination = (props: UsersPropsType) => {
         </div>
 
     )
+}
+
+//===========TYPE================
+
+type UsersPropsType = {
+
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    onPageChanged: (page: number) => void
+    onFilterChanged: (filter: FilterType) => void
 }

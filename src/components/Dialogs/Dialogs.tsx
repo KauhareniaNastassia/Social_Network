@@ -7,17 +7,6 @@ import {MessageForm} from "./MessageForm/MessageForm";
 
 
 export const Dialogs = (props: DialogsPropsType) => {
-
-    /*let sendMessageHandler = () => {
-        props.sendMessage()
-        /!*props.dialogsPage.newMessageText = ''*!/
-    }
-
-    let onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageText(e.currentTarget.value)
-        //props.dispatch(updateNewMessageTextAC(e.currentTarget.value) )
-    }*/
-
     return (
         <div className={css.dialogs}>
             <div className={css.dialogsItems}>
@@ -27,15 +16,6 @@ export const Dialogs = (props: DialogsPropsType) => {
             <div className={css.messages}>
                 {props.dialogsPage.messages.map(message => <Message key={message.id} message={message.message}/>)}
             </div>
-
-            {/*<div>
-                <textarea value={props.dialogsPage.newMessageText}
-                          onChange={onMessageChange}
-                          />
-            </div>
-            <div>
-                <button onClick={sendMessageHandler}> Send</button>
-            </div>*/}
 
             <MessageForm sendMessage={props.sendMessage}
                          updateNewMessageText={props.updateNewMessageText}/>

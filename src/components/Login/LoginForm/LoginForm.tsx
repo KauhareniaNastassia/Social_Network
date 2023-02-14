@@ -3,23 +3,6 @@ import {useFormik} from 'formik';
 import css from "./LoginForm.module.css"
 
 
-export type LoginDataType = {
-    email: string,
-    password: string,
-    rememberMe: boolean
-
-}
-export type LoginErrorType = {
-    email?: string,
-    password?: string,
-    rememberMe?: boolean,
-}
-
-type LoginFormPropsType = {
-    loginThunkCreator: (data: LoginDataType, setStatus: any) => void
-    captchaURL: null
-}
-
 const validate = (values: LoginDataType) => {
     const errors: LoginErrorType = {};
     if (!values.email) {
@@ -49,11 +32,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
         validate,
         onSubmit: (values: LoginDataType, {setStatus}) => {
             props.loginThunkCreator(values, setStatus)
-            /*dispatch(loginThunkCreator(values))*/
-
-            /*  formik.resetForm()*/
         },
-
     });
 
 
@@ -101,9 +80,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
 
                 {props.captchaURL && <img src={props.captchaURL}/>}
 
-                {/* <button disabled={formik.isSubmitting} className={css.submitBtn} type="submit">Sign In</button>*/}
                 <button type="submit">Login</button>
-                {/*{formik.status && <div>{formik.status}</div>}*/}
 
                 {
                     formik.status ? <div>{formik.errors}</div> : null
@@ -113,3 +90,22 @@ export const LoginForm = (props: LoginFormPropsType) => {
         </form>
     );
 };
+
+//===========TYPE================
+
+export type LoginDataType = {
+    email: string,
+    password: string,
+    rememberMe: boolean
+
+}
+export type LoginErrorType = {
+    email?: string,
+    password?: string,
+    rememberMe?: boolean,
+}
+
+type LoginFormPropsType = {
+    loginThunkCreator: (data: LoginDataType, setStatus: any) => void
+    captchaURL: null
+}

@@ -1,21 +1,6 @@
 import {ActionType} from "./redux-store";
 
 
-export type DialogType = {
-    id: string,
-    name: string
-}
-export type MessageType = {
-    id: string,
-    message: string
-}
-
-export type initialStateDialogsPageType = {
-    dialogs: DialogType[]
-    messages: MessageType[]
-    newMessageText: string
-}
-
 let initialStateDialogsPage: initialStateDialogsPageType = {
     dialogs: [
         {id: '1', name: "Nastassia"},
@@ -36,16 +21,6 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
 
     switch (action.type) {
         case "SEND-MESSAGE": {
-            /* action.newMessageText = state.newMessageText
-
-             const newMessage: MessageType = {
-                 id: '4',
-                 message: action.newMessageText
-             }
-             state.messages.push(newMessage)
-             state.newMessageText = ''
-             return state*/
-
             const newMessage: MessageType = {
                 id: '4',
                 message: state.newMessageText
@@ -60,15 +35,11 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
         }
 
         case "UPDATE-NEW-MESSAGE-TEXT": {
-            /*state.newMessageText = action.updatedMessageText
-            return state*/
-
             let stateCopy = {
                 ...state,
-                newMessageText:  action.updatedMessageText
+                newMessageText: action.updatedMessageText
             }
             return stateCopy
-
         }
 
         default:
@@ -77,24 +48,36 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
 
 }
 
+//===========ACTIONS=========
 
-export type SendMessageActionType = {
-    type: 'SEND-MESSAGE',
-    /*newMessageText: string*/
-}
-export type UpdateNewMessageTextActionType = {
-    type: 'UPDATE-NEW-MESSAGE-TEXT',
-    updatedMessageText: string
-}
+export const sendMessageAC = () => ({
+    type: 'SEND-MESSAGE'
+} as const)
 
-
-export const sendMessageAC = (): SendMessageActionType => {
-    return {
-        type: 'SEND-MESSAGE'
-    }
-}
-export const updateNewMessageTextAC = (updatedMessageText: string): UpdateNewMessageTextActionType => {
-    return {
+export const updateNewMessageTextAC = (updatedMessageText: string) => ({
         type: 'UPDATE-NEW-MESSAGE-TEXT', updatedMessageText
-    }
+}as const)
+
+//===========ACTION TYPES=========
+
+export type DialogsPageActionsType =
+    | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof updateNewMessageTextAC>
+
+
+//===========TYPES=========
+
+export type DialogType = {
+    id: string,
+    name: string
+}
+export type MessageType = {
+    id: string,
+    message: string
+}
+
+export type initialStateDialogsPageType = {
+    dialogs: DialogType[]
+    messages: MessageType[]
+    newMessageText: string
 }

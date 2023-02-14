@@ -4,44 +4,7 @@ import {updateObjectInArray} from "../utils/helpers/object-helper";
 
 
 let initialStateUsersPage: initialStateUsersPageType = {
-    users: [
-        /*{
-            id: '1',
-            followed: true,
-            photos: friendFromBar1,
-            name: 'Andrew',
-            status: 'ololo',
-            location:
-                {
-                    city: 'Minsk',
-                    country: 'Belarus'
-                }
-        },
-        {
-            id: '2',
-            followed: true,
-            photos: friendFromBar2,
-            name: 'Kate',
-            status: 'ololo',
-            location:
-                {
-                    city: 'Minsk',
-                    country: 'Belarus'
-                }
-        },
-        {
-            id: '3',
-            followed: false,
-            photos: friendFromBar3,
-            name: 'Lena',
-            status: 'ololo',
-            location:
-                {
-                    city: 'Minsk',
-                    country: 'Belarus'
-                }
-        }*/
-    ],
+    users: [],
     pageSize: 20,
     totalUsersCount: 55,
     currentPage: 1,
@@ -58,30 +21,13 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
         case "FOLLOW": {
             return {
                 ...state,
-
                 users: updateObjectInArray(state.users, action.userID, 'id', {followed: true})
-
-                /*users: state.users.map(user => {
-                    if (user.id === action.userID) {
-                        return {...user, followed: true}
-                    }
-                    return user
-
-                })*/
             }
         }
         case "UNFOLLOW": {
             return {
                 ...state,
-
                 users: updateObjectInArray(state.users, action.userID, 'id', {followed: false})
-
-                /*users: state.users.map(user => {
-                    if (user.id === action.userID) {
-                        return {...user, followed: false}
-                    }
-                    return user
-                })*/
             }
         }
         case "SET-USERS": {
@@ -115,79 +61,48 @@ export const usersPageReducer = (state: initialStateUsersPageType = initialState
 
 //=======ACTIONS======
 
-export const followActionCreator = (userID: string): FollowActionCreatorType => {
-    return {
+export const followActionCreator = (userID: string) => ({
         type: 'FOLLOW',
         userID,
-    }
-}
+}as const)
 
-export const unfollowActionCreator = (userID: string): UnfollowActionCreatorType => {
-    return {
+export const unfollowActionCreator = (userID: string) => ({
         type: 'UNFOLLOW',
         userID
-    }
-}
+}as const)
 
-export const setUsersActionCreator = (users: UserType[]): SetUsersActionCreatorType => {
-    return {
+export const setUsersActionCreator = (users: UserType[]) => ({
         type: 'SET-USERS',
         users
-    }
-}
+}as const)
 
-export const setCurrentPageActionCreator = (currentPage: number): setCurrentPageActionCreatorType => {
-    return {
+export const setCurrentPageActionCreator = (currentPage: number) => ({
         type: 'SET-CURRENT-PAGE',
         currentPage
-    }
-}
+}as const)
 
-export const setUsersTotalCountActionCreator = (totalUsersCount: number): setUsersTotalCountActionCreatorType => {
-    return {
+export const setUsersTotalCountActionCreator = (totalUsersCount: number) => ({
         type: 'SET-USERS-TOTAL-COUNT',
         totalUsersCount
-    }
-}
+}as const)
 
-export const toggleIsFetchingActionCreator = (isFetching: boolean): toggleIsFetchingActionCreatorType => {
-    return {
+export const toggleIsFetchingActionCreator = (isFetching: boolean) => ({
         type: 'TOGGLE-IS-FETCHING',
         isFetching
-    }
-}
+}as const)
 
-export const toggleFollowingProgressActionCreator = (isFetching: boolean, userId: string): toggleFollowingProgressActionCreatorType => {
-    return {
+export const toggleFollowingProgressActionCreator = (isFetching: boolean, userId: string) => ({
         type: 'TOGGLE-IN-FOLLOWING-PROGRESS',
         isFetching,
         userId
-    }
-}
+}as const)
 
-export const setFilterActionCreator = (filter: FilterType):setFilterActionCreatorType => {
-    return {
+export const setFilterActionCreator = (filter: FilterType) => ({
         type: 'SET-FILTER',
         payload: filter
-    }
-}
+}as const)
 
 //=======THUNK======
-
-
-
-/*export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType) => {
-    return (dispatch: AppDispatchType) => {
-        dispatch(toggleIsFetchingActionCreator(true))
-        dispatch(setFilterActionCreator(filter))
-
-        usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend).then(data => {
-            dispatch(toggleIsFetchingActionCreator(false))
-            dispatch(setUsersActionCreator(data.items))
-            dispatch(setUsersTotalCountActionCreator(data.totalCount))
-        })
-    }
-}*/
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType) => {
     return async (dispatch: AppDispatchType) => {
@@ -201,19 +116,6 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number, filt
 
     }
 }
-
-/*export const unFollowUsersThunkCreator = (userId: string) => {
-    return (dispatch: AppDispatchType) => {
-        dispatch(toggleFollowingProgressActionCreator(true, userId))
-
-        usersAPI.unFollowUser(userId).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(unfollowActionCreator(userId))
-            }
-            dispatch(toggleFollowingProgressActionCreator(false, userId))
-        })
-    }
-}*/
 
 const followUnfollowFlow = async (dispatch: AppDispatchType, userId: string, apiMethod: (arg0: string) => any, actionCreator: (arg0: string) => any) => {
 
@@ -229,94 +131,28 @@ const followUnfollowFlow = async (dispatch: AppDispatchType, userId: string, api
 
 export const unFollowUsersThunkCreator = (userId: string) => {
     return async (dispatch: AppDispatchType) => {
-
-        /*let apiMethod = usersAPI.unFollowUser.bind(usersAPI)
-        let actionCreator = unfollowActionCreator*/
-
         followUnfollowFlow(dispatch, userId,  usersAPI.unFollowUser.bind(usersAPI), unfollowActionCreator)
-
-       /* dispatch(toggleFollowingProgressActionCreator(true, userId))
-
-        let res = await apiMethod(userId)
-            if (res.resultCode === 0) {
-                dispatch(actionCreator(userId))
-            }
-            dispatch(toggleFollowingProgressActionCreator(false, userId))*/
     }
 }
 
-/*export const followUsersThunkCreator = (userId: string) => {
-    return (dispatch: AppDispatchType) => {
-        dispatch(toggleFollowingProgressActionCreator(true, userId))
-
-        usersAPI.followUser(userId).then(data => {
-            if (data.resultCode == 0) {
-                dispatch(followActionCreator(userId))
-            }
-            dispatch(toggleFollowingProgressActionCreator(false, userId))
-        })
-    }
-}*/
-
 export const followUsersThunkCreator = (userId: string) => {
     return async (dispatch: AppDispatchType) => {
-
-        /*let apiMethod = usersAPI.followUser.bind(usersAPI)
-        let actionCreator = followActionCreator*/
-
         followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), followActionCreator)
-
-        /*dispatch(toggleFollowingProgressActionCreator(true, userId))
-
-        let res  = await apiMethod(userId)
-            if (res.resultCode == 0) {
-                dispatch(actionCreator(userId))
-            }
-            dispatch(toggleFollowingProgressActionCreator(false, userId))*/
     }
 }
 
 
 //=======ACTION TYPES======
 
-export type FollowActionCreatorType = {
-    type: 'FOLLOW',
-    userID: string
-}
-export type UnfollowActionCreatorType = {
-    type: 'UNFOLLOW',
-    userID: string
-}
-
-export type SetUsersActionCreatorType = {
-    type: 'SET-USERS',
-    users: UserType[]
-}
-
-export type setCurrentPageActionCreatorType = {
-    type: 'SET-CURRENT-PAGE',
-    currentPage: number
-}
-export type setUsersTotalCountActionCreatorType = {
-    type: 'SET-USERS-TOTAL-COUNT',
-    totalUsersCount: number
-}
-export type toggleIsFetchingActionCreatorType = {
-    type: 'TOGGLE-IS-FETCHING',
-    isFetching: boolean
-}
-export type toggleFollowingProgressActionCreatorType = {
-    type: 'TOGGLE-IN-FOLLOWING-PROGRESS',
-    isFetching: boolean,
-    userId: string
-}
-export type setFilterActionCreatorType = {
-    type: 'SET-FILTER',
-    payload: FilterType
-
-
-}
-
+export type UsersPageActionsType =
+    | ReturnType<typeof followActionCreator>
+    | ReturnType<typeof unfollowActionCreator>
+    | ReturnType<typeof setUsersActionCreator>
+    | ReturnType<typeof setCurrentPageActionCreator>
+    | ReturnType<typeof setUsersTotalCountActionCreator>
+    | ReturnType<typeof toggleIsFetchingActionCreator>
+    | ReturnType<typeof toggleFollowingProgressActionCreator>
+    | ReturnType<typeof setFilterActionCreator>
 
 //=======TYPES======
 

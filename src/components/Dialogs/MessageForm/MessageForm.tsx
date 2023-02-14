@@ -3,15 +3,6 @@ import css from './MessageForm.module.css'
 import {SubmitHandler, useForm} from "react-hook-form";
 
 
-type MessageData = {
-    message: string
-}
-
-type MessageFormPropsType = {
-    sendMessage: () => void
-    updateNewMessageText: (updatedMessageText: string) => void
-}
-
 export const MessageForm = (props: MessageFormPropsType) => {
 
     const [message, setMessage] = useState('')
@@ -77,4 +68,16 @@ export const MessageForm = (props: MessageFormPropsType) => {
             </form>
         </div>
     );
+}
+
+
+//===========TYPE================
+
+type MessageData = {
+    message: string
+}
+
+type MessageFormPropsType = {
+    sendMessage: () => void
+    updateNewMessageText: (updatedMessageText: string) => void
 }

@@ -4,21 +4,6 @@ import {ContactsType, ProfileType} from "../../../../redux/profilePageReducer";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Form, Field} from "react-final-form";
 
-type ProfileDataFormPropsType = {
-    onSubmitData: (formData: ProfileFormDataType) => void
-    profile: ProfileType | null
-    contacts: ContactsType
-    isOwner: boolean
-}
-
-export type ProfileFormDataType = {
-    fullName: string
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    aboutMe: string
-
-}
-
 
 export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
 
@@ -114,36 +99,20 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
 
 }
 
+//===========TYPE================
 
-/*{props.isOwner && <div> <button onClick={props.goToEditMode}>Save</button> </div>}
-
-<div>
-    {props.profile?.fullName}
-</div>
-
-<div>
-    <b>Looking for a job:</b> {props.profile?.lookingForAJob ? 'yes' : 'no'}
-</div>
-
-{
-    props.profile?.lookingForAJob &&
-    <div>
-        <b>My professional skills:</b> {props.profile?.lookingForAJobDescription}
-    </div>
+type ProfileDataFormPropsType = {
+    onSubmitData: (formData: ProfileFormDataType) => void
+    profile: ProfileType | null
+    contacts: ContactsType
+    isOwner: boolean
 }
 
-<div>
-    <b>About me:</b> {props.profile?.aboutMe}
-</div>
+export type ProfileFormDataType = {
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    aboutMe: string
 
-<div>
-    <b>Contacts: </b> {Object.keys(props.contacts).map(contact => {
+}
 
-        return <Contact
-            key={contact}
-            contactTitle={contact}
-            contactValue={contact}
-        />
-    }
-)}
-</div>*/

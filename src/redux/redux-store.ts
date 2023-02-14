@@ -1,56 +1,33 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {
-    deletePostActionType,
-    profilePageReducer, savePhotoActionType,
-    setStatusActionType,
-    setUserProfileActionType
+    ProfilePageActionType,
+    profilePageReducer,
 } from "./profilePageReducer";
-import {dialogsPageReducer} from "./dialogsPageReducer";
 import {
-    FollowActionCreatorType,
-    setCurrentPageActionCreatorType, setFilterActionCreatorType,
-    SetUsersActionCreatorType,
-    setUsersTotalCountActionCreatorType,
-    toggleFollowingProgressActionCreatorType,
-    toggleIsFetchingActionCreatorType,
-    UnfollowActionCreatorType,
+    DialogsPageActionsType,
+    dialogsPageReducer,
+} from "./dialogsPageReducer";
+import {
+    UsersPageActionsType,
     usersPageReducer
 } from "./usersPageReducer";
-import {
-    AddPostActionType,
-    SendMessageActionType,
-    UpdateNewMessageTextActionType,
-    UpdateNewPostTextActionType
-} from "./store";
+
 import {siderbarPageReducer} from "./sidebarPageReducer";
-import {authReducer, getCaptchaURLSuccessACType, loginACType, setAuthUserDataACType} from "./authReducer";
+import {
+    AuthActionsType,
+    authReducer,
+} from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {formControllerReducer} from "react-redux-hook-form";
-import {appReducer, setAppErrorACType, setInitializedSuccessAType} from "./appReducer";
+import {AppActionsType, appReducer} from "./appReducer";
 
 
 export type ActionType =
-    AddPostActionType |
-    UpdateNewPostTextActionType |
-    SendMessageActionType |
-    UpdateNewMessageTextActionType |
-    FollowActionCreatorType |
-    UnfollowActionCreatorType |
-    SetUsersActionCreatorType |
-    setCurrentPageActionCreatorType |
-    setUsersTotalCountActionCreatorType |
-    toggleIsFetchingActionCreatorType |
-    toggleFollowingProgressActionCreatorType |
-    setUserProfileActionType |
-    setAuthUserDataACType |
-    setStatusActionType |
-    setFilterActionCreatorType |
-    loginACType |
-    setAppErrorACType |
-    setInitializedSuccessAType |
-    deletePostActionType |
-    savePhotoActionType |
-    getCaptchaURLSuccessACType
+    ProfilePageActionType |
+    AppActionsType |
+    AuthActionsType |
+    DialogsPageActionsType |
+    UsersPageActionsType
+
 
 let rootReducer = combineReducers({
     profilePage: profilePageReducer,
@@ -68,12 +45,10 @@ export const store = createStore(rootReducer, applyMiddleware(thunk))
 export type AppStateType = ReturnType<typeof rootReducer>
 
 export type AppDispatchType = ThunkDispatch<AppStateType, unknown, ActionType>
-export type AppThunkType<ReturnType = void> = ThunkAction<
-    ReturnType,
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,
     AppStateType,
     unknown,
-    ActionType
-    >
+    ActionType>
 
 export type AppStoreType = typeof store
 

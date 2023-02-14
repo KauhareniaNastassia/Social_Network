@@ -62,7 +62,6 @@ export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePr
         status: state.profilePage.status,
         autorizedUserId: state.auth.userId,
         isAuth: state.auth.isAuth
-        //isAuth: state.auth.isAuth
     }
 }
 

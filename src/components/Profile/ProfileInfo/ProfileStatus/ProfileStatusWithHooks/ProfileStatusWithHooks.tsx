@@ -1,9 +1,4 @@
-import React, {ChangeEvent, Component, useEffect, useState} from 'react';
-
-type ProfileStatusWithHooksPropsType = {
-    status: string
-    updateStatus: (status: string) => void
-}
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
 
 export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) => {
@@ -59,3 +54,8 @@ export type ProfileStatusPropsType = {
 }
 
 export type ProfileStatusClassPropsType = Readonly<ProfileStatusPropsType>
+
+type ProfileStatusWithHooksPropsType = {
+    status: string
+    updateStatus: (status: string) => void
+}

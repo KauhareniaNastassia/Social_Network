@@ -1,18 +1,8 @@
-import React, {useState} from 'react';
-import {Contact} from "../Contact/Contact";
+import React from 'react';
 import {ContactsType, ProfileType} from "../../../../redux/profilePageReducer";
 
-type ProfileDataPropsType = {
-    profile: ProfileType | null
-    contacts: ContactsType
-    isOwner: boolean
-    goToEditMode: () => void
-}
 
 const ProfileData = (props: ProfileDataPropsType) => {
-
-
-
 
     return (
         <div>
@@ -38,19 +28,17 @@ const ProfileData = (props: ProfileDataPropsType) => {
                 <b>About me:</b> {props.profile?.aboutMe}
             </div>
 
-            {/*<div>
-                <b>Contacts: </b> {Object.keys(props.contacts).map(contact => {
-
-                    return <Contact
-                        key={contact}
-                        contactTitle={contact}
-                        contactValue={contact}
-                    />
-                }
-            )}
-            </div>*/}
         </div>
     );
 };
 
 export default ProfileData;
+
+//===========TYPE================
+
+type ProfileDataPropsType = {
+    profile: ProfileType | null
+    contacts: ContactsType
+    isOwner: boolean
+    goToEditMode: () => void
+}

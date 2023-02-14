@@ -3,23 +3,6 @@ import friendFromBar2 from "../assets/img/friendFromBar2.jpg";
 import friendFromBar3 from "../assets/img/friendFromBar3.jpg";
 import {ActionType} from "./redux-store";
 
-
-export type SidebarUserType = {
-    id: string
-    followed: boolean,
-    photos: any
-    name: string
-    status: string
-    location: {
-        city: string
-        country: string
-    }
-}
-
-export type initialStateSidebarPageType = {
-    sidebarUsers: SidebarUserType[]
-}
-
 let initialStateSidebarPage: initialStateSidebarPageType = {
     sidebarUsers: [
         {
@@ -66,3 +49,21 @@ export const siderbarPageReducer = (state: initialStateSidebarPageType = initial
             return state
     }
 
+
+//===========TYPES=========
+
+export type SidebarUserType = {
+    id: string
+    followed: boolean,
+    photos: any
+    name: string
+    status: string
+    location: {
+        city: string
+        country: string
+    }
+}
+
+export type initialStateSidebarPageType = {
+    sidebarUsers: SidebarUserType[]
+}

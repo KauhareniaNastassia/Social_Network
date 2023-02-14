@@ -1,6 +1,5 @@
 import {ActionType, AppDispatchType} from "./redux-store";
-import {authAPI, LoginDataType} from "../api/api";
-import {getAuthUserThunkCreator, setAuthUserDataAC} from "./authReducer";
+import {getAuthUserThunkCreator} from "./authReducer";
 
 
 let initialAppState: InitialAppStateType = {
@@ -25,45 +24,38 @@ export const appReducer = (state: InitialAppStateType = initialAppState, action:
 
 //=======ACTIONS======
 
-export const setInitializedSuccessAC = (): setInitializedSuccessAType => {
-    return {
-        type: 'app/SET-INITIALIZED',
-    }
-}
+export const setInitializedSuccessAC = () => ({
+    type: 'app/SET-INITIALIZED',
+} as const)
 
-export const setAppErrorAC = (error: string | null): setAppErrorACType => {
-    return {
-        type: 'app/SET-ERROR',
-        error
-    }
-}
+export const setAppErrorAC = (error: string | null) => ({
+    type: 'app/SET-ERROR',
+    error
+} as const)
 
 
 //=======THUNK======
 
-export const initializeAppThunkCreator = () => {
-    return (dispatch: AppDispatchType) => {
-        let promise = dispatch(getAuthUserThunkCreator())
+export const initializeAppThunkCreator = () =>
+    async (dispatch: AppDispatchType) => {
 
-        Promise.all([promise])
-            .then(() => {
-                dispatch(setInitializedSuccessAC())
-            })
+        try {
+            let promise = dispatch(getAuthUserThunkCreator())
 
+            Promise.all([promise])
+                .then(() => {
+                    dispatch(setInitializedSuccessAC())
+                })
+        } catch (e) {
+        }
     }
-}
-
 
 
 //=======ACTION TYPES======
 
-export type setInitializedSuccessAType = {
-    type: 'app/SET-INITIALIZED',
-}
-export type setAppErrorACType = {
-    type: 'app/SET-ERROR',
-    error: string | null
-}
+export type AppActionsType =
+    | ReturnType<typeof setInitializedSuccessAC>
+    | ReturnType<typeof setAppErrorAC>
 
 
 //=======TYPES======

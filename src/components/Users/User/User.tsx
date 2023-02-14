@@ -5,14 +5,6 @@ import {Link} from "react-router-dom";
 import profileAvatar from "../../../assets/img/profileAvatar.svg";
 
 
-type UserPropsType = {
-    user: UserType
-    followingProgress: []
-    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
-    unFollowUsersTC: (userId: string) => void
-    followUsersTC: (userId: string) => void
-}
-
 export const User = (props: UserPropsType) => {
     return (
         <div className={css.userWrapper}>
@@ -55,4 +47,14 @@ export const User = (props: UserPropsType) => {
             </span>
         </div>
     )
+}
+
+//===========TYPE================
+
+type UserPropsType = {
+    user: UserType
+    followingProgress: []
+    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
+    unFollowUsersTC: (userId: string) => void
+    followUsersTC: (userId: string) => void
 }

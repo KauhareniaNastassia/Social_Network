@@ -24,6 +24,8 @@ export function withAuthRedirect<T>(Component: ComponentType<T>) {
     return ConnectedAuthRedirectComponent;
 };
 
+//===========TYPE================
+
 type mapStateToPropsForRedirectType = {
     isAuth: boolean
 }
