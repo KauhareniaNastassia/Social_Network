@@ -1,12 +1,10 @@
 import React, {Component} from "react";
 import {
-    followActionCreator,
+
     followUsersThunkCreator,
     getUsersThunkCreator,
-    setCurrentPageActionCreator,
-    toggleFollowingProgressActionCreator,
-    unfollowActionCreator,
-    unFollowUsersThunkCreator,
+
+    unFollowUsersThunkCreator, usersPageActions,
 } from "../../redux/usersPageReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -23,7 +21,8 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../redux/selectors/usersSelectors";
-import {FilterType, UserType} from "../../api/api";
+import {FilterType, UserType} from "../../api/usersAPI";
+
 
 
 
@@ -79,10 +78,10 @@ export const mapStateToUsersProps = (state: AppStateType): mapStateToUsersPropsT
 
 export const UsersContainer = compose<React.ComponentType>(
     connect(mapStateToUsersProps, {
-        follow: followActionCreator,
-        unfollow: unfollowActionCreator,
-        setCurrentPage: setCurrentPageActionCreator,
-        toggleFollowingProgress: toggleFollowingProgressActionCreator,
+        follow: usersPageActions.followActionCreator,
+        unfollow: usersPageActions.unfollowActionCreator,
+        setCurrentPage: usersPageActions.setCurrentPageActionCreator,
+        toggleFollowingProgress: usersPageActions.toggleFollowingProgressActionCreator,
         getUsersTC: getUsersThunkCreator,
         unFollowUsersTC: unFollowUsersThunkCreator,
         followUsersTC: followUsersThunkCreator

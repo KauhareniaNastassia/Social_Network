@@ -1,4 +1,4 @@
-import {ActionType} from "./redux-store";
+import {ActionType, InferActionsTypes} from "./redux-store";
 
 
 let initialStateDialogsPage: initialStateDialogsPageType = {
@@ -20,7 +20,7 @@ let initialStateDialogsPage: initialStateDialogsPageType = {
 export const dialogsPageReducer = (state: initialStateDialogsPageType = initialStateDialogsPage, action: ActionType): initialStateDialogsPageType => {
 
     switch (action.type) {
-        case "SEND-MESSAGE": {
+        case "dialogs/SEND-MESSAGE": {
             const newMessage: MessageType = {
                 messageId: 4,
                 message: state.newMessageText
@@ -34,7 +34,7 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
             return stateCopy
         }
 
-        case "UPDATE-NEW-MESSAGE-TEXT": {
+        case "dialogs/UPDATE-NEW-MESSAGE-TEXT": {
             let stateCopy = {
                 ...state,
                 newMessageText: action.updatedMessageText
@@ -50,20 +50,21 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
 
 //===========ACTIONS=========
 
-export const sendMessageAC = () => ({
-    type: 'SEND-MESSAGE'
-} as const)
+export const dialogsPageActions = {
 
-export const updateNewMessageTextAC = (updatedMessageText: string) => ({
-        type: 'UPDATE-NEW-MESSAGE-TEXT', updatedMessageText
-}as const)
+    sendMessageAC: () => ({
+        type: 'dialogs/SEND-MESSAGE'
+    } as const),
+    updateNewMessageTextAC: (updatedMessageText: string) => ({
+        type: 'dialogs/UPDATE-NEW-MESSAGE-TEXT', updatedMessageText
+    }as const)
+
+}
+
 
 //===========ACTION TYPES=========
 
-export type DialogsPageActionsType =
-    | ReturnType<typeof sendMessageAC>
-    | ReturnType<typeof updateNewMessageTextAC>
-
+export type DialogsPageActionsType = InferActionsTypes<typeof dialogsPageActions>
 
 //===========TYPES=========
 

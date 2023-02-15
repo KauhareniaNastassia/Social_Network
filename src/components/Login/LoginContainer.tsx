@@ -3,7 +3,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {loginThunkCreator} from "../../redux/authReducer";
 import {Login} from "./Login";
-import {LoginDataType} from "../../api/api";
+import {LoginDataType} from "../../api/authAPI";
 
 
 const mapStateToLoginPropsType = (state: AppStateType): mapStateToLoginPropsType => {

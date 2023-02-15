@@ -2,7 +2,7 @@ import React from "react";
 import css from './Users.module.css'
 import {Pagination} from "../../common/Pagination/Pagination";
 import {User} from "./User/User";
-import {FilterType, UserType} from "../../api/api";
+import {FilterType, UserType} from "../../api/usersAPI";
 
 
 

@@ -5,8 +5,7 @@ import userImg from '../../../assets/img/profileAvatar.svg'
 import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
 import ProfileData from "./ProfileData/ProfileData";
 import {ProfileDataForm, ProfileFormDataType} from "./ProfileDataForm/ProfileDataForm";
-import {ProfileType} from "../../../types/types";
-import {ProfileDataType} from "../../../api/api";
+import {ProfileDataType} from "../../../api/profileAPI";
 
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({

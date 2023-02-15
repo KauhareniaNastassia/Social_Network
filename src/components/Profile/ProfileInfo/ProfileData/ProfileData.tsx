@@ -1,6 +1,6 @@
 import React from 'react';
-import {ContactsType, ProfileType} from "../../../../types/types";
-import {ProfileDataType} from "../../../../api/api";
+import {ProfileDataType} from "../../../../api/profileAPI";
+
 
 
 const ProfileData: React.FC<ProfileDataPropsType> = ({

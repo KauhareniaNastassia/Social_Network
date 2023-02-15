@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
 import {Field, Form} from "react-final-form";
-import {ContactsType, ProfileType} from "../../../../types/types";
-import {ProfileDataType} from "../../../../api/api";
+import {ProfileDataType} from "../../../../api/profileAPI";
+
 
 
 export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({

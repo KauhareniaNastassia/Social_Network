@@ -1,6 +1,6 @@
 import React from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {FilterType} from "../../../api/api";
+import {FilterType} from "../../../api/usersAPI";
 
 
 

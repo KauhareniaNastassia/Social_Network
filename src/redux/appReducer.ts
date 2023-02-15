@@ -1,4 +1,4 @@
-import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
+import {ActionType, AppDispatchType, AppThunkType, InferActionsTypes} from "./redux-store";
 import {getAuthUserThunkCreator} from "./authReducer";
 
 
@@ -24,14 +24,19 @@ export const appReducer = (state = initialAppState, action: ActionType): Initial
 
 //=======ACTIONS======
 
-export const setInitializedSuccessAC = () => ({
-    type: 'app/SET-INITIALIZED',
-} as const)
+export const appActions = {
+    setInitializedSuccessAC: () => ({
+        type: 'app/SET-INITIALIZED',
+    } as const),
 
-export const setAppErrorAC = (error: string | null) => ({
-    type: 'app/SET-ERROR',
-    error
-} as const)
+    setAppErrorAC: (error: string | null) => ({
+        type: 'app/SET-ERROR',
+        error
+    } as const)
+
+}
+
+
 
 
 //=======THUNK======
@@ -44,7 +49,7 @@ export const initializeAppThunkCreator = (): AppThunkType =>
 
             Promise.all([promise])
                 .then(() => {
-                    dispatch(setInitializedSuccessAC())
+                    dispatch(appActions.setInitializedSuccessAC())
                 })
         } catch (e) {
         }
@@ -53,10 +58,7 @@ export const initializeAppThunkCreator = (): AppThunkType =>
 
 //=======ACTION TYPES======
 
-export type AppActionsType =
-    | ReturnType<typeof setInitializedSuccessAC>
-    | ReturnType<typeof setAppErrorAC>
-
+export type AppActionsType = InferActionsTypes<typeof appActions>
 
 //=======TYPES======
 

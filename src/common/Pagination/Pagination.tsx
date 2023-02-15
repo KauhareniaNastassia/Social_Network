@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import css from './Pagination.module.css'
 import {UsersSearchForm} from "../../components/Forms/UsersSearchForm/UsersSearchForm";
-import {FilterType} from "../../api/api";
-
+import {FilterType} from "../../api/usersAPI";
 
 export const Pagination = (props: UsersPropsType) => {
 

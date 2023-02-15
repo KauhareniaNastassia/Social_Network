@@ -1,6 +1,7 @@
-import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
-import {profileAPI, ProfileDataType} from "../api/api";
+import {ActionType, AppDispatchType, AppThunkType, InferActionsTypes} from "./redux-store";
 import {PhotosType, PostType, ProfileType} from "../types/types";
+import {usersPageActions} from "./usersPageReducer";
+import {profileAPI, ProfileDataType} from "../api/profileAPI";
 
 
 let initialState: initialStateProfilePageType = {
@@ -33,7 +34,7 @@ let initialState: initialStateProfilePageType = {
 
 export const profilePageReducer = (state: initialStateProfilePageType = initialState, action: ActionType): initialStateProfilePageType => {
     switch (action.type) {
-        case "ADD-POST": {
+        case "profile/ADD-POST": {
             const newPost: PostType = {
                 postId: 5,
                 message: state.newPostText,
@@ -47,7 +48,7 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
 
             return stateCopy;
         }
-        case "UPDATE-NEW-POST-TEXT": {
+        case "profile/UPDATE-NEW-POST-TEXT": {
             let stateCopy = {
                 ...state,
                 newPostText: action.updatedPostText
@@ -55,16 +56,16 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
 
             return stateCopy
         }
-        case 'SET-USER-PROFILE': {
+        case 'profile/SET-USER-PROFILE': {
             return {...state, profile: action.profile}
         }
-        case 'SET-STATUS': {
+        case 'profile/SET-STATUS': {
             return {...state, status: action.status}
         }
-        case 'DELETE-POST': {
+        case 'profile/DELETE-POST': {
             return {...state, posts: state.posts.filter(p => p.postId !== action.postId)}
         }
-        case 'SAVE-PHOTO': {
+        case 'profile/SAVE-PHOTO': {
             return {...state, profile: {...state.profile, photos: action.photo}as ProfileDataType}
         }
         default:
@@ -75,45 +76,43 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
 
 //===========ACTIONS=========
 
-export const addPostAC = (newPostText: string) => ({
-    type: 'ADD-POST', newPostText
-} as const)
+export const profilePageActions = {
 
-export const updateNewPostTextAC = (updatedPostText: string) => ({
-    type: 'UPDATE-NEW-POST-TEXT', updatedPostText
-} as const)
+    addPostAC: (newPostText: string) => ({
+        type: 'profile/ADD-POST', newPostText
+    } as const),
 
-export const setUserProfileAC = (profile: ProfileDataType | null) => ({
-    type: 'SET-USER-PROFILE',
-    profile
-} as const)
+    updateNewPostTextAC: (updatedPostText: string) => ({
+        type: 'profile/UPDATE-NEW-POST-TEXT', updatedPostText
+    } as const),
 
-export const setStatusAC = (status: string) => ({
-    type: 'SET-STATUS',
-    status
-} as const)
+    setUserProfileAC: (profile: ProfileDataType | null) => ({
+        type: 'profile/SET-USER-PROFILE',
+        profile
+    } as const),
 
-export const deletePostAC = (postId: number) => ({
-    type: 'DELETE-POST',
-    postId
-} as const)
+    setStatusAC: (status: string) => ({
+        type: 'profile/SET-STATUS',
+        status
+    } as const),
 
-export const savePhotoAC = (photo: PhotosType) => ({
-    type: 'SAVE-PHOTO',
-    photo
-} as const)
+    deletePostAC: (postId: number) => ({
+        type: 'profile/DELETE-POST',
+        postId
+    } as const),
+
+    savePhotoAC: (photo: PhotosType) => ({
+        type: 'profile/SAVE-PHOTO',
+        photo
+    } as const),
+
+}
+
 
 
 //===========ACTION TYPES=========
 
-export type ProfilePageActionType =
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof setUserProfileAC>
-    | ReturnType<typeof setStatusAC>
-    | ReturnType<typeof deletePostAC>
-    | ReturnType<typeof savePhotoAC>
-
+export type ProfilePageActionType = InferActionsTypes<typeof profilePageActions>
 
 //===========THUNK=========
 
@@ -122,7 +121,7 @@ export const getUserProfileThunkCreator = (profileId: number | null): AppThunkTy
         try {
             if(profileId) {
                 let res = await profileAPI.getProfile(profileId)
-                dispatch(setUserProfileAC(res))
+                dispatch(profilePageActions.setUserProfileAC(res))
             }
 
         } catch (e) {
@@ -136,7 +135,7 @@ export const getStatusThunkCreator = (profileId: number): AppThunkType =>
 
             try {
                 let res = await profileAPI.getStatus(profileId)
-                dispatch(setStatusAC(res))
+                dispatch(profilePageActions.setStatusAC(res))
             } catch (e) {
 
             }
@@ -149,7 +148,7 @@ export const updateStatusThunkCreator = (status: string): AppThunkType =>
         try {
             let res = await profileAPI.updateStatus(status)
             if (res.resultCode === 0) {
-                dispatch(setStatusAC(res))
+                dispatch(profilePageActions.setStatusAC(res))
             }
         } catch (e) {
 
@@ -163,7 +162,7 @@ export const savePhotoThunkCreator = (file: File): AppThunkType =>
         try {
             let res = await profileAPI.savePhoto(file)
             if (res.resultCode === 0)
-                dispatch(savePhotoAC(res.data.photos))
+                dispatch(profilePageActions.savePhotoAC(res.data.photos))
             /*dispatch(getUserProfileThunkCreator(userId))*/
         } catch (e) {
 

@@ -1,6 +1,8 @@
-import {ActionType, AppThunkType} from "./redux-store";
-import {setStatusAC} from "./profilePageReducer";
-import {authAPI, LoginDataType, profileAPI, ResultCodeEnum, securityAPI} from "../api/api";
+import {ActionType, AppThunkType, InferActionsTypes} from "./redux-store";
+import {ResultCodeEnum} from "../api/api";
+import {usersPageActions} from "./usersPageReducer";
+import {authAPI, LoginDataType} from "../api/authAPI";
+import {securityAPI} from "../api/securityAPI";
 
 
 let initialState: initialStateAuthType = {
@@ -35,45 +37,36 @@ export const authReducer = (state: initialStateAuthType = initialState, action: 
 
 //=======ACTIONS======
 
-export const setAuthUserDataAC = (authId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
-    type: 'auth/SET-USER-DATA',
-    data: {
-        authId,
-        email,
-        login,
-        isAuth
-    }
-} as const)
+export const authActions = {
 
-export const loginAC = (value: boolean) => ({
-    type: 'auth/LOGIN',
-    value
-} as const)
+    setAuthUserDataAC: (authId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
+        type: 'auth/SET-USER-DATA',
+        data: {
+            authId,
+            email,
+            login,
+            isAuth
+        }
+    } as const),
 
-export const getCaptchaURLSuccessAC = (captchaUrl: string) => ({
-    type: 'auth/GET-CAPTCHA-URL',
-    payload: {
-        captchaUrl
-    }
-} as const)
+    loginAC: (value: boolean) => ({
+        type: 'auth/LOGIN',
+        value
+    } as const),
+
+    getCaptchaURLSuccessAC: (captchaUrl: string) => ({
+        type: 'auth/GET-CAPTCHA-URL',
+        payload: {
+            captchaUrl
+        }
+    } as const)
+
+
+}
+
 
 
 //=======THUNK======
-
-
-export const updateStatusThunkCreator = (status: string):AppThunkType =>
-    async (dispatch) => {
-
-        try {
-            let res = await profileAPI.updateStatus(status)
-            if (res.resultCode === ResultCodeEnum.Success) {
-                dispatch(setStatusAC(res))
-            }
-        } catch (e) {
-
-        }
-    }
-
 
 export const getAuthUserThunkCreator = (): AppThunkType =>
     async (dispatch) => {
@@ -83,7 +76,7 @@ export const getAuthUserThunkCreator = (): AppThunkType =>
 
             if (data.resultCode === ResultCodeEnum.Success) {
                 let {id, login, email} = data.data
-                dispatch(setAuthUserDataAC(id, login, email, true))
+                dispatch(authActions.setAuthUserDataAC(id, login, email, true))
             }
         } catch (e) {
 
@@ -116,7 +109,7 @@ export const logoutThunkCreator = (): AppThunkType =>
         try {
             let res = await authAPI.logout()
             if (res.resultCode === ResultCodeEnum.Success) {
-                dispatch(setAuthUserDataAC(null, null, null, false))
+                dispatch(authActions.setAuthUserDataAC(null, null, null, false))
             }
         } catch (e) {
         }
@@ -130,7 +123,7 @@ export const getCaptchaURLThunkCreator = (): AppThunkType =>
             let res = await securityAPI.getCaptchaUrl()
             let captchaURL = res.data.url
 
-            dispatch(getCaptchaURLSuccessAC(captchaURL))
+            dispatch(authActions.getCaptchaURLSuccessAC(captchaURL))
 
         } catch (e) {
         }
@@ -140,11 +133,7 @@ export const getCaptchaURLThunkCreator = (): AppThunkType =>
 
 //=======ACTION TYPES======
 
-export type AuthActionsType =
-    | ReturnType<typeof setAuthUserDataAC>
-    | ReturnType<typeof loginAC>
-    | ReturnType<typeof getCaptchaURLSuccessAC>
-
+export type AuthActionsType = InferActionsTypes<typeof authActions>
 
 //=======TYPES======
 

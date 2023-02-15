@@ -11,8 +11,8 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm/ProfileDataForm";
-import {ProfileType} from "../../types/types";
-import {ProfileDataType} from "../../api/api";
+import {ProfileDataType} from "../../api/profileAPI";
+
 
 
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
