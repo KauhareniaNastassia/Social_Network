@@ -104,10 +104,10 @@ export type mapStateToUsersPropsType = {
 }
 export type mapDispatchToUsersPropsType = {
     setCurrentPage: (currentPage: number) => void
-    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
     getUsersTC: (currentPage: number, pageSize: number, filter: FilterType) => void
-    unFollowUsersTC: (userId: string) => void
-    followUsersTC: (userId: string) => void
+    unFollowUsersTC: (userId: number) => void
+    followUsersTC: (userId: number) => void
 }
 export type UsersPropsType = mapStateToUsersPropsType & mapDispatchToUsersPropsType
 export type UsersPageClassPropsType = Readonly<UsersPropsType>

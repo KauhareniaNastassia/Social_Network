@@ -117,10 +117,10 @@ export type ProfilePageActionType =
 
 //===========THUNK=========
 
-export const getUserProfileThunkCreator = (userId: number) =>
+export const getUserProfileThunkCreator = (profileId: number) =>
     async (dispatch: AppDispatchType) => {
         try {
-            let res = await profileAPI.getProfile(userId)
+            let res = await profileAPI.getProfile(profileId)
             dispatch(setUserProfileAC(res))
         } catch (e) {
 
@@ -128,11 +128,11 @@ export const getUserProfileThunkCreator = (userId: number) =>
     }
 
 
-export const getStatusThunkCreator = (userId: number) =>
+export const getStatusThunkCreator = (profileId: number) =>
         async (dispatch: AppDispatchType) => {
 
             try {
-                let res = await profileAPI.getStatus(userId)
+                let res = await profileAPI.getStatus(profileId)
                 dispatch(setStatusAC(res))
             } catch (e) {
 
@@ -171,12 +171,12 @@ export const savePhotoThunkCreator = (file: File) =>
 export const saveProfileThunkCreator = (profile: ProfileType) =>
     async (dispatch: AppDispatchType, getState: any) => {
 
-    const userId = getState().auth.userId
+    const profileId = getState().auth.userId
 
         try {
             let res = await profileAPI.saveProfile(profile)
             if (res.resultCode === 0) {
-                dispatch(getUserProfileThunkCreator(userId))
+                dispatch(getUserProfileThunkCreator(profileId))
             }
         } catch (e) {
 

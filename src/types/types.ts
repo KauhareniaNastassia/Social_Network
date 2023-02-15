@@ -8,7 +8,7 @@ export type PostType = {
 
 export type ProfileType = {
     aboutMe: string
-    userId: number
+    profileId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -35,7 +35,7 @@ export type PhotosType = {
 //==============USER PAGE TYPES ====================
 
 export type UserType = {
-    id: string
+    id: number
     followed: number,
     photos: PhotosType
     name: string

@@ -17,18 +17,18 @@ import {ProfileType} from "../../types/types";
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
     refreshProfile() {
-        let userId = this.props.match.params.userId
+        let profileId = this.props.match.params.profileId
 
-        if (!userId) {
-            userId = 24911
-            /*userId = this.props.autorizedUserId as number*/
-            if(!userId) {
+        if (!profileId) {
+            profileId = 24911
+            /*profileId = this.props.autorizedUserId as number*/
+            if(!profileId) {
                 this.props.history.push('/login')
             }
         }
 
-        this.props.getUserProfileTC(userId)
-        this.props.getUserStatusTC(userId)
+        this.props.getUserProfileTC(profileId)
+        this.props.getUserStatusTC(profileId)
     }
 
     componentDidMount() {
@@ -36,7 +36,7 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
     }
 
     componentDidUpdate() {
-        if (this.props.match.params.userId != this.props.match.params.userId)
+        if (this.props.match.params.profileId != this.props.match.params.profileId)
         this.refreshProfile()
     }
 
@@ -44,7 +44,7 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
         return (
             <Profile
                 {...this.props}
-                isOwner={!this.props.match.params.userId}
+                isOwner={!this.props.match.params.profileId}
                 profile={this.props.profile}
                 status={this.props.status}
                 updateStatus={this.props.updateStatusTC}
@@ -93,12 +93,12 @@ export type mapStateToProfilePropsType = {
     //isAuth: boolean
 }
 export type mapDispatchToProfilePropsType = {
-    getUserProfileTC: (userId: number) => void
-    getUserStatusTC: (userId: number) => void
+    getUserProfileTC: (profileId: number) => void
+    getUserStatusTC: (profileId: number) => void
     updateStatusTC: (status: string) => void
     savePhotoTC: (file: File) => void
     saveProfileTC: (formData: ProfileFormDataType) => void
 }
 type PathParamsType = {
-    userId: number
+    profileId: number
 }
