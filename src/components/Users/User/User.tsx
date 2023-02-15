@@ -2,7 +2,8 @@ import React from "react";
 import css from "./User.module.css"
 import {Link} from "react-router-dom";
 import profileAvatar from "../../../assets/img/profileAvatar.svg";
-import {UserType} from "../../../types/types";
+import {UserType} from "../../../api/api";
+
 
 
 export const User = (props: UserPropsType) => {

@@ -6,6 +6,7 @@ import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/Pro
 import ProfileData from "./ProfileData/ProfileData";
 import {ProfileDataForm, ProfileFormDataType} from "./ProfileDataForm/ProfileDataForm";
 import {ProfileType} from "../../../types/types";
+import {ProfileDataType} from "../../../api/api";
 
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
@@ -74,7 +75,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
 //===========TYPE================
 
 type ProfileInfoPropsType = {
-    profile: ProfileType | null
+    profile: ProfileDataType | null
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean

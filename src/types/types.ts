@@ -1,5 +1,7 @@
 //==============PROFILE PAGE TYPES ====================
 
+
+
 export type PostType = {
     postId: number,
     message: string
@@ -40,7 +42,7 @@ export type UserType = {
     photos: PhotosType
     name: string
     status: string
-    location: {
+    location?: {
         city: string
         country: string
     }

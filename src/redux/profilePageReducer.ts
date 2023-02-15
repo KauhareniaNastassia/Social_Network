@@ -1,5 +1,5 @@
 import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
-import {profileAPI} from "../api/api";
+import {profileAPI, ProfileDataType} from "../api/api";
 import {PhotosType, PostType, ProfileType} from "../types/types";
 
 
@@ -27,7 +27,7 @@ let initialState: initialStateProfilePageType = {
         },
     ] as PostType[],
     newPostText: '',
-    profile: null as ProfileType | null,
+    profile: null as ProfileDataType | null,
     status: ''
 }
 
@@ -65,7 +65,7 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
             return {...state, posts: state.posts.filter(p => p.postId !== action.postId)}
         }
         case 'SAVE-PHOTO': {
-            return {...state, profile: {...state.profile, photos: action.photo}as ProfileType}
+            return {...state, profile: {...state.profile, photos: action.photo}as ProfileDataType}
         }
         default:
             return state
@@ -83,7 +83,7 @@ export const updateNewPostTextAC = (updatedPostText: string) => ({
     type: 'UPDATE-NEW-POST-TEXT', updatedPostText
 } as const)
 
-export const setUserProfileAC = (profile: ProfileType | null) => ({
+export const setUserProfileAC = (profile: ProfileDataType | null) => ({
     type: 'SET-USER-PROFILE',
     profile
 } as const)
@@ -171,7 +171,7 @@ export const savePhotoThunkCreator = (file: File): AppThunkType =>
 
     }
 
-export const saveProfileThunkCreator = (profile: ProfileType): AppThunkType =>
+export const saveProfileThunkCreator = (profile: ProfileDataType): AppThunkType =>
     async (dispatch, getState) => {
 
     const profileId = getState().auth.authId
@@ -191,7 +191,7 @@ export const saveProfileThunkCreator = (profile: ProfileType): AppThunkType =>
 export type ProfilePageType = {
     posts: PostType[],
     newPostText: string,
-    profile: ProfileType | null
+    profile: ProfileDataType | null
     status: string
 }
 

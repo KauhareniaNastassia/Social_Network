@@ -12,6 +12,7 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm/ProfileDataForm";
 import {ProfileType} from "../../types/types";
+import {ProfileDataType} from "../../api/api";
 
 
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
@@ -86,7 +87,7 @@ export type ProfilePropsType = mapStateToProfilePropsType & mapDispatchToProfile
 // @ts-ignore
 export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 export type mapStateToProfilePropsType = {
-    profile: ProfileType | null
+    profile: ProfileDataType | null
     status: string
     authorizedUserId:  number | null
     isAuth: boolean

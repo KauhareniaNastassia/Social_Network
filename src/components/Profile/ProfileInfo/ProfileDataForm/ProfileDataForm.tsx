@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import {Field, Form} from "react-final-form";
 import {ContactsType, ProfileType} from "../../../../types/types";
+import {ProfileDataType} from "../../../../api/api";
 
 
 export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
@@ -56,11 +57,9 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                             autoFocus={true}
                             component="input"
                             type="checkbox"
-                            checked={lookingForAJobValue}
-                            onChange={() => setLookingForAJobValue(!lookingForAJobValue)}
                         />
 
-                        {lookingForAJobValue === true &&
+                        {profile?.lookingForAJob === true &&
                             <div>
                                 <label>Tell about job description:</label>
                                 <Field
@@ -91,7 +90,7 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 
 type ProfileDataFormPropsType = {
     onSubmitData: (formData: ProfileFormDataType) => void
-    profile: ProfileType | null
+    profile: ProfileDataType | null
     isOwner: boolean
 }
 

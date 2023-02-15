@@ -1,7 +1,6 @@
 import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
-import {usersAPI} from "../api/api";
+import {FilterType, GetUsersParamsType, usersAPI, UserType} from "../api/api";
 import {updateObjectInArray} from "../utils/helpers/object-helper";
-import {PhotosType, UserType} from "../types/types";
 
 
 let initialStateUsersPage: initialStateUsersPageType = {
@@ -105,11 +104,26 @@ export const setFilterActionCreator = (filter: FilterType) => ({
 
 //=======THUNK======
 
+/*export const getUsersThunkCreator = (params: GetUsersParamsType): AppThunkType =>
+    async (dispatch) => {
+
+        try {
+            dispatch(toggleIsFetchingActionCreator(true))
+            dispatch(setFilterActionCreator(params.filter))
+
+            let data = await usersAPI.getUsers(params)
+            dispatch(toggleIsFetchingActionCreator(false))
+            dispatch(setUsersActionCreator(data.items))
+            dispatch(setUsersTotalCountActionCreator(data.totalCount))
+        } catch (e) {
+
+        }
+    }*/
+
 export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType): AppThunkType =>
     async (dispatch) => {
 
         try {
-
             dispatch(toggleIsFetchingActionCreator(true))
             dispatch(setFilterActionCreator(filter))
 
@@ -122,10 +136,9 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number, filt
         }
     }
 
-const followUnfollowFlow = async (dispatch: AppDispatchType,
-                                  userId: number,
-                                  apiMethod: (arg0: number) => any,
-                                  actionCreator: (userId: number) => any) => {
+
+
+const followUnfollowFlow = async (dispatch: AppDispatchType, userId: number, apiMethod: (arg0: number) => any, actionCreator: (arg0: number) => any) => {
 
     dispatch(toggleFollowingProgressActionCreator(true, userId))
 
@@ -137,25 +150,17 @@ const followUnfollowFlow = async (dispatch: AppDispatchType,
     dispatch(toggleFollowingProgressActionCreator(false, userId))
 }
 
-export const unFollowUsersThunkCreator = (userId: number): AppThunkType =>
-    async (dispatch) => {
-
-        try {
-            followUnfollowFlow(dispatch, userId, usersAPI.unFollowUser.bind(usersAPI), unfollowActionCreator)
-        } catch (e) {
-
-        }
+export const unFollowUsersThunkCreator = (userId: number) => {
+    return async (dispatch: AppDispatchType) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.unFollowUser.bind(usersAPI), unfollowActionCreator)
     }
+}
 
-export const followUsersThunkCreator = (userId: number): AppThunkType =>
-    async (dispatch) => {
-
-        try {
-            followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), followActionCreator)
-        } catch (e) {
-
-        }
+export const followUsersThunkCreator = (userId: number) => {
+    return async (dispatch: AppDispatchType) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), followActionCreator)
     }
+}
 
 
 //=======ACTION TYPES======
@@ -180,10 +185,6 @@ export type initialStateUsersPageType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: []
-    filter: {
-        term: string
-        friend: null | boolean
-    }
+    filter: FilterType
 }
 
-export type FilterType = typeof initialStateUsersPage.filter

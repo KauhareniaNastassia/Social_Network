@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {
-    FilterType,
     followActionCreator,
     followUsersThunkCreator,
     getUsersThunkCreator,
@@ -24,7 +23,8 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../redux/selectors/usersSelectors";
-import {UserType} from "../../types/types";
+import {FilterType, UserType} from "../../api/api";
+
 
 
 export class UsersAPIContainer extends Component<UsersPageClassPropsType> {

@@ -1,5 +1,6 @@
 import React from 'react';
 import {ContactsType, ProfileType} from "../../../../types/types";
+import {ProfileDataType} from "../../../../api/api";
 
 
 const ProfileData: React.FC<ProfileDataPropsType> = ({
@@ -43,7 +44,7 @@ export default ProfileData;
 //===========TYPE================
 
 type ProfileDataPropsType = {
-    profile: ProfileType | null
+    profile: ProfileDataType | null
 
     isOwner: boolean
     goToEditMode: () => void

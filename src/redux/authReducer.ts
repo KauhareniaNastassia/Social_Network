@@ -1,7 +1,6 @@
-import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
-import {authAPI, LoginDataType, profileAPI, securityAPI} from "../api/api";
-import {setAppErrorAC} from "./appReducer";
-import {savePhotoAC, setStatusAC} from "./profilePageReducer";
+import {ActionType, AppThunkType} from "./redux-store";
+import {setStatusAC} from "./profilePageReducer";
+import {authAPI, LoginDataType, profileAPI, ResultCodeEnum, securityAPI} from "../api/api";
 
 
 let initialState: initialStateAuthType = {
@@ -67,7 +66,7 @@ export const updateStatusThunkCreator = (status: string):AppThunkType =>
 
         try {
             let res = await profileAPI.updateStatus(status)
-            if (res.resultCode === 0) {
+            if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(setStatusAC(res))
             }
         } catch (e) {
@@ -82,9 +81,9 @@ export const getAuthUserThunkCreator = (): AppThunkType =>
         try {
             let data = await authAPI.auth()
 
-            if (data.resultCode === 0) {
-                let {authId, login, email} = data.data.login
-                dispatch(setAuthUserDataAC(authId, login, email, true))
+            if (data.resultCode === ResultCodeEnum.Success) {
+                let {id, login, email} = data.data
+                dispatch(setAuthUserDataAC(id, login, email, true))
             }
         } catch (e) {
 
@@ -99,14 +98,12 @@ export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) =
         try {
             let res = await authAPI.login(data)
 
-            if (res.resultCode === 0) {
+            if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(getAuthUserThunkCreator())
             } else {
-                if (res.resultCode === 10) {
+                if (res.resultCode === ResultCodeEnum.CaptchaIsRequired) {
                     dispatch(getCaptchaURLThunkCreator())
                 }
-
-                dispatch(setAppErrorAC(res.data.messages[0]))
             }
         } catch (e) {
         }
@@ -118,7 +115,7 @@ export const logoutThunkCreator = (): AppThunkType =>
 
         try {
             let res = await authAPI.logout()
-            if (res.resultCode === 0) {
+            if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(setAuthUserDataAC(null, null, null, false))
             }
         } catch (e) {

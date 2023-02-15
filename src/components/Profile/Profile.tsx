@@ -3,6 +3,7 @@ import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm/ProfileDataForm";
 import {ProfileType} from "../../types/types";
+import {ProfileDataType} from "../../api/api";
 
 
 export const Profile: React.FC<ProfilePropsType> = ({
@@ -34,7 +35,7 @@ export const Profile: React.FC<ProfilePropsType> = ({
 //===========TYPE================
 
 type ProfilePropsType = {
-    profile: ProfileType | null
+    profile: ProfileDataType | null
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean
