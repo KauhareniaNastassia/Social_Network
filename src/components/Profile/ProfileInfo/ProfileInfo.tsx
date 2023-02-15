@@ -1,11 +1,11 @@
 import React, {ChangeEvent, useState} from "react";
 import css from "./ProfileInfo.module.css"
 import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat";
-import {ProfileType} from "../../../redux/profilePageReducer";
 import userImg from '../../../assets/img/profileAvatar.svg'
 import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
 import ProfileData from "./ProfileData/ProfileData";
 import {ProfileDataForm, ProfileFormDataType} from "./ProfileDataForm/ProfileDataForm";
+import {ProfileType} from "../../../types/types";
 
 
 

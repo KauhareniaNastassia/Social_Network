@@ -34,7 +34,7 @@ export const HeaderContainer = connect(mapStateToHeaderProps, {
 
 type mapStateToHeaderPropsType = {
     isAuth: boolean
-    login: null
+    login: string | null
 }
 
 type MapDispatchToHeaderPropsType = {

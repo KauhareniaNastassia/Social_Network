@@ -4,14 +4,14 @@ import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {
     getStatusThunkCreator,
-    getUserProfileThunkCreator,
-    ProfileType, savePhotoThunkCreator, saveProfileThunkCreator,
+    getUserProfileThunkCreator, savePhotoThunkCreator, saveProfileThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profilePageReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm/ProfileDataForm";
+import {ProfileType} from "../../types/types";
 
 
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
@@ -20,8 +20,8 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
         let userId = this.props.match.params.userId
 
         if (!userId) {
-            userId = '24911'
-            /*userId = this.props.autorizedUserId as unknown as string*/
+            userId = 24911
+            /*userId = this.props.autorizedUserId as number*/
             if(!userId) {
                 this.props.history.push('/login')
             }
@@ -83,21 +83,22 @@ export const ProfileContainer = compose<React.ComponentType>(
 //===========TYPE================
 
 export type ProfilePropsType = mapStateToProfilePropsType & mapDispatchToProfilePropsType
+// @ts-ignore
 export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 export type mapStateToProfilePropsType = {
     profile: ProfileType | null
     status: string
-    autorizedUserId:  null
-    isAuth:boolean
+    autorizedUserId:  number | null
+    isAuth: boolean
     //isAuth: boolean
 }
 export type mapDispatchToProfilePropsType = {
-    getUserProfileTC: (userId: string) => void
-    getUserStatusTC: (status: string) => void
+    getUserProfileTC: (userId: number) => void
+    getUserStatusTC: (userId: number) => void
     updateStatusTC: (status: string) => void
     savePhotoTC: (file: File) => void
     saveProfileTC: (formData: ProfileFormDataType) => void
 }
 type PathParamsType = {
-    userId: string
+    userId: number
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import css from "./User.module.css"
-import {UserType} from "../../../redux/usersPageReducer";
 import {Link} from "react-router-dom";
 import profileAvatar from "../../../assets/img/profileAvatar.svg";
+import {UserType} from "../../../types/types";
 
 
 export const User = (props: UserPropsType) => {
@@ -25,7 +25,7 @@ export const User = (props: UserPropsType) => {
                             onClick={() => {
                                 props.unFollowUsersTC(props.user.id)
                             }}
-                        className={css.unfollowButton}>
+                            className={css.unfollowButton}>
                             Unfollow
                         </button>
 

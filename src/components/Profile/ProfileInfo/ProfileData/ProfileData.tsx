@@ -1,5 +1,6 @@
 import React from 'react';
-import {ContactsType, ProfileType} from "../../../../redux/profilePageReducer";
+import {ContactsType, ProfileType} from "../../../../types/types";
+
 
 
 const ProfileData = (props: ProfileDataPropsType) => {

@@ -107,5 +107,5 @@ export type LoginErrorType = {
 
 type LoginFormPropsType = {
     loginThunkCreator: (data: LoginDataType, setStatus: any) => void
-    captchaURL: null
+    captchaURL: string | null
 }

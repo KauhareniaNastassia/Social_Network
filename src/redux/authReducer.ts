@@ -5,11 +5,11 @@ import {savePhotoAC, setStatusAC} from "./profilePageReducer";
 
 
 let initialState: initialStateAuthType = {
-    userId: null,
-    email: null,
-    login: null,
+    userId: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
     isAuth: false,
-    captcha: null
+    captcha: null as string | null
 }
 
 export const authReducer = (state: initialStateAuthType = initialState, action: ActionType): initialStateAuthType => {
@@ -36,7 +36,7 @@ export const authReducer = (state: initialStateAuthType = initialState, action: 
 
 //=======ACTIONS======
 
-export const setAuthUserDataAC = (userId: null, email: null, login: null, isAuth: boolean) => ({
+export const setAuthUserDataAC = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
     type: 'auth/SET-USER-DATA',
     data: {
         userId,
@@ -156,15 +156,14 @@ export type AuthType = {
     email: null,
     login: null,
     isAuth: boolean,
-
 }
 
 export type initialStateAuthType = {
-    userId: null,
-    email: null,
-    login: null,
+    userId: number | null,
+    email: string | null,
+    login: string | null,
     isAuth: boolean
-    captcha: null
+    captcha: string | null
 }
 
 

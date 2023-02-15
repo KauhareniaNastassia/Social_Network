@@ -1,8 +1,9 @@
 import React from "react";
 import css from './Users.module.css'
-import {FilterType, UserType} from "../../redux/usersPageReducer";
+import {FilterType} from "../../redux/usersPageReducer";
 import {Pagination} from "../../common/Pagination/Pagination";
 import {User} from "./User/User";
+import {UserType} from "../../types/types";
 
 
 

@@ -1,32 +1,33 @@
 import {ActionType, AppDispatchType} from "./redux-store";
 import {profileAPI} from "../api/api";
+import {PhotosType, PostType, ProfileType} from "../types/types";
 
 
 let initialState: initialStateProfilePageType = {
     posts: [
         {
-            id: '1',
+            postId: 1,
             message: "Hi, how are you?",
             likesCount: 15
         },
         {
-            id: '2',
+            postId: 2,
             message: "It is my first post",
             likesCount: 5
         },
         {
-            id: '3',
+            postId: 3,
             message: "My dog is the best dog ever",
             likesCount: 7
         },
         {
-            id: '4',
+            postId: 4,
             message: "Such a beautiful squirrel",
             likesCount: 18
         },
     ] as PostType[],
     newPostText: '',
-    profile: null,
+    profile: null as ProfileType | null,
     status: ''
 }
 
@@ -34,7 +35,7 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
     switch (action.type) {
         case "ADD-POST": {
             const newPost: PostType = {
-                id: '5',
+                postId: 5,
                 message: state.newPostText,
                 likesCount: 5,
             }
@@ -61,11 +62,10 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
             return {...state, status: action.status}
         }
         case 'DELETE-POST': {
-            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+            return {...state, posts: state.posts.filter(p => p.postId !== action.postId)}
         }
         case 'SAVE-PHOTO': {
-            // @ts-ignore
-            return {...state, profile: {...state.profile, photos: action.data}}
+            return {...state, profile: {...state.profile, photos: action.photo}as ProfileType}
         }
         default:
             return state
@@ -75,8 +75,8 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
 
 //===========ACTIONS=========
 
-export const addPostAC = () => ({
-    type: 'ADD-POST',
+export const addPostAC = (newPostText: string) => ({
+    type: 'ADD-POST', newPostText
 } as const)
 
 export const updateNewPostTextAC = (updatedPostText: string) => ({
@@ -93,7 +93,7 @@ export const setStatusAC = (status: string) => ({
     status
 } as const)
 
-export const deletePostAC = (postId: string) => ({
+export const deletePostAC = (postId: number) => ({
     type: 'DELETE-POST',
     postId
 } as const)
@@ -117,7 +117,7 @@ export type ProfilePageActionType =
 
 //===========THUNK=========
 
-export const getUserProfileThunkCreator = (userId: string) =>
+export const getUserProfileThunkCreator = (userId: number) =>
     async (dispatch: AppDispatchType) => {
         try {
             let res = await profileAPI.getProfile(userId)
@@ -128,7 +128,7 @@ export const getUserProfileThunkCreator = (userId: string) =>
     }
 
 
-export const getStatusThunkCreator = (userId: string) =>
+export const getStatusThunkCreator = (userId: number) =>
         async (dispatch: AppDispatchType) => {
 
             try {
@@ -169,12 +169,14 @@ export const savePhotoThunkCreator = (file: File) =>
     }
 
 export const saveProfileThunkCreator = (profile: ProfileType) =>
-    async (dispatch: AppDispatchType) => {
+    async (dispatch: AppDispatchType, getState: any) => {
+
+    const userId = getState().auth.userId
 
         try {
             let res = await profileAPI.saveProfile(profile)
             if (res.resultCode === 0) {
-                dispatch(getUserProfileThunkCreator(profile.userId))
+                dispatch(getUserProfileThunkCreator(userId))
             }
         } catch (e) {
 
@@ -182,11 +184,6 @@ export const saveProfileThunkCreator = (profile: ProfileType) =>
     }
 
 //===========TYPES=========
-export type PostType = {
-    id: string,
-    message: string
-    likesCount: number
-}
 
 export type ProfilePageType = {
     posts: PostType[],
@@ -197,29 +194,5 @@ export type ProfilePageType = {
 
 type initialStateProfilePageType = ProfilePageType
 
-export type ProfileType = {
-    aboutMe: string
-    userId: string
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: ContactsType
-    photos: PhotosType
-}
 
-export type ContactsType = {
-    github: string
-    vk: string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
-}
-
-type PhotosType = {
-    small: string | null
-    large: string | null
-}
 

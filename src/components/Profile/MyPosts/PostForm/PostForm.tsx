@@ -3,21 +3,21 @@ import css from './PostForm.module.css'
 import {SubmitHandler, useForm} from "react-hook-form";
 
 
-type PostData = {
+export type PostData = {
     post: string
 }
 
 type PostFormPropsType = {
     newPostText: string
-    addPost: () => void
-    updateNewPostText:(updatedPostText: string) => void
+    addPost: (newPostText: string) => void
+    updateNewPostText: (updatedPostText: string) => void
 }
 
-export const PostForm = (props: PostFormPropsType) =>  {
+export const PostForm = (props: PostFormPropsType) => {
 
-    const[post, setPost] = useState('')
+    const [post, setPost] = useState('')
 
-    const { register, handleSubmit, formState: {errors} } = useForm<PostData>({
+    const {register, handleSubmit, formState: {errors}} = useForm<{ post: string }>({
         defaultValues: {
             post: '',
         },
@@ -25,10 +25,10 @@ export const PostForm = (props: PostFormPropsType) =>  {
     });
 
 
-    const onSubmit: SubmitHandler<PostData> = (post: PostData) => {
-        props.addPost()
+    const onSubmit: SubmitHandler<PostData> = ({post}) => {
+        props.addPost(post)
         setPost('')
-        console.log(post)
+
     }
 
     const onEnterPress = (key: string) => {
@@ -59,13 +59,14 @@ export const PostForm = (props: PostFormPropsType) =>  {
                             maxLength: {
                                 value: 280,
                                 message: "But don't overdo it, 280 characters should be more than enough!"
-                            }}) }
+                            }
+                        })}
                         onChange={onPostChangeHandler}
                         value={post}
                     />
                 </div>
 
-                {errors.post ? <div>{Object.values(errors).map( (e,idx) => {
+                {errors.post ? <div>{Object.values(errors).map((e, idx) => {
                     // @ts-ignore
                     return (<p key={idx}>{e.message}</p>)
                 })}</div> : null}
@@ -74,7 +75,8 @@ export const PostForm = (props: PostFormPropsType) =>  {
                     <label></label>
                     <button
                         type="submit"
-                    >Add post</button>
+                    >Add post
+                    </button>
                 </div>
             </form>
         </div>

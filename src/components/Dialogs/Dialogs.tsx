@@ -10,11 +10,11 @@ export const Dialogs = (props: DialogsPropsType) => {
     return (
         <div className={css.dialogs}>
             <div className={css.dialogsItems}>
-                {props.dialogsPage.dialogs.map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>)}
+                {props.dialogsPage.dialogs.map(dialog => <DialogItem key={dialog.dialogId} name={dialog.name} dialogId={dialog.dialogId}/>)}
 
             </div>
             <div className={css.messages}>
-                {props.dialogsPage.messages.map(message => <Message key={message.id} message={message.message}/>)}
+                {props.dialogsPage.messages.map(message => <Message key={message.messageId} message={message.message}/>)}
             </div>
 
             <MessageForm sendMessage={props.sendMessage}

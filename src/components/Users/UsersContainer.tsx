@@ -8,7 +8,6 @@ import {
     toggleFollowingProgressActionCreator,
     unfollowActionCreator,
     unFollowUsersThunkCreator,
-    UserType
 } from "../../redux/usersPageReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -25,6 +24,7 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../redux/selectors/usersSelectors";
+import {UserType} from "../../types/types";
 
 
 export class UsersAPIContainer extends Component<UsersPageClassPropsType> {

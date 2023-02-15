@@ -3,15 +3,15 @@ import {ActionType} from "./redux-store";
 
 let initialStateDialogsPage: initialStateDialogsPageType = {
     dialogs: [
-        {id: '1', name: "Nastassia"},
-        {id: '2', name: "Lena"},
-        {id: '3', name: "Lesya"},
-        {id: '4', name: "Olga"},
+        {dialogId: 1, name: "Nastassia"},
+        {dialogId: 2, name: "Lena"},
+        {dialogId: 3, name: "Lesya"},
+        {dialogId: 4, name: "Olga"},
     ] as DialogType[],
     messages: [
-        {id: '1', message: "Hi?"},
-        {id: '2', message: "How is your cat?"},
-        {id: '3', message: "Woof-woof"},
+        {messageId: 1, message: "Hi?"},
+        {messageId: 2, message: "How is your cat?"},
+        {messageId: 3, message: "Woof-woof"},
     ] as MessageType[],
     newMessageText: ''
 }
@@ -22,7 +22,7 @@ export const dialogsPageReducer = (state: initialStateDialogsPageType = initialS
     switch (action.type) {
         case "SEND-MESSAGE": {
             const newMessage: MessageType = {
-                id: '4',
+                messageId: 4,
                 message: state.newMessageText
             }
 
@@ -68,11 +68,11 @@ export type DialogsPageActionsType =
 //===========TYPES=========
 
 export type DialogType = {
-    id: string,
+    dialogId: number,
     name: string
 }
 export type MessageType = {
-    id: string,
+    messageId: number,
     message: string
 }
 

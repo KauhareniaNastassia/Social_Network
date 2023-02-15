@@ -4,10 +4,10 @@ import {getAuthUserThunkCreator} from "./authReducer";
 
 let initialAppState: InitialAppStateType = {
     initialized: false,
-    error: null as null | string,
+    error: null
 }
 
-export const appReducer = (state: InitialAppStateType = initialAppState, action: ActionType): InitialAppStateType => {
+export const appReducer = (state = initialAppState, action: ActionType): InitialAppStateType => {
 
     switch (action.type) {
         case 'app/SET-INITIALIZED':

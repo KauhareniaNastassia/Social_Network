@@ -1,8 +1,8 @@
 import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../redux/profilePageReducer";
 import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm/ProfileDataForm";
+import {ProfileType} from "../../types/types";
 
 
 export const Profile = (props: ProfilePropsType) => {

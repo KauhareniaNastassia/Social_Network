@@ -1,12 +1,13 @@
 import {ActionType, AppDispatchType} from "./redux-store";
 import {usersAPI} from "../api/api";
 import {updateObjectInArray} from "../utils/helpers/object-helper";
+import {PhotosType, UserType} from "../types/types";
 
 
 let initialStateUsersPage: initialStateUsersPageType = {
     users: [],
     pageSize: 20,
-    totalUsersCount: 55,
+    totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
     followingInProgress: [],
@@ -156,17 +157,7 @@ export type UsersPageActionsType =
 
 //=======TYPES======
 
-export type UserType = {
-    id: string
-    followed: boolean,
-    photos: any
-    name: string
-    status: string
-    location: {
-        city: string
-        country: string
-    }
-}
+
 
 export type initialStateUsersPageType = {
     users: UserType[],

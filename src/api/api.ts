@@ -1,5 +1,6 @@
 import axios from "axios";
-import {ProfileType} from "../redux/profilePageReducer";
+import {ProfileType} from "../types/types";
+
 
 const instance = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
@@ -25,11 +26,11 @@ export const authAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userId: string) {
+    getProfile(userId: number) {
         return instance.get(`profile/${userId}`)
             .then(res => res.data)
     },
-    getStatus(userId: string) {
+    getStatus(userId: number) {
         return instance.get(`profile/status/${userId}`)
             .then(res => res.data)
     },
@@ -83,7 +84,7 @@ export type LoginDataType = {
     email: string
     password: string
     rememberMe: boolean
-    captcha?: null
+    captcha?: string
 }
 
 

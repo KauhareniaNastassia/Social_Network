@@ -1,8 +1,7 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Contact} from "../Contact/Contact";
-import {ContactsType, ProfileType} from "../../../../redux/profilePageReducer";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {Form, Field} from "react-final-form";
+import React, {useState} from 'react';
+
+import {Field, Form} from "react-final-form";
+import {ContactsType, ProfileType} from "../../../../types/types";
 
 
 export const ProfileDataForm = (props: ProfileDataFormPropsType) => {

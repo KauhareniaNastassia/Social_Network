@@ -22,7 +22,7 @@ export const LoginContainer = connect(mapStateToLoginPropsType, {
 
 type mapStateToLoginPropsType = {
     isAuth: boolean
-    captchaURL: null
+    captchaURL: string | null
 }
 
 type MapDispatchToLoginPropsType = {
