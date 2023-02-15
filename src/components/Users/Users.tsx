@@ -6,8 +6,7 @@ import {User} from "./User/User";
 import {UserType} from "../../types/types";
 
 
-
-export const Users = (props: UsersPropsType) => {
+export const Users: React.FC<UsersPropsType> = ({...props}) => {
     return (
         <div className={css.usersWrapper}>
             <Pagination

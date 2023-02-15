@@ -1,4 +1,4 @@
-import {ActionType, AppDispatchType} from "./redux-store";
+import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
 import {profileAPI} from "../api/api";
 import {PhotosType, PostType, ProfileType} from "../types/types";
 
@@ -117,19 +117,22 @@ export type ProfilePageActionType =
 
 //===========THUNK=========
 
-export const getUserProfileThunkCreator = (profileId: number) =>
-    async (dispatch: AppDispatchType) => {
+export const getUserProfileThunkCreator = (profileId: number | null): AppThunkType =>
+    async (dispatch) => {
         try {
-            let res = await profileAPI.getProfile(profileId)
-            dispatch(setUserProfileAC(res))
+            if(profileId) {
+                let res = await profileAPI.getProfile(profileId)
+                dispatch(setUserProfileAC(res))
+            }
+
         } catch (e) {
 
         }
     }
 
 
-export const getStatusThunkCreator = (profileId: number) =>
-        async (dispatch: AppDispatchType) => {
+export const getStatusThunkCreator = (profileId: number): AppThunkType =>
+        async (dispatch) => {
 
             try {
                 let res = await profileAPI.getStatus(profileId)
@@ -140,8 +143,8 @@ export const getStatusThunkCreator = (profileId: number) =>
         }
 
 
-export const updateStatusThunkCreator = (status: string) =>
-    async (dispatch: AppDispatchType) => {
+export const updateStatusThunkCreator = (status: string): AppThunkType =>
+    async (dispatch) => {
 
         try {
             let res = await profileAPI.updateStatus(status)
@@ -154,8 +157,8 @@ export const updateStatusThunkCreator = (status: string) =>
     }
 
 
-export const savePhotoThunkCreator = (file: File) =>
-    async (dispatch: AppDispatchType) => {
+export const savePhotoThunkCreator = (file: File): AppThunkType =>
+    async (dispatch) => {
 
         try {
             let res = await profileAPI.savePhoto(file)
@@ -168,10 +171,10 @@ export const savePhotoThunkCreator = (file: File) =>
 
     }
 
-export const saveProfileThunkCreator = (profile: ProfileType) =>
-    async (dispatch: AppDispatchType, getState: any) => {
+export const saveProfileThunkCreator = (profile: ProfileType): AppThunkType =>
+    async (dispatch, getState) => {
 
-    const profileId = getState().auth.userId
+    const profileId = getState().auth.authId
 
         try {
             let res = await profileAPI.saveProfile(profile)

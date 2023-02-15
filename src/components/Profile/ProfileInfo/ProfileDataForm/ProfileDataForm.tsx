@@ -4,20 +4,16 @@ import {Field, Form} from "react-final-form";
 import {ContactsType, ProfileType} from "../../../../types/types";
 
 
-export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
+export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
+                                                                        onSubmitData,
+                                                                        profile,
+                                                                        isOwner
+                                                                    }) => {
 
-    const [fullNameValue, setFullNameValue] = useState(props.profile?.fullName)
-    const [lookingForAJobValue, setLookingForAJobValue] = useState(props.profile?.lookingForAJob)
-    const [lookingForAJobDescrValue, setLookingForAJobDescrValue] = useState(props.profile?.lookingForAJobDescription)
-    const [aboutMeValue, setAboutMeValue] = useState(props.profile?.aboutMe)
-
-
-    /*const onChangeFullName = (e: ChangeEvent<HTMLInputElement>) => {
-        setFullNameValue(e.currentTarget.value)
-    }*/
+    const [lookingForAJobValue, setLookingForAJobValue] = useState(profile?.lookingForAJob)
 
     const onSubmit = (values: ProfileFormDataType) => {
-        props.onSubmitData(values)
+        onSubmitData(values)
 
         /*window.alert(JSON.stringify(values))*/
     }
@@ -26,19 +22,19 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
         <Form
             onSubmit={onSubmit}
             initialValues={{
-                fullName: props.profile?.fullName,
-                lookingForAJob: lookingForAJobValue,
-                lookingForAJobDescription: lookingForAJobDescrValue,
-                aboutMe: aboutMeValue
+                fullName: profile?.fullName,
+                lookingForAJob: profile?.lookingForAJob,
+                lookingForAJobDescription: profile?.lookingForAJobDescription,
+                aboutMe: profile?.aboutMe
             }}
             render={({handleSubmit, form, submitting, pristine, values}) => (
 
 
                 <form onSubmit={handleSubmit}>
 
-                    {props.isOwner && <div>
+                    {isOwner && <div>
 
-                        <button type="submit">
+                        <button type="submit" >
                             Save
                         </button>
 
@@ -68,7 +64,6 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
                             <div>
                                 <label>Tell about job description:</label>
                                 <Field
-                                    value={lookingForAJobDescrValue}
                                     name="lookingForAJobDescription"
                                     component="textarea"
                                     type="text"
@@ -77,12 +72,9 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
 
                     </div>
 
-
-
                     <div>
                         <label>About me</label>
                         <Field
-                            value={aboutMeValue}
                             name="aboutMe"
                             component="textarea"
                             placeholder="About me"/>
@@ -92,10 +84,7 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
                 </form>
             )}
         />
-
     )
-
-
 }
 
 //===========TYPE================
@@ -103,7 +92,6 @@ export const ProfileDataForm = (props: ProfileDataFormPropsType) => {
 type ProfileDataFormPropsType = {
     onSubmitData: (formData: ProfileFormDataType) => void
     profile: ProfileType | null
-    contacts: ContactsType
     isOwner: boolean
 }
 
@@ -112,6 +100,5 @@ export type ProfileFormDataType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     aboutMe: string
-
 }
 

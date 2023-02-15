@@ -36,17 +36,3 @@ export const getFollowingInProgress = (state: AppStateType) => {
 export const getFilter = (state: AppStateType) => {
     return state.usersPage.filter
 }
-
-
-/*
-export const mapStateToUsersProps = (state: AppStateType): mapStateToUsersPropsType => {
-    return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
-        filter: state.usersPage.filter
-    }
-}*/

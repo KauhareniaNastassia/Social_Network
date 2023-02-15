@@ -17,18 +17,18 @@ import {ProfileType} from "../../types/types";
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
     refreshProfile() {
-        let profileId = this.props.match.params.profileId
+        let userId = this.props.match.params.userId
 
-        if (!profileId) {
-            profileId = 24911
-            /*profileId = this.props.autorizedUserId as number*/
-            if(!profileId) {
+        if (!userId) {
+            userId = 24911
+            /*profileId = this.props.authorizedUserId as number*/
+            if(!userId) {
                 this.props.history.push('/login')
             }
         }
 
-        this.props.getUserProfileTC(profileId)
-        this.props.getUserStatusTC(profileId)
+        this.props.getUserProfileTC(userId)
+        this.props.getUserStatusTC(userId)
     }
 
     componentDidMount() {
@@ -36,7 +36,7 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
     }
 
     componentDidUpdate() {
-        if (this.props.match.params.profileId != this.props.match.params.profileId)
+        if (this.props.match.params.userId != this.props.match.params.userId)
         this.refreshProfile()
     }
 
@@ -44,7 +44,7 @@ export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
         return (
             <Profile
                 {...this.props}
-                isOwner={!this.props.match.params.profileId}
+                isOwner={!this.props.match.params.userId}
                 profile={this.props.profile}
                 status={this.props.status}
                 updateStatus={this.props.updateStatusTC}
@@ -60,7 +60,7 @@ export const mapStateToProfileProps = (state: AppStateType): mapStateToProfilePr
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        autorizedUserId: state.auth.userId,
+        authorizedUserId: state.auth.authId,
         isAuth: state.auth.isAuth
     }
 }
@@ -88,7 +88,7 @@ export type ProfilePageClassPropsType = RouteComponentProps<PathParamsType> & Pr
 export type mapStateToProfilePropsType = {
     profile: ProfileType | null
     status: string
-    autorizedUserId:  number | null
+    authorizedUserId:  number | null
     isAuth: boolean
     //isAuth: boolean
 }
@@ -100,5 +100,5 @@ export type mapDispatchToProfilePropsType = {
     saveProfileTC: (formData: ProfileFormDataType) => void
 }
 type PathParamsType = {
-    profileId: number
+    userId: number
 }

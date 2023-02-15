@@ -1,23 +1,23 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 
 
-export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) => {
+export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> = ({status, updateStatus}) => {
 
     const [editMode, setEditMode] = useState(false)
-    const [inputValue, setInputValue] = useState(props.status)
+    const [inputValue, setInputValue] = useState(status)
 
     const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.currentTarget.value)
     }
 
-    const updateStatus = () => {
+    const updateStatusHandler = () => {
         setEditMode(false)
-        props.updateStatus(inputValue)
+        updateStatus(inputValue)
     }
 
     useEffect(() => {
-        setInputValue(props.status)
-    }, [props.status])
+        setInputValue(status)
+    }, [status])
 
     return (
         <div>
@@ -26,7 +26,7 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
                     <b>Status: </b>
                     <span
                         onDoubleClick={() => setEditMode(true)}>
-                            {props.status || 'Tell everyone what happened!'}
+                            {status || 'Tell everyone what happened!'}
                         </span>
                 </div>
             }
@@ -37,7 +37,7 @@ export const ProfileStatusWithHooks = (props: ProfileStatusWithHooksPropsType) =
                         value={inputValue}
                         onChange={onChangeInput}
                         autoFocus={true}
-                        onBlur={updateStatus}
+                        onBlur={updateStatusHandler}
                     >
                     </input>
                 </div>}

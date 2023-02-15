@@ -2,31 +2,36 @@ import React from 'react';
 import {ContactsType, ProfileType} from "../../../../types/types";
 
 
-
-const ProfileData = (props: ProfileDataPropsType) => {
+const ProfileData: React.FC<ProfileDataPropsType> = ({
+                                                         isOwner,
+                                                         goToEditMode,
+                                                         profile,
+                                                     }) => {
 
     return (
         <div>
 
-            {props.isOwner && <div> <button onClick={props.goToEditMode}>Edit</button> </div>}
+            {isOwner && <div>
+                <button onClick={goToEditMode}>Edit</button>
+            </div>}
 
             <div>
-                {props.profile?.fullName}
+                {profile?.fullName}
             </div>
 
             <div>
-                <b>Looking for a job:</b> {props.profile?.lookingForAJob ? 'yes' : 'no'}
+                <b>Looking for a job:</b> {profile?.lookingForAJob ? 'yes' : 'no'}
             </div>
 
             {
-                props.profile?.lookingForAJob &&
+                profile?.lookingForAJob &&
                 <div>
-                    <b>My professional skills:</b> {props.profile?.lookingForAJobDescription}
+                    <b>My professional skills:</b> {profile?.lookingForAJobDescription}
                 </div>
             }
 
             <div>
-                <b>About me:</b> {props.profile?.aboutMe}
+                <b>About me:</b> {profile?.aboutMe}
             </div>
 
         </div>
@@ -39,7 +44,7 @@ export default ProfileData;
 
 type ProfileDataPropsType = {
     profile: ProfileType | null
-    contacts: ContactsType
+
     isOwner: boolean
     goToEditMode: () => void
 }

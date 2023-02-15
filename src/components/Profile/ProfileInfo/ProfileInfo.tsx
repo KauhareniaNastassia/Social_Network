@@ -8,33 +8,39 @@ import {ProfileDataForm, ProfileFormDataType} from "./ProfileDataForm/ProfileDat
 import {ProfileType} from "../../../types/types";
 
 
-
-export const ProfileInfo = (props: ProfileInfoPropsType) => {
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
+                                                                profile,
+                                                                status,
+                                                                updateStatus,
+                                                                isOwner,
+                                                                savePhoto,
+                                                                saveProfile
+                                                            }) => {
 
     const [editMode, setEditMode] = useState(false)
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files) {
-            props.savePhoto(e.currentTarget.files[0])
+            savePhoto(e.currentTarget.files[0])
         }
     }
 
     const onSubmitData = (formData: ProfileFormDataType) => {
-        props.saveProfile(formData)
+        saveProfile(formData)
 
         setEditMode(false)
     }
 
-    if (!props.profile) {
+    if (!profile) {
         return <PreloaderCat/>
     }
 
     return (
         <div>
             <div className={css.descriptionBlock}>
-                <img src={props.profile?.photos.large ? props.profile.photos.large : userImg} className={css.userImg}/>
+                <img src={profile?.photos.large ? profile.photos.large : userImg} className={css.userImg}/>
 
-                {props.isOwner &&
+                {isOwner &&
                     <input
                         type='file'
                         onChange={onMainPhotoSelected}
@@ -43,22 +49,20 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                 {
                     editMode
                         ? <ProfileDataForm
-                            profile={props.profile}
-                            contacts={props.profile.contacts}
-                            isOwner={props.isOwner}
+                            profile={profile}
+                            isOwner={isOwner}
                             onSubmitData={onSubmitData}
                         />
                         : <ProfileData
-                            profile={props.profile}
-                            contacts={props.profile.contacts}
-                            isOwner={props.isOwner}
+                            profile={profile}
+                            isOwner={isOwner}
                             goToEditMode={() => setEditMode(true)}
                         />
                 }
 
                 <ProfileStatusWithHooks
-                    status={props.status}
-                    updateStatus={props.updateStatus}
+                    status={status}
+                    updateStatus={updateStatus}
                 />
             </div>
 

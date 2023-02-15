@@ -5,7 +5,7 @@ import {savePhotoAC, setStatusAC} from "./profilePageReducer";
 
 
 let initialState: initialStateAuthType = {
-    userId: null as number | null,
+    authId: null as number | null,
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
@@ -36,10 +36,10 @@ export const authReducer = (state: initialStateAuthType = initialState, action: 
 
 //=======ACTIONS======
 
-export const setAuthUserDataAC = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
+export const setAuthUserDataAC = (authId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
     type: 'auth/SET-USER-DATA',
     data: {
-        userId,
+        authId,
         email,
         login,
         isAuth
@@ -62,8 +62,8 @@ export const getCaptchaURLSuccessAC = (captchaUrl: string) => ({
 //=======THUNK======
 
 
-export const updateStatusThunkCreator = (status: string) =>
-    async (dispatch: AppDispatchType) => {
+export const updateStatusThunkCreator = (status: string):AppThunkType =>
+    async (dispatch) => {
 
         try {
             let res = await profileAPI.updateStatus(status)
@@ -76,15 +76,15 @@ export const updateStatusThunkCreator = (status: string) =>
     }
 
 
-export const getAuthUserThunkCreator = () =>
-    async (dispatch: AppDispatchType) => {
+export const getAuthUserThunkCreator = (): AppThunkType =>
+    async (dispatch) => {
 
         try {
             let data = await authAPI.auth()
 
             if (data.resultCode === 0) {
-                let {id, login, email} = data.data.login
-                dispatch(setAuthUserDataAC(id, login, email, true))
+                let {authId, login, email} = data.data.login
+                dispatch(setAuthUserDataAC(authId, login, email, true))
             }
         } catch (e) {
 
@@ -93,8 +93,8 @@ export const getAuthUserThunkCreator = () =>
 
     }
 
-export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) => void) =>
-    async (dispatch: AppDispatchType) => {
+export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) => void): AppThunkType =>
+    async (dispatch) => {
 
         try {
             let res = await authAPI.login(data)
@@ -113,8 +113,8 @@ export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) =
     }
 
 
-export const logoutThunkCreator = () =>
-    async (dispatch: AppDispatchType) => {
+export const logoutThunkCreator = (): AppThunkType =>
+    async (dispatch) => {
 
         try {
             let res = await authAPI.logout()
@@ -126,8 +126,8 @@ export const logoutThunkCreator = () =>
 
     }
 
-export const getCaptchaURLThunkCreator = () =>
-    async (dispatch: AppDispatchType) => {
+export const getCaptchaURLThunkCreator = (): AppThunkType =>
+    async (dispatch) => {
 
         try {
             let res = await securityAPI.getCaptchaUrl()
@@ -152,14 +152,14 @@ export type AuthActionsType =
 //=======TYPES======
 
 export type AuthType = {
-    userId: null,
+    authId: null,
     email: null,
     login: null,
     isAuth: boolean,
 }
 
 export type initialStateAuthType = {
-    userId: number | null,
+    authId: number | null,
     email: string | null,
     login: string | null,
     isAuth: boolean

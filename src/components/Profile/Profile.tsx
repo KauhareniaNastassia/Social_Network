@@ -5,16 +5,26 @@ import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm/ProfileDataForm
 import {ProfileType} from "../../types/types";
 
 
-export const Profile = (props: ProfilePropsType) => {
+export const Profile: React.FC<ProfilePropsType> = ({
+                                                        profile,
+                                                        status,
+                                                        updateStatus,
+                                                        isOwner,
+                                                        savePhoto,
+                                                        saveProfile
+                                                    }) => {
+
+
+
     return (
         <div>
             <ProfileInfo
-                profile={props.profile}
-                status={props.status}
-                updateStatus={props.updateStatus}
-                isOwner={props.isOwner}
-                savePhoto={props.savePhoto}
-                saveProfile={props.saveProfile}
+                profile={profile}
+                status={status}
+                updateStatus={updateStatus}
+                isOwner={isOwner}
+                savePhoto={savePhoto}
+                saveProfile={saveProfile}
             />
             <MyPostsContainer />
         </div>

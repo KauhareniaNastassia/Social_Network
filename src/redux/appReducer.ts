@@ -1,4 +1,4 @@
-import {ActionType, AppDispatchType} from "./redux-store";
+import {ActionType, AppDispatchType, AppThunkType} from "./redux-store";
 import {getAuthUserThunkCreator} from "./authReducer";
 
 
@@ -36,8 +36,8 @@ export const setAppErrorAC = (error: string | null) => ({
 
 //=======THUNK======
 
-export const initializeAppThunkCreator = () =>
-    async (dispatch: AppDispatchType) => {
+export const initializeAppThunkCreator = (): AppThunkType =>
+    async (dispatch) => {
 
         try {
             let promise = dispatch(getAuthUserThunkCreator())

@@ -4,11 +4,14 @@ import {FilterType} from "../../redux/usersPageReducer";
 import {UsersSearchForm} from "../../components/Forms/UsersSearchForm/UsersSearchForm";
 
 
-export const Pagination = (props: UsersPropsType) => {
+
+
+
+export const Pagination: React.FC<PaginationPropsType> = ({totalUsersCount, pageSize, currentPage, onPageChanged, onFilterChanged}) => {
 
     let portionSize = 10
 
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
 
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
@@ -17,6 +20,7 @@ export const Pagination = (props: UsersPropsType) => {
 
     let portionCount = Math.ceil(pagesCount / portionSize)
     let [portionNumber, setPortionNumber] = useState(1)
+
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
     let rightPortionNumber = portionNumber * portionSize
 
@@ -25,25 +29,25 @@ export const Pagination = (props: UsersPropsType) => {
 
         <div className={css.pagination}>
             <div>
-                <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
+                <UsersSearchForm onFilterChanged={onFilterChanged}/>
             </div>
             <div>
 
-                { portionNumber > 1 &&
-                    <button onClick={() =>setPortionNumber(portionNumber - 1) }> PREV </button>
+                {portionNumber > 1 &&
+                    <button onClick={() => setPortionNumber(portionNumber - 1)}> PREV </button>
                 }
                 {pages
                     .filter(page => page >= leftPortionPageNumber && page <= rightPortionNumber)
                     .map(page => {
-                    return <span
-                        onClick={(e) => {
-                            props.onPageChanged(page)
-                        }}
-                        className={props.currentPage === page ? css.selectedPage : ''}>
+                        return <span
+                            onClick={(e) => {
+                                onPageChanged(page)
+                            }}
+                            className={currentPage === page ? css.selectedPage : ''}>
                             {page} </span>
-                })}
-                { portionCount > portionNumber &&
-                <button onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}
+                    })}
+                {portionCount > portionNumber &&
+                    <button onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}
             </div>
 
         </div>
@@ -53,8 +57,7 @@ export const Pagination = (props: UsersPropsType) => {
 
 //===========TYPE================
 
-type UsersPropsType = {
-
+type PaginationPropsType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
