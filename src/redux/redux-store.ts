@@ -33,7 +33,7 @@ let rootReducer = combineReducers({
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))
 
-//==============TYPES=======]=======
+//==============TYPES==============
 
 export type AppStateType = ReturnType<typeof rootReducer>
 

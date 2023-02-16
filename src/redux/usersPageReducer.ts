@@ -2,6 +2,7 @@ import {ActionType, AppDispatchType, AppThunkType, InferActionsTypes} from "./re
 
 import {updateObjectInArray} from "../utils/helpers/object-helper";
 import {FilterType, usersAPI, UserType} from "../api/usersAPI";
+import {ResponseType} from "../api/authAPI";
 
 
 let initialStateUsersPage: initialStateUsersPageType = {
@@ -143,7 +144,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number, filt
 
 
 
-const followUnfollowFlow = async (dispatch: AppDispatchType, userId: number, apiMethod: (arg0: number) => any, actionCreator: (arg0: number) => any) => {
+const followUnfollowFlow = async (dispatch: AppDispatchType, userId: number, apiMethod: (userId: number) => Promise<ResponseType>, actionCreator: (userId: number) => ActionType) => {
 
     dispatch(usersPageActions.toggleFollowingProgressActionCreator(true, userId))
 
@@ -155,15 +156,16 @@ const followUnfollowFlow = async (dispatch: AppDispatchType, userId: number, api
     dispatch(usersPageActions.toggleFollowingProgressActionCreator(false, userId))
 }
 
-export const unFollowUsersThunkCreator = (userId: number) => {
+export const unFollowUsersThunkCreator = (userId: number): AppThunkType => {
     return async (dispatch: AppDispatchType) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.unFollowUser.bind(usersAPI), usersPageActions.unfollowActionCreator)
+        await followUnfollowFlow(dispatch, userId, usersAPI.unFollowUser.bind(usersAPI), usersPageActions.unfollowActionCreator)
     }
 }
 
-export const followUsersThunkCreator = (userId: number) => {
+export const followUsersThunkCreator = (userId: number): AppThunkType => {
     return async (dispatch: AppDispatchType) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), usersPageActions.followActionCreator)
+
+        await followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), usersPageActions.followActionCreator)
     }
 }
 

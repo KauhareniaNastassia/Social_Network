@@ -3,16 +3,6 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {FilterType} from "../../../api/usersAPI";
 
 
-
-type UsersSearchFormType = {
-    onFilterChanged: (filter: FilterType) => void
-}
-
-type FormType = {
-    term: string
-    friend: 'true' | 'false' | 'null'
-}
-
 const UsersSearchFormValidate = (values: any) => {
     const errors = {}
     return errors
@@ -60,3 +50,14 @@ export const UsersSearchForm = React.memo((props: UsersSearchFormType) => {
     );
 })
 
+
+//=============TYPES===============
+
+type UsersSearchFormType = {
+    onFilterChanged: (filter: FilterType) => void
+}
+
+type FormType = {
+    term: string
+    friend: 'true' | 'false' | 'null'
+}

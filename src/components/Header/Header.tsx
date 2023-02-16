@@ -3,11 +3,6 @@ import logo from '../../assets/img/logo.png'
 import css from "./Header.module.css"
 import {NavLink} from "react-router-dom";
 
-type HeaderPropsType = {
-    isAuth: boolean
-    login:  string | null
-    logoutTC: () => void
-}
 
 export const Header:React.FC<HeaderPropsType> = ({
                                                      isAuth,
@@ -30,3 +25,13 @@ export const Header:React.FC<HeaderPropsType> = ({
         </header>
     )
 };
+
+
+
+//===========TYPES===============
+
+type HeaderPropsType = {
+    isAuth: boolean
+    login:  string | null
+    logoutTC: () => void
+}

@@ -14,7 +14,7 @@ export const usersAPI = {
             .then(res => res.data)
     },
     followUser(userId: number) {
-        return instance.post<AxiosResponse>(`follow/${userId}`)
+        return instance.post(`follow/${userId}`)
             .then(res => res.data)
     }
 }
@@ -45,7 +45,7 @@ export type GetUsersResponseType = {
 export type UserType = {
     name: string
     id: number
-    uniqueUrlName: null,
+    uniqueUrlName?: null,
     photos: PhotosType,
     status: string,
     followed: boolean

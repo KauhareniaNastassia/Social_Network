@@ -3,11 +3,17 @@ import css from './Pagination.module.css'
 import {UsersSearchForm} from "../../components/Forms/UsersSearchForm/UsersSearchForm";
 import {FilterType} from "../../api/usersAPI";
 
-export const Pagination = (props: UsersPropsType) => {
+export const Pagination:React.FC<PaginatorPropsType> = ({
+                                                            totalUsersCount,
+                                                            pageSize,
+                                                            currentPage,
+                                                            onPageChanged,
+                                                            onFilterChanged
+                                                        }) => {
 
     let portionSize = 10
 
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
 
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
@@ -24,7 +30,7 @@ export const Pagination = (props: UsersPropsType) => {
 
         <div className={css.pagination}>
             <div>
-                <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
+                <UsersSearchForm onFilterChanged={onFilterChanged}/>
             </div>
             <div>
 
@@ -36,9 +42,9 @@ export const Pagination = (props: UsersPropsType) => {
                     .map(page => {
                     return <span
                         onClick={(e) => {
-                            props.onPageChanged(page)
+                            onPageChanged(page)
                         }}
-                        className={props.currentPage === page ? css.selectedPage : ''}>
+                        className={currentPage === page ? css.selectedPage : ''}>
                             {page} </span>
                 })}
                 { portionCount > portionNumber &&
@@ -52,7 +58,7 @@ export const Pagination = (props: UsersPropsType) => {
 
 //===========TYPE================
 
-type UsersPropsType = {
+type PaginatorPropsType = {
 
     totalUsersCount: number
     pageSize: number
