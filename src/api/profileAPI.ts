@@ -1,4 +1,7 @@
 import {instance} from "./api";
+import {AxiosResponse} from "axios";
+import {ResponseType} from "./authAPI";
+import {PhotosType} from "./usersAPI";
 
 export const profileAPI = {
     getProfile(profileId: number) {
@@ -6,23 +9,22 @@ export const profileAPI = {
             .then(res => res.data)
     },
     getStatus(profileId: number) {
-        return instance.get(`profile/status/${profileId}`)
+        return instance.get<string>(`profile/status/${profileId}`)
             .then(res => res.data)
     },
     updateStatus(status: string) {
-        return instance.put(`profile/status`, {status})
+        return instance.put<ResponseType>(`profile/status`, {status})
             .then(res => res.data)
     },
     savePhoto(photo: File) {
-
         const formData = new FormData()
         formData.append('image', photo)
 
-        return instance.put(`profile/photo`, formData)
+        return instance.put<ResponseType<PhotosResponseType>>(`profile/photo`, formData)
             .then(res => res.data)
     },
     saveProfile(profile: ProfileDataType) {
-        return instance.put(`profile`, profile)
+        return instance.put<ResponseType<ProfileDataType>>(`profile`, profile)
             .then(res => res.data)
     },
 }
@@ -56,4 +58,8 @@ export type ContactsProfileResponseType = {
 export type ProfilePhotosResponseType = {
     small: string
     large: string
+}
+
+export type PhotosResponseType = {
+    photos: PhotosType
 }

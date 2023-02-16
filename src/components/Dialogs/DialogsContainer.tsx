@@ -13,19 +13,13 @@ let mapStateToDialogsProps = (state: AppStateType): mapStateToDialogsPropsType =
     }
 }
 
-let mapDispatchDialogsToProps = (dispatch: Dispatch): mapDispatchToDialogsPropsType => {
-    return {
-        sendMessage: () => {
-            dispatch(dialogsPageActions.sendMessageAC())
-        },
-        updateNewMessageText: (updatedMessageText: string) => {
-            dispatch(dialogsPageActions.updateNewMessageTextAC(updatedMessageText))
-        }
-    }
-}
 
 export const DialogsContainer = compose<React.ComponentType>(
-    connect(mapStateToDialogsProps, mapDispatchDialogsToProps),
+    connect(mapStateToDialogsProps, {
+        sendMessage: dialogsPageActions.sendMessageAC,
+        updateNewMessageText: dialogsPageActions.updateNewMessageTextAC
+        }
+    ),
     withAuthRedirect
 )(Dialogs)
 

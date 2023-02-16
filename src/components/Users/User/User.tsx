@@ -7,34 +7,40 @@ import {UserType} from "../../../api/usersAPI";
 
 
 
-export const User = (props: UserPropsType) => {
+export const User: React.FC<UserPropsType> = ({
+                                                  user,
+                                                  followingProgress,
+                                                  toggleFollowingProgress,
+                                                  unFollowUsersTC,
+                                                  followUsersTC
+                                              }) => {
     return (
         <div className={css.userWrapper}>
             <span>
                 <div>
-                    <Link to={'/profile/' + props.user.id}>
+                    <Link to={'/profile/' + user.id}>
                         <img className={css.userPhoto}
-                             src={props.user.photos.small != null
-                                 ? props.user.photos.small
+                             src={user.photos.small != null
+                                 ? user.photos.small
                                  : profileAvatar}/>
                     </Link>
 
                 </div>
                 <div className={css.followUnfollowButton}>
-                    {props.user.followed
+                    {user.followed
                         ? <button
-                            disabled={props.followingProgress.some(id => id === props.user.id)}
+                            disabled={followingProgress.some(id => id === user.id)}
                             onClick={() => {
-                                props.unFollowUsersTC(props.user.id)
+                                unFollowUsersTC(user.id)
                             }}
                             className={css.unfollowButton}>
                             Unfollow
                         </button>
 
                         : <button
-                            disabled={props.followingProgress.some(id => id === props.user.id)}
+                            disabled={followingProgress.some(id => id === user.id)}
                             onClick={() => {
-                                props.followUsersTC(props.user.id)
+                                followUsersTC(user.id)
                             }}
                             className={css.followButton}>
                             Follow
@@ -43,8 +49,8 @@ export const User = (props: UserPropsType) => {
                 </span>
             <span>
                 <span>
-                    <div>{props.user.name}</div>
-                    <div>{props.user.status}</div>
+                    <div>{user.name}</div>
+                    <div>{user.status}</div>
                 </span>
             </span>
         </div>

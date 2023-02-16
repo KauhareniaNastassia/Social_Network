@@ -36,9 +36,6 @@ export const appActions = {
 
 }
 
-
-
-
 //=======THUNK======
 
 export const initializeAppThunkCreator = (): AppThunkType =>

@@ -1,4 +1,5 @@
 import {instance} from "./api";
+import {AxiosResponse} from "axios";
 
 export const usersAPI = {
     getUsers(currentPage: number,
@@ -13,7 +14,7 @@ export const usersAPI = {
             .then(res => res.data)
     },
     followUser(userId: number) {
-        return instance.post(`follow/${userId}`)
+        return instance.post<AxiosResponse>(`follow/${userId}`)
             .then(res => res.data)
     }
 }

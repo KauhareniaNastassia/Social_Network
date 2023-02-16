@@ -1,7 +1,7 @@
 import {ActionType, AppThunkType, InferActionsTypes} from "./redux-store";
-import {ResultCodeEnum} from "../api/api";
+
 import {usersPageActions} from "./usersPageReducer";
-import {authAPI, LoginDataType} from "../api/authAPI";
+import {authAPI, LoginDataType, ResultCodeEnum} from "../api/authAPI";
 import {securityAPI} from "../api/securityAPI";
 
 
@@ -121,7 +121,7 @@ export const getCaptchaURLThunkCreator = (): AppThunkType =>
 
         try {
             let res = await securityAPI.getCaptchaUrl()
-            let captchaURL = res.data.url
+            let captchaURL = res.url
 
             dispatch(authActions.getCaptchaURLSuccessAC(captchaURL))
 

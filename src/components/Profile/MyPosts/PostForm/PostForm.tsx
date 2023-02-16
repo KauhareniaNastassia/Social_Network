@@ -13,7 +13,11 @@ type PostFormPropsType = {
     updateNewPostText: (updatedPostText: string) => void
 }
 
-export const PostForm = (props: PostFormPropsType) => {
+export const PostForm: React.FC<PostFormPropsType> = ({
+                                                          newPostText,
+                                                          addPost,
+                                                          updateNewPostText
+                                                      }) => {
 
     const [post, setPost] = useState('')
 
@@ -26,7 +30,7 @@ export const PostForm = (props: PostFormPropsType) => {
 
 
     const onSubmit: SubmitHandler<PostData> = ({post}) => {
-        props.addPost(post)
+        addPost(post)
         setPost('')
 
     }
@@ -37,7 +41,7 @@ export const PostForm = (props: PostFormPropsType) => {
 
     const onPostChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setPost(e.currentTarget.value)
-        props.updateNewPostText(e.currentTarget.value)
+        updateNewPostText(e.currentTarget.value)
     }
 
 

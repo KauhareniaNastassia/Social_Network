@@ -148,7 +148,7 @@ export const updateStatusThunkCreator = (status: string): AppThunkType =>
         try {
             let res = await profileAPI.updateStatus(status)
             if (res.resultCode === 0) {
-                dispatch(profilePageActions.setStatusAC(res))
+                dispatch(profilePageActions.setStatusAC(status))
             }
         } catch (e) {
 

@@ -37,8 +37,7 @@ export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-type PropertiesType<T> = T extends {[key: string]: infer U} ? U : never
-export type InferActionsTypes<T extends {[key: string]: (...args:any[] )=> any}> = ReturnType<PropertiesType<T>>
+export type InferActionsTypes<T> = T extends { [key: string]: (...args:any[] )=> infer U} ? U : never
 
 export type ActionType =
     ProfilePageActionType |
@@ -53,5 +52,5 @@ export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,
     unknown,
     ActionType>
 
-export type AppStoreType = typeof store
+/*export type AppStoreType = typeof store*/
 
