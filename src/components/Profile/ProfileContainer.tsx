@@ -18,26 +18,29 @@ import {ProfileDataType} from "../../api/profileAPI";
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
     refreshProfile() {
-        let userId = this.props.match.params.userId
+        let userId: number|null = this.props.match.params.userId
 
         if (!userId) {
-            userId = 24911
-            /*profileId = this.props.authorizedUserId as number*/
+            userId = this.props.authorizedUserId
             if(!userId) {
                 this.props.history.push('/login')
             }
         }
 
-        this.props.getUserProfileTC(userId)
-        this.props.getUserStatusTC(userId)
+        if (!userId) {
+            console.error("ID should exist in URI parameter")
+        } else {
+            this.props.getUserProfileTC(userId)
+            this.props.getUserStatusTC(userId)
+        }
     }
 
     componentDidMount() {
         this.refreshProfile()
     }
 
-    componentDidUpdate() {
-        if (this.props.match.params.userId != this.props.match.params.userId)
+    componentDidUpdate(prevProps:ProfilePageClassPropsType, prevState: ProfilePageClassPropsType) {
+        if (this.props.match.params.userId != prevProps.match.params.userId)
         this.refreshProfile()
     }
 
@@ -91,7 +94,6 @@ export type mapStateToProfilePropsType = {
     status: string
     authorizedUserId:  number | null
     isAuth: boolean
-    //isAuth: boolean
 }
 export type mapDispatchToProfilePropsType = {
     getUserProfileTC: (profileId: number) => void

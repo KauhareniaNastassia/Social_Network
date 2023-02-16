@@ -1,6 +1,7 @@
 import React from 'react';
 import {ProfileDataType} from "../../../../api/profileAPI";
-
+import {Contact} from "../Contact/Contact";
+import {ContactsType} from "../../../../types/types";
 
 
 const ProfileData: React.FC<ProfileDataPropsType> = ({
@@ -35,6 +36,18 @@ const ProfileData: React.FC<ProfileDataPropsType> = ({
                 <b>About me:</b> {profile?.aboutMe}
             </div>
 
+            {/*<div>
+                <b>Contacts</b>: {
+                Object
+                    .keys(profile.contacts)
+                    .map((key) => {
+                        return <Contact
+                            key={key}
+                            contactTitle={key}
+                            contactValue={profile.contacts[key as keyof ContactsType]}/>
+                    })}
+            </div>*/}
+
         </div>
     );
 };
@@ -44,7 +57,7 @@ export default ProfileData;
 //===========TYPE================
 
 type ProfileDataPropsType = {
-    profile: ProfileDataType | null
+    profile: ProfileDataType
 
     isOwner: boolean
     goToEditMode: () => void

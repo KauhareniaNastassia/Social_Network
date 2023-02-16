@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 
 import {Field, Form} from "react-final-form";
 import {ProfileDataType} from "../../../../api/profileAPI";
-
+import {Contact} from "../Contact/Contact";
+import {ContactsType} from "../../../../types/types";
 
 
 export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
@@ -35,7 +36,7 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 
                     {isOwner && <div>
 
-                        <button type="submit" >
+                        <button type="submit">
                             Save
                         </button>
 
@@ -79,9 +80,26 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                             placeholder="About me"/>
                     </div>
 
+                    {/*<div>
+                        <b>Contacts</b>: {Object
+                        .keys(profile.contacts)
+                        .map((key) => {
+                            return <div key={key}>
+                                <b>{key}: <Field
+                                    name="Contacts"
+                                    component="input"
+                                    type="text"
+                                /></b>
+                            </div>
+                        })}
+
+                    </div>*/}
+
                     <pre>{JSON.stringify(values)}</pre>
                 </form>
-            )}
+            )
+
+            }
         />
     )
 }
@@ -90,8 +108,9 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 
 type ProfileDataFormPropsType = {
     onSubmitData: (formData: ProfileFormDataType) => void
-    profile: ProfileDataType | null
+    profile: ProfileDataType
     isOwner: boolean
+
 }
 
 export type ProfileFormDataType = {
