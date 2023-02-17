@@ -21,6 +21,8 @@ const DialogsPage = React.lazy(async () => ({default: (await import('./component
 
 const ProfileContainer = React.lazy(async () => ({default: (await import('./components/Profile/ProfileContainer')).ProfileContainer}))
 
+const ChatPage = React.lazy(async () => ({default: (await import('./pages/chatpage/ChatPage')).ChatPage}))
+
 
 
 export class App extends Component<AppContainerPropsType> {
@@ -60,6 +62,9 @@ export class App extends Component<AppContainerPropsType> {
                             <Route path='/forum' render={() => <Forum/>}/>
 
                             <Route path='/login' render={() => <Login/>}/>
+
+
+                            <Route path='/chat' render={() => <ChatPage/>}/>
 
                             <Route path='*' render={() =><div>
                                 <Button>OK</Button>
