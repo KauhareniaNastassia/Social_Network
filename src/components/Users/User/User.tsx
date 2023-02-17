@@ -10,9 +10,8 @@ import {UserType} from "../../../api/usersAPI";
 export const User: React.FC<UserPropsType> = ({
                                                   user,
                                                   followingProgress,
-                                                  toggleFollowingProgress,
-                                                  unFollowUsersTC,
-                                                  followUsersTC
+                                                  unfollowUsers,
+                                                  followUsers
                                               }) => {
     return (
         <div className={css.userWrapper}>
@@ -31,7 +30,7 @@ export const User: React.FC<UserPropsType> = ({
                         ? <button
                             disabled={followingProgress.some(id => id === user.id)}
                             onClick={() => {
-                                unFollowUsersTC(user.id)
+                                unfollowUsers(user.id)
                             }}
                             className={css.unfollowButton}>
                             Unfollow
@@ -40,7 +39,7 @@ export const User: React.FC<UserPropsType> = ({
                         : <button
                             disabled={followingProgress.some(id => id === user.id)}
                             onClick={() => {
-                                followUsersTC(user.id)
+                                followUsers(user.id)
                             }}
                             className={css.followButton}>
                             Follow
@@ -62,7 +61,6 @@ export const User: React.FC<UserPropsType> = ({
 type UserPropsType = {
     user: UserType
     followingProgress: []
-    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
-    unFollowUsersTC: (userId: number) => void
-    followUsersTC: (userId: number) => void
+    unfollowUsers: (userId: number) => void
+    followUsers: (userId: number) => void
 }

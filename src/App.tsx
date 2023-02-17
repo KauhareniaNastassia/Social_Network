@@ -4,19 +4,23 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom'
 import {Care} from "./components/Care/Care";
 import {Forum} from "./components/Forum/Forum";
-import {UsersContainer} from "./components/Users/UsersContainer";
+import {UsersPage} from "./components/Users/UsersPage";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
-import {LoginContainer} from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {initializeAppThunkCreator} from "./redux/appReducer";
 import {AppStateType} from "./redux/redux-store";
 import {PreloaderDog} from "./common/preloader/PreloaderDog/PreloaderDog";
+import {Login} from "./components/Login/Login";
+import 'antd/dist/reset.css';
+import {Button} from "antd";
 
 
-const DialogsContainer = React.lazy(async () => ({default: (await import('./components/Dialogs/DialogsContainer')).DialogsContainer}))
+
+const DialogsPage = React.lazy(async () => ({default: (await import('./components/Dialogs/DialogsPage')).DialogsPage}))
 
 const ProfileContainer = React.lazy(async () => ({default: (await import('./components/Profile/ProfileContainer')).ProfileContainer}))
+
 
 
 export class App extends Component<AppContainerPropsType> {
@@ -48,16 +52,18 @@ export class App extends Component<AppContainerPropsType> {
                                    />}/>
 
                             <Route path='/dialogs'
-                                   render={() => <DialogsContainer
+                                   render={() => <DialogsPage
                                    />}/>
 
-                            <Route path='/users' render={() => <UsersContainer/>}/>
+                            <Route path='/users' render={() => <UsersPage/>}/>
                             <Route path='/care' render={() => <Care/>}/>
                             <Route path='/forum' render={() => <Forum/>}/>
 
-                            <Route path='/login' render={() => <LoginContainer/>}/>
+                            <Route path='/login' render={() => <Login/>}/>
 
-                            <Route path='*' render={() =><div>404 NOT FOUND</div>}/>
+                            <Route path='*' render={() =><div>
+                                <Button>OK</Button>
+                                404 NOT FOUND</div>}/>
                         </Switch>
                     </Suspense>
                 </div>

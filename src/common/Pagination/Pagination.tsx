@@ -1,14 +1,11 @@
 import React, {useState} from "react";
 import css from './Pagination.module.css'
-import {UsersSearchForm} from "../../components/Forms/UsersSearchForm/UsersSearchForm";
-import {FilterType} from "../../api/usersAPI";
 
 export const Pagination:React.FC<PaginatorPropsType> = ({
                                                             totalUsersCount,
                                                             pageSize,
                                                             currentPage,
-                                                            onPageChanged,
-                                                            onFilterChanged
+                                                            onPageChanged
                                                         }) => {
 
     let portionSize = 10
@@ -29,9 +26,7 @@ export const Pagination:React.FC<PaginatorPropsType> = ({
     return (
 
         <div className={css.pagination}>
-            <div>
-                <UsersSearchForm onFilterChanged={onFilterChanged}/>
-            </div>
+
             <div>
 
                 { portionNumber > 1 &&
@@ -64,5 +59,5 @@ type PaginatorPropsType = {
     pageSize: number
     currentPage: number
     onPageChanged: (page: number) => void
-    onFilterChanged: (filter: FilterType) => void
+
 }

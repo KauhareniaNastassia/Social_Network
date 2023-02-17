@@ -1,15 +1,15 @@
 import React from 'react'
-import css from './Dialogs.module.css'
+import css from './DialogsPage.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogsPropsType} from "./DialogsContainer";
 import {MessageForm} from "./MessageForm/MessageForm";
+import {useAppSelector} from "../../hoc/useAppSelector";
 
 
-export const Dialogs: React.FC<DialogsPropsType> = ({
-                                                        dialogsPage,
-                                                        sendMessage,
-                                                        updateNewMessageText}) => {
+export const DialogsPage: React.FC = () => {
+
+    const dialogsPage = useAppSelector((state) => state.dialogsPage)
+
     return (
         <div className={css.dialogs}>
             <div className={css.dialogsItems}>
@@ -20,8 +20,7 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
                 {dialogsPage.messages.map(message => <Message key={message.messageId} message={message.message}/>)}
             </div>
 
-            <MessageForm sendMessage={sendMessage}
-                         updateNewMessageText={updateNewMessageText}/>
+            <MessageForm />
 
         </div>
     )

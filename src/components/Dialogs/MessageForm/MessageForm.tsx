@@ -1,11 +1,14 @@
 import React, {ChangeEvent, useState} from 'react'
 import css from './MessageForm.module.css'
 import {SubmitHandler, useForm} from "react-hook-form";
+import {useDispatch} from "react-redux";
+import {dialogsPageActions} from "../../../redux/dialogsPageReducer";
 
 
-export const MessageForm = (props: MessageFormPropsType) => {
+export const MessageForm: React.FC = () => {
 
     const [message, setMessage] = useState('')
+    const dispatch = useDispatch()
 
     const {register, handleSubmit, formState: {errors}} = useForm<MessageData>({
         defaultValues: {
@@ -16,7 +19,7 @@ export const MessageForm = (props: MessageFormPropsType) => {
 
 
     const onSubmit: SubmitHandler<MessageData> = (message: MessageData) => {
-        props.sendMessage()
+        dispatch(dialogsPageActions.sendMessageAC())
         setMessage('')
         console.log(message)
     }
@@ -27,7 +30,7 @@ export const MessageForm = (props: MessageFormPropsType) => {
 
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.currentTarget.value)
-        props.updateNewMessageText(e.currentTarget.value)
+        dispatch(dialogsPageActions.updateNewMessageTextAC(e.currentTarget.value))
     }
 
 
@@ -77,7 +80,3 @@ type MessageData = {
     message: string
 }
 
-type MessageFormPropsType = {
-    sendMessage: () => void
-    updateNewMessageText: (updatedMessageText: string) => void
-}

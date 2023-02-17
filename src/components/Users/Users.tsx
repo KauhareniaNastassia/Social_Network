@@ -1,31 +1,103 @@
-import React from "react";
+import React, {useEffect} from "react";
 import css from './Users.module.css'
 import {Pagination} from "../../common/Pagination/Pagination";
 import {User} from "./User/User";
-import {FilterType, UserType} from "../../api/usersAPI";
+import {FilterType} from "../../api/usersAPI";
+import {UsersSearchForm} from "../Forms/UsersSearchForm/UsersSearchForm";
+import {useAppSelector} from "../../hoc/useAppSelector";
+import {useDispatch} from "react-redux";
+import {
+    followUsersThunkCreator,
+    getUsersThunkCreator,
+    unFollowUsersThunkCreator,
+    usersPageActions
+} from "../../redux/usersPageReducer";
+import {useHistory} from "react-router-dom";
 
 
+export const Users: React.FC = () => {
 
-export const Users: React.FC<UsersPropsType> = ({...props}) => {
+    const totalUsersCount = useAppSelector((state) => state.usersPage.totalUsersCount)
+    const currentPage = useAppSelector((state) => state.usersPage.currentPage)
+    const pageSize = useAppSelector((state) => state.usersPage.pageSize)
+    const users = useAppSelector((state) => state.usersPage.users)
+    const filter = useAppSelector(state => state.usersPage.filter)
+    const followingProgress = useAppSelector(state => state.usersPage.followingInProgress)
+    const dispatch = useDispatch()
+  const history = useHistory()
+
+    const followUsers = (userId: number) => {
+        dispatch(followUsersThunkCreator(userId))
+    }
+
+    const unfollowUsers = (userId: number) => {
+        dispatch(unFollowUsersThunkCreator(userId))
+    }
+
+    const onPageChanged = (page: number) => {
+        dispatch(usersPageActions.setCurrentPageActionCreator(page))
+        dispatch(getUsersThunkCreator(page, pageSize, filter))
+    }
+
+    const  onFilterChanged = (filter: FilterType) => {
+        dispatch(getUsersThunkCreator(1, pageSize, filter))
+    }
+
+
+    useEffect( () => {
+        history.push( {
+            pathname: '/users',
+            search: `&term=${filter.term}&friend=${filter.term}&page=${currentPage}`
+        } )
+    }, [filter, currentPage] )//comeback after refactoring to functional components 16
+
+    useEffect(() => {
+
+        /*const parsed = queryString.parse(history.location.search.substr(1)) as {term: string, page: string, friend: string}
+
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if(!!parsed.page) actualPage = Number(parsed.page)
+        if(!!parsed.page) actualFilter = {...actualFilter, term: parsed.term as string}
+
+        switch (parsed.friend) {
+            case 'null' :
+                actualFilter = {...actualFilter, friend: null}
+                break;
+            case 'true' :
+                actualFilter = {...actualFilter, friend: null}
+                break;
+            case 'false' :
+                actualFilter = {...actualFilter, friend: null}
+                break;
+        }
+        dispatch(getUsersThunkCreator(actualPage, pageSize, actualFilter))
+        */
+
+        dispatch(getUsersThunkCreator(currentPage, pageSize, filter))
+    }, [])
+
     return (
         <div className={css.usersWrapper}>
+
+            <UsersSearchForm onFilterChanged={onFilterChanged}/>
+
             <Pagination
-                totalUsersCount={props.totalUsersCount}
-                pageSize={props.pageSize}
-                currentPage={props.currentPage}
-                onPageChanged={props.onPageChanged}
-                onFilterChanged={props.onFilterChanged}
+                totalUsersCount={totalUsersCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChanged={onPageChanged}
             />
 
             <div className={css.usersBlock}>
-                {props.users.map(user =>
+                {users.map(user =>
                     <User
                         key={user.id}
                         user={user}
-                        followingProgress={props.followingProgress}
-                        toggleFollowingProgress={props.toggleFollowingProgress}
-                        unFollowUsersTC={props.unFollowUsersTC}
-                        followUsersTC={props.followUsersTC}
+                        followingProgress={followingProgress}
+                        unfollowUsers={unfollowUsers}
+                        followUsers={followUsers}
                     />
                 )}
             </div>
@@ -33,18 +105,3 @@ export const Users: React.FC<UsersPropsType> = ({...props}) => {
     )
 }
 
-
-//===========TYPE================
-
-type UsersPropsType = {
-    users: UserType[]
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
-    onPageChanged: (page: number) => void
-    onFilterChanged: (filter: FilterType) => void
-    followingProgress: []
-    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
-    unFollowUsersTC: (userId: number) => void
-    followUsersTC: (userId: number) => void
-}

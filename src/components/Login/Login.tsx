@@ -1,21 +1,22 @@
 import React from 'react';
 import {LoginForm} from "./LoginForm/LoginForm";
-import {LoginPropsType} from "./LoginContainer";
 import {Redirect} from "react-router-dom";
+import {useAppSelector} from "../../hoc/useAppSelector";
 
 
+export const Login = () => {
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const captchaURL = useAppSelector(state => state.auth.captcha)
 
-export const Login = (props: LoginPropsType) => {
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to={'/profile'}/>
     }
 
     return (
         <div>
             <h1>LOGIN</h1>
-            <LoginForm loginThunkCreator ={props.loginThunkCreator}
-                       captchaURL={props.captchaURL}/>
+            <LoginForm captchaURL={captchaURL}/>
 
             <div>
                 <div>For test use this=)</div>

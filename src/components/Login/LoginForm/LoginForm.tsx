@@ -1,6 +1,8 @@
 import React from 'react';
 import {useFormik} from 'formik';
 import css from "./LoginForm.module.css"
+import {useDispatch} from "react-redux";
+import {loginThunkCreator} from "../../../redux/authReducer";
 
 
 const validate = (values: LoginDataType) => {
@@ -22,6 +24,8 @@ const validate = (values: LoginDataType) => {
 
 export const LoginForm = (props: LoginFormPropsType) => {
 
+    const dispatch = useDispatch()
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -31,7 +35,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
         },
         validate,
         onSubmit: (values: LoginDataType, {setStatus}) => {
-            props.loginThunkCreator(values, setStatus)
+            dispatch(loginThunkCreator(values, setStatus))
         },
     });
 
@@ -106,6 +110,6 @@ export type LoginErrorType = {
 }
 
 type LoginFormPropsType = {
-    loginThunkCreator: (data: LoginDataType, setStatus: any) => void
+
     captchaURL: string | null
 }

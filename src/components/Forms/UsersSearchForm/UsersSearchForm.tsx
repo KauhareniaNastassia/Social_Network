@@ -1,6 +1,7 @@
 import React from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {FilterType} from "../../../api/usersAPI";
+import {useAppSelector} from "../../../hoc/useAppSelector";
 
 
 const UsersSearchFormValidate = (values: any) => {
@@ -9,6 +10,8 @@ const UsersSearchFormValidate = (values: any) => {
 }
 
 export const UsersSearchForm = React.memo((props: UsersSearchFormType) => {
+
+    const filter = useAppSelector( (state) => state.usersPage.filter )
 
     const submit = (
         values: FormType,
@@ -28,7 +31,8 @@ export const UsersSearchForm = React.memo((props: UsersSearchFormType) => {
     return (
         <div>
             <Formik
-                initialValues={{term: '', friend: 'null'}}
+                enableReinitialize={true}
+                initialValues={{term: filter.term, friend: String(filter.friend) as FriendType}}
                 validate={UsersSearchFormValidate}
                 onSubmit={submit}
             >
@@ -59,5 +63,7 @@ type UsersSearchFormType = {
 
 type FormType = {
     term: string
-    friend: 'true' | 'false' | 'null'
+    friend: FriendType
 }
+
+type FriendType = 'true' | 'false' | 'null'
