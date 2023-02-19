@@ -19,6 +19,7 @@ import {
 } from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AppActionsType, appReducer} from "./appReducer";
+import {ChatActionsType, chatReducer} from "./chatReducer";
 
 
 let rootReducer = combineReducers({
@@ -27,7 +28,8 @@ let rootReducer = combineReducers({
     usersPage: usersPageReducer,
     sidebarPage: siderbarPageReducer,
     auth: authReducer,
-    app: appReducer
+    app: appReducer,
+    chat: chatReducer
 })
 
 
@@ -44,7 +46,8 @@ export type ActionType =
     AppActionsType |
     AuthActionsType |
     DialogsPageActionsType |
-    UsersPageActionsType
+    UsersPageActionsType |
+    ChatActionsType
 
 export type AppDispatchType = ThunkDispatch<AppStateType, unknown, ActionType>
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,

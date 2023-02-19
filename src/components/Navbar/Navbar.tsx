@@ -1,7 +1,7 @@
 import React from "react";
 import '../../App.css';
 import css from './Navbar.module.css'
-import {NavLink} from "react-router-dom";
+import {NavLink, Route} from "react-router-dom";
 import {SidebarPageContainer} from "./UsersForNavbar/SidebarPageContainer";
 
 
@@ -22,6 +22,9 @@ export const Navbar = () => {
             </div>
             <div className={css.item}>
                 <NavLink to='/forum' activeClassName={css.activeLink}> Forum </NavLink>
+            </div>
+            <div className={css.item}>
+                <NavLink to='/chat' activeClassName={css.activeLink}> Chat </NavLink>
             </div>
 
             <div>

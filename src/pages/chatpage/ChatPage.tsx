@@ -1,19 +1,34 @@
-import React from 'react';
-import {Chat} from "./chat/Chat";
+import React, {useEffect, useState} from 'react';
+import {AddMessageForm} from "./AddMessageForm/AddMessageForm";
+import {useDispatch} from "react-redux";
+import {startChatMessagesThunkCreator, stopChatMessagesThunkCreator} from "../../redux/chatReducer";
+import {Messages} from "./Messages/Messages";
+import {useAppSelector} from "../../hoc/useAppSelector";
+
+export const ChatPage: React.FC = () => {
+
+    const dispatch = useDispatch()
+    const status = useAppSelector(state => state.chat.status)
+
+    useEffect( () => {
+        dispatch(startChatMessagesThunkCreator())
+
+        return () => {
+            stopChatMessagesThunkCreator()
+        }
+    }, [])
 
 
-
-const wsChannel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-
-
-export const ChatPage:React.FC = () => {
     return (
         <div>
-            <Chat wsChannel={wsChannel}/>
+            {status === 'error' && <div>Some error occured. Please refresh page</div>}
+                 <>
+                    <Messages />
+                    <AddMessageForm />
+                </>
         </div>
     );
 };
-
 
 
 //================TYPES==============
