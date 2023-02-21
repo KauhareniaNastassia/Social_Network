@@ -3,6 +3,10 @@ import {ActionType, AppThunkType, InferActionsTypes} from "./redux-store";
 import {usersPageActions} from "./usersPageReducer";
 import {authAPI, LoginDataType, ResultCodeEnum} from "../api/authAPI";
 import {securityAPI} from "../api/securityAPI";
+import {handleServerAppError, handleServerNetworkError} from "../utils/errorHandler";
+import {appActions} from "./appReducer";
+import {profilePageActions} from "./profilePageReducer";
+import {AxiosError} from "axios";
 
 
 let initialState: initialStateAuthType = {
@@ -70,13 +74,14 @@ export const authActions = {
 
 export const getAuthUserThunkCreator = (): AppThunkType =>
     async (dispatch) => {
-
+        dispatch(appActions.setAppStatusAC('loading'))
         try {
             let data = await authAPI.auth()
 
             if (data.resultCode === ResultCodeEnum.Success) {
                 let {id, login, email} = data.data
                 dispatch(authActions.setAuthUserDataAC(id, login, email, true))
+                dispatch(appActions.setAppStatusAC('success'))
             }
         } catch (e) {
 
@@ -85,33 +90,39 @@ export const getAuthUserThunkCreator = (): AppThunkType =>
 
     }
 
-export const loginThunkCreator = (data: LoginDataType, setError: (error?: any) => void): AppThunkType =>
+export const loginThunkCreator = (data: LoginDataType): AppThunkType =>
     async (dispatch) => {
+
+    dispatch(appActions.setAppStatusAC('loading'))
 
         try {
             let res = await authAPI.login(data)
 
             if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(getAuthUserThunkCreator())
+                dispatch(appActions.setAppStatusAC('success'))
             } else {
-                if (res.resultCode === ResultCodeEnum.CaptchaIsRequired) {
-                    dispatch(getCaptchaURLThunkCreator())
-                }
+                handleServerAppError(res, dispatch)
             }
         } catch (e) {
+            handleServerNetworkError(e, dispatch)
         }
     }
 
 
 export const logoutThunkCreator = (): AppThunkType =>
     async (dispatch) => {
-
+        dispatch(appActions.setAppStatusAC('loading'))
         try {
             let res = await authAPI.logout()
             if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(authActions.setAuthUserDataAC(null, null, null, false))
+                dispatch(appActions.setAppStatusAC('success'))
+            } else {
+                handleServerAppError(res, dispatch)
             }
         } catch (e) {
+            handleServerNetworkError(e, dispatch)
         }
 
     }

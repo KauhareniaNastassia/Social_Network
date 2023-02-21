@@ -8,7 +8,7 @@ export const Messages: React.FC = () => {
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const messages = useAppSelector(state => state.chat.messages)
 
-    const [isAutoScroll, setIsAutoScroll] = useState(false)
+    const [isAutoScroll, setIsAutoScroll] = useState(true)
 
     const onScrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const element = e.currentTarget

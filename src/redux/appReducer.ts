@@ -4,7 +4,8 @@ import {getAuthUserThunkCreator} from "./authReducer";
 
 let initialAppState: InitialAppStateType = {
     initialized: false,
-    error: null
+    error: null,
+    status: 'idle' as AppStatusType
 }
 
 export const appReducer = (state = initialAppState, action: ActionType): InitialAppStateType => {
@@ -15,6 +16,9 @@ export const appReducer = (state = initialAppState, action: ActionType): Initial
 
         case 'app/SET-ERROR':
             return {...state, error: action.error}
+
+        case 'app/SET-STATUS':
+            return {...state, status: action.status}
 
         default:
             return state
@@ -29,9 +33,14 @@ export const appActions = {
         type: 'app/SET-INITIALIZED',
     } as const),
 
-    setAppErrorAC: (error: string | null) => ({
+    setAppErrorAC: (error: ErrorAppType) => ({
         type: 'app/SET-ERROR',
         error
+    } as const),
+
+    setAppStatusAC: (status: AppStatusType) => ({
+        type: 'app/SET-STATUS',
+        status
     } as const)
 
 }
@@ -61,8 +70,15 @@ export type AppActionsType = InferActionsTypes<typeof appActions>
 
 export type InitialAppStateType = {
     initialized: boolean
-    error: null | string,
+    error: ErrorAppType | null
+    status: AppStatusType
 }
 
+export type AppStatusType = 'idle' | 'loading' | 'success' | 'error'
+
+export type ErrorAppType = {
+    message: string
+    type: 'success' | 'error'
+}
 
 

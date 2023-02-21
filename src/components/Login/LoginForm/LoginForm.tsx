@@ -1,8 +1,11 @@
 import React from 'react';
-import {useFormik} from 'formik';
+import {Field, Form, useFormik} from 'formik';
 import css from "./LoginForm.module.css"
 import {useDispatch} from "react-redux";
 import {loginThunkCreator} from "../../../redux/authReducer";
+import {useAppDispatch, useAppSelector} from "../../../hoc/useAppSelector";
+
+
 
 
 const validate = (values: LoginDataType) => {
@@ -24,7 +27,7 @@ const validate = (values: LoginDataType) => {
 
 export const LoginForm = (props: LoginFormPropsType) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -34,66 +37,63 @@ export const LoginForm = (props: LoginFormPropsType) => {
 
         },
         validate,
-        onSubmit: (values: LoginDataType, {setStatus}) => {
-            dispatch(loginThunkCreator(values, setStatus))
+        onSubmit: (values: LoginDataType) => {
+            dispatch(loginThunkCreator(values))
         },
     });
 
 
     return (
-        <form onSubmit={formik.handleSubmit} className={css.loginForm}>
+                <form onSubmit={formik.handleSubmit} className={css.loginForm}>
+                    <div>
+                        <div className={css.emailBlock}>
+                            <label className={css.emailLabel} htmlFor="Email">Email</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                onChange={formik.handleChange}
+                                value={formik.values.email}
 
-            <div>
-                <div className={css.emailBlock}>
-                    <label className={css.emailLabel} htmlFor="Email">Email</label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.email}
-                    />
-                </div>
+                            />
+                        </div>
 
-                {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                        {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
 
-                <div className={css.passwordBlock}>
-                    <label className={css.passwordLabel} htmlFor="Password">Password</label>
-                    <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                    />
-                </div>
+                        <div className={css.passwordBlock}>
+                            <label className={css.passwordLabel} htmlFor="Password">Password</label>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
+                            />
+                        </div>
 
-                {formik.touched.password && formik.errors.password &&
-                    <div style={{color: 'red'}}>{formik.errors.password}</div>}
+                        {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
 
-                <div className={css.rememberMeBlock}>
-                    <input
-                        id="rememberMe"
-                        name="rememberMe"
-                        type="checkbox"
-                        onChange={formik.handleChange}
-                        checked={formik.values.rememberMe}
-                    />
-                    <label htmlFor="rememberMe">Remember me</label>
-                </div>
+                        <div className={css.rememberMeBlock}>
+                            <input
+                                id="rememberMe"
+                                name="rememberMe"
+                                type="checkbox"
+                                onChange={formik.handleChange}
+                                checked={formik.values.rememberMe}
+                            />
+                            <label htmlFor="rememberMe">Remember me</label>
+                        </div>
 
-                {props.captchaURL && <img src={props.captchaURL}/>}
+                        {props.captchaURL && <img src={props.captchaURL}/>}
 
-                <button type="submit">Login</button>
+                        <button type="submit">Login</button>
 
-                {
-                    formik.status ? <div>{formik.errors}</div> : null
-                }
 
-            </div>
-        </form>
-    );
-};
+                    </div>
+                </form>
+    )
+            }
+
 
 //===========TYPE================
 

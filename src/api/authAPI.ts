@@ -28,6 +28,7 @@ export type LoginDataType = {
 export type ResponseType<D = {}> = {
     resultCode: ResultCodeEnum
     messages: Array<string>
+    fieldsErrors: []
     data: D
 }
 
