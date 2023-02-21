@@ -4,29 +4,32 @@ import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat"
 import userImg from '../../../assets/img/profileAvatar.svg'
 import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
 import ProfileData from "./ProfileData/ProfileData";
-import {ProfileDataForm, ProfileFormDataType} from "./ProfileDataForm/ProfileDataForm";
-import {ProfileDataType} from "../../../api/profileAPI";
+import {ProfileDataForm} from "./ProfileDataForm/ProfileDataForm";
+import {ProfileDataType, UpdateProfileType} from "../../../api/profileAPI";
+import {useParams} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../hoc/useAppSelector";
+import {savePhotoThunkCreator, saveProfileThunkCreator} from "../../../redux/profilePageReducer";
 
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                                                                 profile,
                                                                 status,
-                                                                updateStatus,
-                                                                isOwner,
-                                                                savePhoto,
-                                                                saveProfile
                                                             }) => {
 
     const [editMode, setEditMode] = useState(false)
+    const myProfileId = useAppSelector((state) => state.auth.authId)
+    const dispatch = useAppDispatch()
+
+
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files) {
-            savePhoto(e.currentTarget.files[0])
+            dispatch(savePhotoThunkCreator(e.currentTarget.files[0]))
         }
     }
 
-    const onSubmitData = (formData: ProfileFormDataType) => {
-        saveProfile(formData)
+    const onSubmitData = (formData: UpdateProfileType) => {
+        dispatch(saveProfileThunkCreator(formData))
 
         setEditMode(false)
     }
@@ -38,9 +41,9 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
     return (
         <div>
             <div className={css.descriptionBlock}>
-                <img src={profile?.photos.large ? profile.photos.large : userImg} className={css.userImg}/>
+                <img src={profile?.photos?.large ? profile.photos.large : userImg} className={css.userImg}/>
 
-                {isOwner &&
+                {myProfileId &&
                     <input
                         type='file'
                         onChange={onMainPhotoSelected}
@@ -50,19 +53,17 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                     editMode
                         ? <ProfileDataForm
                             profile={profile}
-                            isOwner={isOwner}
                             onSubmitData={onSubmitData}
                         />
                         : <ProfileData
                             profile={profile}
-                            isOwner={isOwner}
                             goToEditMode={() => setEditMode(true)}
                         />
                 }
 
                 <ProfileStatusWithHooks
                     status={status}
-                    updateStatus={updateStatus}
+
                 />
             </div>
 
@@ -76,10 +77,8 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
 type ProfileInfoPropsType = {
     profile: ProfileDataType | null
     status: string
-    updateStatus: (status: string) => void
     isOwner: boolean
-    savePhoto: (file: File) => void
-    saveProfile: (formData: ProfileFormDataType) => void
+
 }
 
 

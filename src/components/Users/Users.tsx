@@ -12,7 +12,7 @@ import {
     unFollowUsersThunkCreator,
     usersPageActions
 } from "../../redux/usersPageReducer";
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 export const Users: React.FC = () => {
@@ -24,7 +24,7 @@ export const Users: React.FC = () => {
     const filter = useAppSelector(state => state.usersPage.filter)
     const followingProgress = useAppSelector(state => state.usersPage.followingInProgress)
     const dispatch = useDispatch()
-  const history = useHistory()
+    const history = useNavigate()
 
     const followUsers = (userId: number) => {
         dispatch(followUsersThunkCreator(userId))
@@ -39,17 +39,17 @@ export const Users: React.FC = () => {
         dispatch(getUsersThunkCreator(page, pageSize, filter))
     }
 
-    const  onFilterChanged = (filter: FilterType) => {
+    const onFilterChanged = (filter: FilterType) => {
         dispatch(getUsersThunkCreator(1, pageSize, filter))
     }
 
 
-    useEffect( () => {
-        history.push( {
+    useEffect(() => {
+        history({
             pathname: '/users',
             search: `&term=${filter.term}&friend=${filter.term}&page=${currentPage}`
-        } )
-    }, [filter, currentPage] )//comeback after refactoring to functional components 16
+        })
+    }, [filter, currentPage])//comeback after refactoring to functional components 16
 
     useEffect(() => {
 

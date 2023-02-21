@@ -23,7 +23,7 @@ export const profileAPI = {
         return instance.put<ResponseType<PhotosResponseType>>(`profile/photo`, formData)
             .then(res => res.data)
     },
-    saveProfile(profile: ProfileDataType) {
+    saveProfile(profile: UpdateProfileType) {
         return instance.put<ResponseType<ProfileDataType>>(`profile`, profile)
             .then(res => res.data)
     },
@@ -33,14 +33,21 @@ export const profileAPI = {
 
 //=============TYPES======================
 
-export type ProfileDataType = {
+export type UpdateProfileType = {
+    fullName: string
     aboutMe: string
+    lookingForAJobDescription: string
+    lookingForAJob: boolean
+}
+
+export type ProfileDataType = {
     userId: number
+    aboutMe: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: ContactsProfileResponseType
-    photos: ProfilePhotosResponseType
+    contacts?: ContactsProfileResponseType
+    photos?: ProfilePhotosResponseType
 
 }
 

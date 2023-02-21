@@ -1,19 +1,91 @@
-import React, {Component} from "react";
+import React, {useEffect} from "react";
 import {Profile} from "./Profile";
-import {AppStateType} from "../../redux/redux-store";
-import {connect} from "react-redux";
-import {
-    getStatusThunkCreator,
-    getUserProfileThunkCreator, savePhotoThunkCreator, saveProfileThunkCreator,
-    updateStatusThunkCreator
-} from "../../redux/profilePageReducer";
-import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {compose} from "redux";
-import {ProfileFormDataType} from "./ProfileInfo/ProfileDataForm/ProfileDataForm";
-import {ProfileDataType} from "../../api/profileAPI";
+import {getStatusThunkCreator, getUserProfileThunkCreator} from "../../redux/profilePageReducer";
+import {useAppDispatch, useAppSelector} from "../../hoc/useAppSelector";
+import {useNavigate, useParams} from "react-router-dom";
+import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 
+export const ProfileContainer:React.FC = () => {
+    const profile = useAppSelector((state) => state.profilePage.profile)
+    const status = useAppSelector((state) => state.profilePage.status)
+    const authorizedUserId = useAppSelector((state) => state.auth.authId)
+    const isAuth = useAppSelector((state) => state.auth.isAuth)
+    const history = useNavigate()
+    const dispatch = useAppDispatch()
+
+    let userId = useParams()
+    let profileId = Number(userId)
+
+
+
+    /*const refreshProfile = () => {
+
+        if (!profileId && authorizedUserId) {
+            profileId = authorizedUserId
+            if(!userId) {
+               history('/login')
+            }
+        }
+
+        if (!profileId) {
+            console.error("ID should exist in URI parameter")
+        } else {
+            dispatch(getUserProfileThunkCreator(profileId))
+            dispatch(getStatusThunkCreator(profileId))
+
+        }
+    }*/
+
+    /*useEffect( () => {
+        if (!profileId && authorizedUserId) {
+            profileId = authorizedUserId
+            if(!userId) {
+                history('/login')
+            }
+        }
+
+        if (!profileId) {
+            console.error("ID should exist in URI parameter")
+        } else {
+            dispatch(getUserProfileThunkCreator(profileId))
+            dispatch(getStatusThunkCreator(profileId))
+
+        }
+    }, [profileId] )*/
+
+
+    useEffect( () => {
+        if(userId) {
+            dispatch(getUserProfileThunkCreator(+userId))
+            dispatch(getStatusThunkCreator(+userId))
+        }
+
+    }, [userId] )
+
+
+    return (
+        <div>
+            <ProfileInfo
+                profile={profile}
+                status={status}
+                isOwner={!userId}
+
+
+            />
+            <MyPostsContainer />
+        </div>
+    )
+}
+
+
+
+
+
+
+
+/*
 
 export class ProfileAPIContainer extends Component<ProfilePageClassPropsType> {
 
@@ -79,7 +151,7 @@ export const ProfileContainer = compose<React.ComponentType>(
             savePhotoTC: savePhotoThunkCreator,
             saveProfileTC: saveProfileThunkCreator
         }),
-    withRouter,
+
     withAuthRedirect
 )(ProfileAPIContainer)
 
@@ -104,4 +176,5 @@ export type mapDispatchToProfilePropsType = {
 }
 type PathParamsType = {
     userId: number
-}
+}*/
+

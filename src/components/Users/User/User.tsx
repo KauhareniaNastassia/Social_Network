@@ -17,7 +17,7 @@ export const User: React.FC<UserPropsType> = ({
         <div className={css.userWrapper}>
             <span>
                 <div>
-                    <Link to={'/profile/' + user.id}>
+                    <Link to={`/profile/${user.id}`}>
                         <img className={css.userPhoto}
                              src={user.photos.small != null
                                  ? user.photos.small

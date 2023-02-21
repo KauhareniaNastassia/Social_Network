@@ -1,7 +1,7 @@
 import {ActionType, AppDispatchType, AppThunkType, InferActionsTypes} from "./redux-store";
 import {PhotosType, PostType, ProfileType} from "../types/types";
 import {usersPageActions} from "./usersPageReducer";
-import {profileAPI, ProfileDataType} from "../api/profileAPI";
+import {profileAPI, ProfileDataType, UpdateProfileType} from "../api/profileAPI";
 
 
 let initialState: initialStateProfilePageType = {
@@ -170,7 +170,7 @@ export const savePhotoThunkCreator = (file: File): AppThunkType =>
 
     }
 
-export const saveProfileThunkCreator = (profile: ProfileDataType): AppThunkType =>
+export const saveProfileThunkCreator = (profile: UpdateProfileType): AppThunkType =>
     async (dispatch, getState) => {
 
     const profileId = getState().auth.authId

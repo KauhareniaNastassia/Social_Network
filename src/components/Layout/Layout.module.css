@@ -1,0 +1,16 @@
+.wrapper {
+    display:grid;
+    grid-template-areas:
+            'n c';
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 5px;
+    overflow: auto;
+}
+
+.navbar {
+    grid-area: n;
+}
+
+.content {
+    grid-area: c;
+}

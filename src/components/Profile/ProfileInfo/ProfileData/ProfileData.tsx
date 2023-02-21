@@ -2,18 +2,21 @@ import React from 'react';
 import {ProfileDataType} from "../../../../api/profileAPI";
 import {Contact} from "../Contact/Contact";
 import {ContactsType} from "../../../../types/types";
+import {useParams} from "react-router-dom";
+import {useAppSelector} from "../../../../hoc/useAppSelector";
 
 
 const ProfileData: React.FC<ProfileDataPropsType> = ({
-                                                         isOwner,
                                                          goToEditMode,
                                                          profile,
                                                      }) => {
 
+    const myProfileId = useAppSelector((state) => state.auth.authId)
+
     return (
         <div>
 
-            {isOwner && <div>
+            {myProfileId && <div>
                 <button onClick={goToEditMode}>Edit</button>
             </div>}
 
@@ -58,7 +61,5 @@ export default ProfileData;
 
 type ProfileDataPropsType = {
     profile: ProfileDataType
-
-    isOwner: boolean
     goToEditMode: () => void
 }

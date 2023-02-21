@@ -4,17 +4,19 @@ import {Field, Form} from "react-final-form";
 import {ProfileDataType} from "../../../../api/profileAPI";
 import {Contact} from "../Contact/Contact";
 import {ContactsType} from "../../../../types/types";
+import {useParams} from "react-router-dom";
+import {useAppSelector} from "../../../../hoc/useAppSelector";
 
 
 export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                                                                         onSubmitData,
-                                                                        profile,
-                                                                        isOwner
+                                                                        profile
                                                                     }) => {
 
     const [lookingForAJobValue, setLookingForAJobValue] = useState(profile?.lookingForAJob)
+    const myProfileId = useAppSelector((state) => state.auth.authId)
 
-    const onSubmit = (values: ProfileFormDataType) => {
+    const onSubmit = (values: UpdateProfileType) => {
         onSubmitData(values)
 
         /*window.alert(JSON.stringify(values))*/
@@ -34,7 +36,7 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 
                 <form onSubmit={handleSubmit}>
 
-                    {isOwner && <div>
+                    {myProfileId && <div>
 
                         <button type="submit">
                             Save
@@ -107,13 +109,11 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 //===========TYPE================
 
 type ProfileDataFormPropsType = {
-    onSubmitData: (formData: ProfileFormDataType) => void
+    onSubmitData: (formData: UpdateProfileType) => void
     profile: ProfileDataType
-    isOwner: boolean
-
 }
 
-export type ProfileFormDataType = {
+export type UpdateProfileType = {
     fullName: string
     lookingForAJob: boolean
     lookingForAJobDescription: string

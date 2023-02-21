@@ -1,10 +1,13 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {useAppDispatch} from "../../../../../hoc/useAppSelector";
+import {updateStatusThunkCreator} from "../../../../../redux/profilePageReducer";
 
 
-export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> = ({status, updateStatus}) => {
+export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> = ({status}) => {
 
     const [editMode, setEditMode] = useState(false)
     const [inputValue, setInputValue] = useState(status)
+    const dispatch = useAppDispatch()
 
     const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.currentTarget.value)
@@ -12,7 +15,7 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
 
     const updateStatusHandler = () => {
         setEditMode(false)
-        updateStatus(inputValue)
+        dispatch(updateStatusThunkCreator(inputValue))
     }
 
     useEffect(() => {
@@ -48,14 +51,8 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
 
 //===========TYPE================
 
-export type ProfileStatusPropsType = {
-    status: string
-    updateStatus: (status: string) => void
-}
 
-export type ProfileStatusClassPropsType = Readonly<ProfileStatusPropsType>
 
 type ProfileStatusWithHooksPropsType = {
     status: string
-    updateStatus: (status: string) => void
 }

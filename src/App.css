@@ -1,18 +1,21 @@
 .app-wrapper {
-    display: grid;
+    display: flex;
     width: 1200px;
     margin: 0 auto;
-    grid-template-areas:
+    flex-direction:column;
+    min-height: 100vh;
+    /*grid-template-areas:
         'h h'
         'n c';
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
     grid-gap: 5px;
-    overflow: auto;
+    overflow: auto;*/
 }
 
 .app-wrapper-content {
-    grid-area: c;
+  /*  grid-area: c;*/
+    min-height: 100vh;
     background-color: #FEF3EB;
 }
 

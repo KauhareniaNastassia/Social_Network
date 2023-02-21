@@ -1,6 +1,6 @@
 import React from 'react';
 import {LoginForm} from "./LoginForm/LoginForm";
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {useAppSelector} from "../../hoc/useAppSelector";
 
 
@@ -10,7 +10,7 @@ export const Login = () => {
 
 
     if (isAuth) {
-        return <Redirect to={'/profile'}/>
+        return <Navigate to={'/profile'}/>
     }
 
     return (
