@@ -38,7 +38,7 @@ export const ProfileContainer:React.FC = () => {
         }
     }*/
 
-    /*useEffect( () => {
+    useEffect( () => {
         if (!profileId && authorizedUserId) {
             profileId = authorizedUserId
             if(!userId) {
@@ -53,16 +53,16 @@ export const ProfileContainer:React.FC = () => {
             dispatch(getStatusThunkCreator(profileId))
 
         }
-    }, [profileId] )*/
+    }, [profileId] )
 
 
-    useEffect( () => {
+   /* useEffect( () => {
         if(userId) {
             dispatch(getUserProfileThunkCreator(+userId))
             dispatch(getStatusThunkCreator(+userId))
         }
 
-    }, [userId] )
+    }, [userId] )*/
 
 
     return (
