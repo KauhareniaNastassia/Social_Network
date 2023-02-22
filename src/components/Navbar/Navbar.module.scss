@@ -1,0 +1,28 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+.nav__wrapper {
+
+    padding: 20px;
+    min-height: 100vh;
+
+
+    .nav__item_block {
+
+        padding:5px;
+        @include text(18px, 500, $main-text-color);
+
+        .nav__item {
+            color: $main-text-color;
+            text-decoration: none;
+
+        }
+        .nav__item_activeLink {
+            color: #ED5C1D;
+            text-decoration: none;
+        }
+    }
+
+
+
+}
