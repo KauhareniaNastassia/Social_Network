@@ -11,6 +11,7 @@ import {Button} from "antd";
 import {useAppDispatch, useAppSelector} from "./hoc/useAppSelector";
 import {Layout} from "./components/Layout/Layout";
 import {Header} from "./components/Header/Header";
+import {Users} from "./components/Users/Users";
 
 
 const DialogsPage = React.lazy(async () => ({default: (await import('./components/Dialogs/DialogsPage')).DialogsPage}))
@@ -47,7 +48,7 @@ export const App: React.FC = () => {
                             <Route path='/' element={<Navigate to={'/profile'}/>}/>
                             <Route path='/profile/:userId?' element={<ProfileContainer/>}/>
                             <Route path='/dialogs' element={<DialogsPage/>}/>
-                            <Route path='/users' element={<UsersPage/>}/>
+                            <Route path='/users' element={<Users/>}/>
                             <Route path='/care' element={<Care/>}/>
                             <Route path='/forum' element={<ChatPage/>}/>
 

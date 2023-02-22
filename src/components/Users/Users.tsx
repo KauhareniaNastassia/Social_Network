@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import css from './Users.module.css'
+import React, {useEffect, useState} from "react";
+import css from './Users.module.scss'
 import {Pagination} from "../../common/Pagination/Pagination";
 import {User} from "./User/User";
 import {FilterType} from "../../api/usersAPI";
@@ -13,10 +13,12 @@ import {
     usersPageActions
 } from "../../redux/usersPageReducer";
 import {useNavigate} from "react-router-dom";
+import {PreloaderDog} from "../../common/preloader/PreloaderDog/PreloaderDog";
+import {useDebounce} from "use-debounce";
 
 
 export const Users: React.FC = () => {
-
+    const isFetching = useAppSelector(state => state.usersPage.isFetching)
     const totalUsersCount = useAppSelector((state) => state.usersPage.totalUsersCount)
     const currentPage = useAppSelector((state) => state.usersPage.currentPage)
     const pageSize = useAppSelector((state) => state.usersPage.pageSize)
@@ -25,6 +27,14 @@ export const Users: React.FC = () => {
     const followingProgress = useAppSelector(state => state.usersPage.followingInProgress)
     const dispatch = useDispatch()
     const history = useNavigate()
+
+
+
+
+    const [term, setTerm] = useState<string>()
+    const debouncedValue = useDebounce<string | undefined>(term, 1000)
+
+
 
     const followUsers = (userId: number) => {
         dispatch(followUsersThunkCreator(userId))
@@ -44,6 +54,9 @@ export const Users: React.FC = () => {
     }
 
 
+
+
+
     useEffect(() => {
         history({
             pathname: '/users',
@@ -51,56 +64,47 @@ export const Users: React.FC = () => {
         })
     }, [filter, currentPage])//comeback after refactoring to functional components 16
 
+
+
+
     useEffect(() => {
-
-        /*const parsed = queryString.parse(history.location.search.substr(1)) as {term: string, page: string, friend: string}
-
-        let actualPage = currentPage
-        let actualFilter = filter
-
-        if(!!parsed.page) actualPage = Number(parsed.page)
-        if(!!parsed.page) actualFilter = {...actualFilter, term: parsed.term as string}
-
-        switch (parsed.friend) {
-            case 'null' :
-                actualFilter = {...actualFilter, friend: null}
-                break;
-            case 'true' :
-                actualFilter = {...actualFilter, friend: null}
-                break;
-            case 'false' :
-                actualFilter = {...actualFilter, friend: null}
-                break;
-        }
-        dispatch(getUsersThunkCreator(actualPage, pageSize, actualFilter))
-        */
-
         dispatch(getUsersThunkCreator(currentPage, pageSize, filter))
-    }, [])
+    }, [currentPage, pageSize, filter])
 
     return (
-        <div className={css.usersWrapper}>
+        <div >
 
-            <UsersSearchForm onFilterChanged={onFilterChanged}/>
+            {isFetching
+                ? <PreloaderDog/>
+                : <div className={css.users__wrapper}>
+                    <div>
+                        <UsersSearchForm
+                            onFilterChanged={onFilterChanged}/>
+                    </div>
 
-            <Pagination
-                totalUsersCount={totalUsersCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChanged={onPageChanged}
-            />
+                    <div className={css.usersBlock}>
+                        {users.map(user =>
+                            <User
+                                key={user.id}
+                                user={user}
+                                followingProgress={followingProgress}
+                                unfollowUsers={unfollowUsers}
+                                followUsers={followUsers}
+                            />
+                        )}
+                    </div>
 
-            <div className={css.usersBlock}>
-                {users.map(user =>
-                    <User
-                        key={user.id}
-                        user={user}
-                        followingProgress={followingProgress}
-                        unfollowUsers={unfollowUsers}
-                        followUsers={followUsers}
-                    />
-                )}
-            </div>
+                    <div>
+                        <Pagination
+                            totalUsersCount={totalUsersCount}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChanged={onPageChanged}
+                        />
+                    </div>
+                </div>}
+
+
         </div>
     )
 }

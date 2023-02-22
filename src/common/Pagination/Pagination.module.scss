@@ -1,0 +1,49 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+
+.pagination{
+
+    padding: 5px 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius: 10px;
+    background-color: #fafafa;
+
+    .pagination_btn {
+        align-self: center;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffbc8b;
+        @include text(18px, 500, #F8F8F8);
+    }
+
+    .pagination_pages {
+        display: flex;
+        gap: 5px;
+        text-align: center;
+        @include text(16px, 400, $main-text-color);
+
+        .page {
+            width: 30px;
+        }
+
+        .selectedPage {
+            font-weight: bold;
+            color: #ED5C1D;
+        }
+
+    }
+
+
+
+
+}
+
+
+

@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import css from './Pagination.module.css'
+import css from './Pagination.module.scss'
 
-export const Pagination:React.FC<PaginatorPropsType> = ({
-                                                            totalUsersCount,
-                                                            pageSize,
-                                                            currentPage,
-                                                            onPageChanged
-                                                        }) => {
+export const Pagination: React.FC<PaginatorPropsType> = ({
+                                                             totalUsersCount,
+                                                             pageSize,
+                                                             currentPage,
+                                                             onPageChanged
+                                                         }) => {
 
     let portionSize = 10
 
@@ -28,23 +28,31 @@ export const Pagination:React.FC<PaginatorPropsType> = ({
         <div className={css.pagination}>
 
             <div>
-
-                { portionNumber > 1 &&
-                    <button onClick={() =>setPortionNumber(portionNumber - 1) }> PREV </button>
+                {portionNumber > 1 &&
+                    <button className={css.pagination_btn} onClick={() => setPortionNumber(portionNumber - 1)}> PREV </button>
                 }
+            </div>
+
+
+            <div className={css.pagination_pages}>
                 {pages
                     .filter(page => page >= leftPortionPageNumber && page <= rightPortionNumber)
                     .map(page => {
-                    return <span
-                        onClick={(e) => {
-                            onPageChanged(page)
-                        }}
-                        className={currentPage === page ? css.selectedPage : ''}>
+                        return <span
+                            onClick={(e) => {
+                                onPageChanged(page)
+                            }}
+                            className={currentPage === page ? css.selectedPage : css.page}>
                             {page} </span>
-                })}
-                { portionCount > portionNumber &&
-                <button onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}
+                    })}
             </div>
+
+
+            <div>
+                {portionCount > portionNumber &&
+                    <button className={css.pagination_btn} onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}
+            </div>
+
 
         </div>
 

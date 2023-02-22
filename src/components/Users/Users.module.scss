@@ -1,0 +1,35 @@
+
+.users__wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+
+
+  .usersBlock {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius: 10px;
+    background-color: #fafafa;
+  }
+}
+
+/*
+.userPhoto {
+    width: 150px;
+    height: 100px;
+
+}
+
+.selectedPage {
+    font-weight: bold;
+}
+
+
+
+.user {
+    margin: 30px 10px;
+    width: 20%;
+}*/
