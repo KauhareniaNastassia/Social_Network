@@ -51,8 +51,6 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusWithHooksPropsType> =
 
 //===========TYPE================
 
-
-
 type ProfileStatusWithHooksPropsType = {
     status: string
 }

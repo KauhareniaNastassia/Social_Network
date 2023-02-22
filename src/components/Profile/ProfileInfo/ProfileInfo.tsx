@@ -5,10 +5,9 @@ import userImg from '../../../assets/img/profileAvatar.svg'
 import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
 import ProfileData from "./ProfileData/ProfileData";
 import {ProfileDataForm} from "./ProfileDataForm/ProfileDataForm";
-import {ProfileDataType, UpdateProfileType} from "../../../api/profileAPI";
-import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../hoc/useAppSelector";
 import {savePhotoThunkCreator, saveProfileThunkCreator} from "../../../redux/profilePageReducer";
+import {ProfileDataType, UpdateProfileType} from "../../../api/profileAPI";
 
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({

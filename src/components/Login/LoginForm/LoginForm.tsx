@@ -1,11 +1,9 @@
 import React from 'react';
 import {Field, Form, useFormik} from 'formik';
-import css from "./LoginForm.module.css"
+import css from "./LoginForm.module.scss"
 import {useDispatch} from "react-redux";
 import {loginThunkCreator} from "../../../redux/authReducer";
 import {useAppDispatch, useAppSelector} from "../../../hoc/useAppSelector";
-
-
 
 
 const validate = (values: LoginDataType) => {
@@ -44,55 +42,61 @@ export const LoginForm = (props: LoginFormPropsType) => {
 
 
     return (
-                <form onSubmit={formik.handleSubmit} className={css.loginForm}>
-                    <div>
-                        <div className={css.emailBlock}>
-                            <label className={css.emailLabel} htmlFor="Email">Email</label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                onChange={formik.handleChange}
-                                value={formik.values.email}
+        <form onSubmit={formik.handleSubmit} className={css.loginForm__wrapper}>
 
-                            />
-                        </div>
+            <div className={css.loginForm__block}>
+                <div className={css.loginForm__block_item}>
+                    <label className={css.loginForm__label} htmlFor="Email">Email</label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
+                        className={css.loginForm__input}
+                    />
+                </div>
 
-                        {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
-
-                        <div className={css.passwordBlock}>
-                            <label className={css.passwordLabel} htmlFor="Password">Password</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                onChange={formik.handleChange}
-                                value={formik.values.password}
-                            />
-                        </div>
-
-                        {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
-
-                        <div className={css.rememberMeBlock}>
-                            <input
-                                id="rememberMe"
-                                name="rememberMe"
-                                type="checkbox"
-                                onChange={formik.handleChange}
-                                checked={formik.values.rememberMe}
-                            />
-                            <label htmlFor="rememberMe">Remember me</label>
-                        </div>
-
-                        {props.captchaURL && <img src={props.captchaURL}/>}
-
-                        <button type="submit">Login</button>
+                {formik.errors.email ? <div className={css.loginForm__block_error}>{formik.errors.email}</div> : null}
+            </div>
 
 
-                    </div>
-                </form>
+
+            <div className={css.loginForm__block}>
+                <div className={css.loginForm__block_item}>
+                    <label className={css.loginForm__label} htmlFor="Password">Password</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                        className={css.loginForm__input}
+                    />
+                </div>
+                {formik.errors.password ? <div className={css.loginForm__block_error}>{formik.errors.password}</div> : null}
+            </div>
+
+
+
+            <div className={css.loginForm__rememberMeBlock}>
+                <input
+                    id="rememberMe"
+                    name="rememberMe"
+                    type="checkbox"
+                    onChange={formik.handleChange}
+                    checked={formik.values.rememberMe}
+                    className={css.loginForm__rememberMeBlock_checkbox}
+                />
+                <label className={css.loginForm__rememberMeBlock_label} htmlFor="rememberMe">Remember me</label>
+            </div>
+
+            {props.captchaURL && <img src={props.captchaURL}/>}
+
+            <button className={css.loginForm__button} type="submit">Login</button>
+        </form>
     )
-            }
+}
 
 
 //===========TYPE================

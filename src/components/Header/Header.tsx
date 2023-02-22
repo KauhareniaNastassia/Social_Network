@@ -13,7 +13,7 @@ export const Header:React.FC = () => {
     const login = useAppSelector((state) => state.auth.login)
 
     const onClickLogoutHandler = () => {
-        dispatch(logoutThunkCreator)
+        dispatch(logoutThunkCreator())
     }
 
     return (

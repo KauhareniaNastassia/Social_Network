@@ -28,7 +28,7 @@ let initialState: initialStateProfilePageType = {
         },
     ] as PostType[],
     newPostText: '',
-    profile: null as ProfileDataType | null,
+    profile: {} as ProfileDataType,
     status: ''
 }
 
@@ -86,7 +86,7 @@ export const profilePageActions = {
         type: 'profile/UPDATE-NEW-POST-TEXT', updatedPostText
     } as const),
 
-    setUserProfileAC: (profile: ProfileDataType | null) => ({
+    setUserProfileAC: (profile: ProfileDataType) => ({
         type: 'profile/SET-USER-PROFILE',
         profile
     } as const),
@@ -116,13 +116,13 @@ export type ProfilePageActionType = InferActionsTypes<typeof profilePageActions>
 
 //===========THUNK=========
 
-export const getUserProfileThunkCreator = (profileId: number | null): AppThunkType =>
+export const getUserProfileThunkCreator = (profileId: number): AppThunkType =>
     async (dispatch) => {
         try {
-            if(profileId) {
+
                 let res = await profileAPI.getProfile(profileId)
                 dispatch(profilePageActions.setUserProfileAC(res))
-            }
+
 
         } catch (e) {
 
@@ -177,7 +177,7 @@ export const saveProfileThunkCreator = (profile: UpdateProfileType): AppThunkTyp
 
         try {
             let res = await profileAPI.saveProfile(profile)
-            if (res.resultCode === 0) {
+            if (res.resultCode === 0 && profileId) {
                 dispatch(getUserProfileThunkCreator(profileId))
             }
         } catch (e) {

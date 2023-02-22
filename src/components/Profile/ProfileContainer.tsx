@@ -20,13 +20,13 @@ export const ProfileContainer:React.FC = () => {
 
 
 
-    /*const refreshProfile = () => {
+    const refreshProfile = () => {
 
         if (!profileId && authorizedUserId) {
             profileId = authorizedUserId
-            if(!userId) {
+           /* if(!userId) {
                history('/login')
-            }
+            }*/
         }
 
         if (!profileId) {
@@ -36,10 +36,10 @@ export const ProfileContainer:React.FC = () => {
             dispatch(getStatusThunkCreator(profileId))
 
         }
-    }*/
+    }
 
     useEffect( () => {
-        if (!profileId && authorizedUserId) {
+        /*if (!profileId && authorizedUserId) {
             profileId = authorizedUserId
             if(!userId) {
                 history('/login')
@@ -52,8 +52,11 @@ export const ProfileContainer:React.FC = () => {
             dispatch(getUserProfileThunkCreator(profileId))
             dispatch(getStatusThunkCreator(profileId))
 
-        }
+        }*/
+        refreshProfile()
+
     }, [profileId] )
+
 
 
    /* useEffect( () => {
