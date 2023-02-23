@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Social_Network/static/css/main.ef0a327a.css",
-    "main.js": "/Social_Network/static/js/main.8e99ef8f.js",
+    "main.css": "/Social_Network/static/css/main.3ccda247.css",
+    "main.js": "/Social_Network/static/js/main.a4060244.js",
     "static/media/friendFromBar1.jpg": "/Social_Network/static/media/friendFromBar1.b3b8484ae92f88e325b4.jpg",
     "static/media/preloaderCat.png": "/Social_Network/static/media/preloaderCat.e8faa48a369b1f0f4672.png",
     "static/media/ava1.jpg": "/Social_Network/static/media/ava1.3d186d38c4f4b9be36e2.jpg",
@@ -9,13 +9,17 @@
     "static/media/friendFromBar3.jpg": "/Social_Network/static/media/friendFromBar3.a9daa01361d516257bac.jpg",
     "static/media/friendFromBar2.jpg": "/Social_Network/static/media/friendFromBar2.f7b4da9134a3a2f40922.jpg",
     "static/media/preloaderDog.png": "/Social_Network/static/media/preloaderDog.3c088b36d9674025bcd5.png",
+    "static/media/bigLogo.svg": "/Social_Network/static/media/bigLogo.927accb818eb510bb46121f439565fb3.svg",
+    "static/media/Petsville.svg": "/Social_Network/static/media/Petsville.9d043cc60af2606bb388e14b96568e35.svg",
+    "static/media/activeLike.svg": "/Social_Network/static/media/activeLike.f39cca6a88bbbb10a463d448ed978b38.svg",
+    "static/media/unActiveLike.svg": "/Social_Network/static/media/unActiveLike.5c155dffd2742220108ecdf4b0f2d079.svg",
     "static/media/profileAvatar.svg": "/Social_Network/static/media/profileAvatar.87f0edbe5fded27ba988ea899bde2fbe.svg",
     "index.html": "/Social_Network/index.html",
-    "main.ef0a327a.css.map": "/Social_Network/static/css/main.ef0a327a.css.map",
-    "main.8e99ef8f.js.map": "/Social_Network/static/js/main.8e99ef8f.js.map"
+    "main.3ccda247.css.map": "/Social_Network/static/css/main.3ccda247.css.map",
+    "main.a4060244.js.map": "/Social_Network/static/js/main.a4060244.js.map"
   },
   "entrypoints": [
-    "static/css/main.ef0a327a.css",
-    "static/js/main.8e99ef8f.js"
+    "static/css/main.3ccda247.css",
+    "static/js/main.a4060244.js"
   ]
 }
