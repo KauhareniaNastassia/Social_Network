@@ -3,7 +3,7 @@ import {getStatusThunkCreator, getUserProfileThunkCreator} from "../../redux/pro
 import {useAppDispatch, useAppSelector} from "../../hoc/useAppSelector";
 import {useNavigate, useParams} from "react-router-dom";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {MyPosts} from "./MyPosts/MyPosts";
 
 
 export const Profile:React.FC = () => {
@@ -53,7 +53,7 @@ export const Profile:React.FC = () => {
 
 
             />
-            <MyPostsContainer />
+            <MyPosts />
         </div>
     )
 }

@@ -19,13 +19,6 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
     const myProfileId = useAppSelector((state) => state.auth.authId)
     const dispatch = useAppDispatch()
 
-
-    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.currentTarget.files) {
-            dispatch(savePhotoThunkCreator(e.currentTarget.files[0]))
-        }
-    }
-
     const onSubmitData = (formData: UpdateProfileType) => {
         dispatch(saveProfileThunkCreator(formData))
         setEditMode(false)
@@ -59,13 +52,8 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                             goToEditMode={() => setEditMode(true)}
                         />
                 }
-
-
             </div>
-
         </div>
-
-
     )
 }
 

@@ -1,0 +1,61 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+
+.item {
+    @include borderBlock;
+
+    .postInfo {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+
+        .postInfo_img {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+        }
+
+        .postInfo_message {
+            padding: 10px 5px;
+            @include text(18px, 400, $main-text-color)
+        }
+    }
+
+
+    .post_likeBlock {
+        display: flex;
+        align-self: end;
+        justify-content: end;
+
+        margin: 20px 20px 5px 0;
+
+        .post__likeBtn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: none;
+            border-radius: 10px;
+            padding: 3px 10px;
+            background-color: #9a9999;
+
+            .post__likeBtn_img {
+                width: 30px;
+                height: 30px;
+            }
+
+
+        }
+        .post__likeBtn_active {
+            background-color: #ffbc8b;
+        }
+
+
+
+
+    }
+
+
+
+}

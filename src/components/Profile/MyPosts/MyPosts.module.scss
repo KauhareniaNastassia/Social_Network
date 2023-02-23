@@ -1,0 +1,22 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+.wrapper__posts {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .wrapper__addPosts_block {
+        @include borderBlock;
+        height: 100px;
+
+    }
+
+    .posts {
+
+    }
+
+
+}
+

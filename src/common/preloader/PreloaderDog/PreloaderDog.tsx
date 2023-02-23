@@ -1,5 +1,5 @@
 import React from 'react';
-import css from "./PreloaderDog.module.css"
+import css from './PreloaderDog.module.scss'
 import preloader from "../../../assets/img/preloaderDog.png";
 
 export const PreloaderDog = () => {

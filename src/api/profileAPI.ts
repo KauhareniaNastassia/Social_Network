@@ -47,7 +47,7 @@ export type ProfileDataType = {
     lookingForAJobDescription: string
     fullName: string
     contacts?: ContactsProfileResponseType
-    photos?: ProfilePhotosResponseType
+    photos: ProfilePhotosResponseType
 
 }
 

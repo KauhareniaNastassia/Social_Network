@@ -15,12 +15,12 @@ export const Navbar: React.FC = () => {
                 </NavLink>
             </div>
 
-            <div className={css.nav__item_block}>
+            {/*<div className={css.nav__item_block}>
                 <NavLink to='/dialogs'
                          className={({isActive}) => isActive ? css.nav__item_activeLink : css.nav__item}>
                     Messages
                 </NavLink>
-            </div>
+            </div>*/}
 
             <div className={css.nav__item_block}>
                 <NavLink to='/users'

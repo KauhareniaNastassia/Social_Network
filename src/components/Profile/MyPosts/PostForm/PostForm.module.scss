@@ -1,0 +1,61 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+
+.postFormWrapper {
+  display: flex;
+  flex-direction: row;
+
+
+
+  .postFormMessage {
+    display: flex;
+    flex-direction: column;
+
+
+    .postFormMessage_error_opacity {
+      @include text(14px, 300, #f96630);
+      height: 20px;
+      opacity: 0;
+    }
+
+    .postFormMessage_error {
+      @include text(14px, 300, #f96630);
+      height: 20px;
+    }
+
+    .postForm__textarea {
+      @include text(16px, 400, $main-text-color);
+      width: 700px;
+      height: 60px;
+      border: none;
+      border-bottom: 1px solid #ffbc8b;
+      caret-color: #f96630;
+      background-color: #F8F8F8;
+      padding: 5px 5px;
+      @include borderBlock;
+
+      &:focus {
+        outline: none !important;
+        background-color: #F8F8F8;
+        box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+      }
+    }
+  }
+
+  .postForm__BTN_block {
+    align-self: end;
+   margin-left: 140px;
+
+    .postForm__BTN {
+
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f56f34;
+      @include text(18px, 500, #F8F8F8);
+    }
+  }
+}
+
+
