@@ -76,7 +76,7 @@ export const getAuthUserThunkCreator = (): AppThunkType =>
     async (dispatch) => {
         dispatch(appActions.setAppStatusAC('loading'))
         try {
-            let data = await authAPI.auth()
+            const data = await authAPI.auth()
 
             if (data.resultCode === ResultCodeEnum.Success) {
                 let {id, login, email} = data.data

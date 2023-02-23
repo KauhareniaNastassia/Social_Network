@@ -120,7 +120,7 @@ export const getUserProfileThunkCreator = (profileId: number): AppThunkType =>
     async (dispatch) => {
         try {
 
-                let res = await profileAPI.getProfile(profileId)
+                const res = await profileAPI.getProfile(profileId)
                 dispatch(profilePageActions.setUserProfileAC(res))
 
 

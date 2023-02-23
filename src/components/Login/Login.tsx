@@ -12,7 +12,7 @@ export const Login = () => {
 
 
     if (isAuth) {
-        return <Navigate to={'/profile'}/>
+        return <Navigate to={`/profile`}/>
     }
 
     return (

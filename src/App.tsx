@@ -1,8 +1,7 @@
-import React, {Suspense, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Navigate, Route, Routes} from 'react-router-dom'
 import {Care} from "./components/Care/Care";
-import {UsersPage} from "./components/Users/UsersPage";
 import {initializeAppThunkCreator} from "./redux/appReducer";
 import {PreloaderDog} from "./common/preloader/PreloaderDog/PreloaderDog";
 import {Login} from "./components/Login/Login";
@@ -12,13 +11,9 @@ import {useAppDispatch, useAppSelector} from "./hoc/useAppSelector";
 import {Layout} from "./components/Layout/Layout";
 import {Header} from "./components/Header/Header";
 import {Users} from "./components/Users/Users";
-
-
-const DialogsPage = React.lazy(async () => ({default: (await import('./components/Dialogs/DialogsPage')).DialogsPage}))
-
-const ProfileContainer = React.lazy(async () => ({default: (await import('./components/Profile/ProfileContainer')).ProfileContainer}))
-
-const ChatPage = React.lazy(async () => ({default: (await import('./pages/chatpage/ChatPage')).ChatPage}))
+import {Profile} from "./components/Profile/Profile";
+import {DialogsPage} from "./components/Dialogs/DialogsPage";
+import {ChatPage} from "./pages/chatpage/ChatPage";
 
 
 export const App: React.FC = () => {
@@ -40,13 +35,12 @@ export const App: React.FC = () => {
 
 
             <div className='app-wrapper-content'>
-                <Suspense fallback={<div>< PreloaderDog/></div>}>
                     <Routes>
 
                         <Route element={<Layout/>}>
 
                             <Route path='/' element={<Navigate to={'/profile'}/>}/>
-                            <Route path='/profile/:userId?' element={<ProfileContainer/>}/>
+                            <Route path='/profile/:userId?' element={<Profile/>}/>
                             <Route path='/dialogs' element={<DialogsPage/>}/>
                             <Route path='/users' element={<Users/>}/>
                             <Route path='/care' element={<Care/>}/>
@@ -60,7 +54,6 @@ export const App: React.FC = () => {
                             <Button>OK</Button>
                             404 NOT FOUND</div>}/>
                     </Routes>
-                </Suspense>
             </div>
         </div>
     );

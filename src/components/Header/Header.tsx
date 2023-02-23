@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
                             <button onClick={onClickLogoutHandler} className={css.header__userBlock_logoutBTN}>Log Out</button>
                         </div>
                         <div>
-                            {authId === id &&
+                            {authId &&
                                 <NavLink to='/profile'>
                                     <img src={ava} className={css.header_userPhoto}/>
                                 </NavLink>

@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
-import css from "./ProfileInfo.module.css"
+import css from "./ProfileInfo.module.scss"
 import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat";
 import userImg from '../../../assets/img/profileAvatar.svg'
 import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
@@ -8,6 +8,7 @@ import {ProfileDataForm} from "./ProfileDataForm/ProfileDataForm";
 import {useAppDispatch, useAppSelector} from "../../../hoc/useAppSelector";
 import {savePhotoThunkCreator, saveProfileThunkCreator} from "../../../redux/profilePageReducer";
 import {ProfileDataType, UpdateProfileType} from "../../../api/profileAPI";
+import {ProfilePhoto} from "./ProfilePhoto/ProfilePhoto";
 
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
@@ -20,7 +21,6 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
     const dispatch = useAppDispatch()
 
 
-
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files) {
             dispatch(savePhotoThunkCreator(e.currentTarget.files[0]))
@@ -29,7 +29,6 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
 
     const onSubmitData = (formData: UpdateProfileType) => {
         dispatch(saveProfileThunkCreator(formData))
-
         setEditMode(false)
     }
 
@@ -38,16 +37,13 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
     }
 
     return (
-        <div>
-            <div className={css.descriptionBlock}>
-                <img src={profile?.photos?.large ? profile.photos.large : userImg} className={css.userImg}/>
+        <div className={css.wrapper}>
 
-                {myProfileId &&
-                    <input
-                        type='file'
-                        onChange={onMainPhotoSelected}
-                    />}
+            <ProfilePhoto
+                myProfileId={myProfileId}
+                photo={profile?.photos}/>
 
+            <div>
                 {
                     editMode
                         ? <ProfileDataForm
@@ -67,6 +63,8 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
             </div>
 
         </div>
+
+
     )
 }
 
