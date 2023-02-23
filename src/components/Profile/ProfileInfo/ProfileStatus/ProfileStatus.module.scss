@@ -1,0 +1,33 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+.wrapper__status {
+display: flex;
+  gap: 10px;
+  min-height: 30px;
+
+  .status_unEdit_title {
+    @include text(18px, 700, #f56f34);
+  }
+
+  .status_unEdit {
+    @include text(18px, 500, $main-text-color);
+    font-style: italic;
+  }
+
+  .status_edit {
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid #ffbc8b;
+    caret-color: #f96630;
+    @include text(16px, 500, $main-text-color);
+    background-color: #F8F8F8;
+
+    &:focus {
+      outline: none !important;
+      background-color: #F8F8F8;
+      box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+    }
+  }
+
+}

@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {Field, Form} from "react-final-form";
 import {ProfileDataType} from "../../../../api/profileAPI";
-import {Contact} from "../Contact/Contact";
-import {ContactsType} from "../../../../types/types";
-import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../../hoc/useAppSelector";
+import css from "./ProfileDataForm.module.scss";
 
 
 export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
@@ -13,12 +11,11 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                                                                         profile
                                                                     }) => {
 
-    const [lookingForAJobValue, setLookingForAJobValue] = useState(profile?.lookingForAJob)
+
     const myProfileId = useAppSelector((state) => state.auth.authId)
 
     const onSubmit = (values: UpdateProfileType) => {
         onSubmitData(values)
-
         /*window.alert(JSON.stringify(values))*/
     }
 
@@ -34,49 +31,42 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
             render={({handleSubmit, form, submitting, pristine, values}) => (
 
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className={css.wrapper__profileData}>
 
-                    {myProfileId && <div>
-
-                        <button type="submit">
-                            Save
-                        </button>
-
-                    </div>}
-
-                    <div>
-                        <label>Full Name</label>
+                    <div className={css.profileData_item}>
+                        <label className={css.wrapper__profileData_title}>Full Name</label>
                         <Field
+                            className={css.wrapper__profileData_field}
                             name="fullName"
                             component="input"
                             type="text"
                             placeholder='full name'
                         />
                     </div>
-                    <div>
-                        <label>Looking for a job:</label>
+                    <div className={css.profileData_item}>
+                        <label className={css.wrapper__profileData_title}>Do you have a pet?:</label>
                         <Field
                             name="lookingForAJob"
                             autoFocus={true}
                             component="input"
                             type="checkbox"
                         />
-
-                        {profile?.lookingForAJob === true &&
-                            <div>
-                                <label>Tell about job description:</label>
-                                <Field
-                                    name="lookingForAJobDescription"
-                                    component="textarea"
-                                    type="text"
-                                    placeholder={'job description'}/>
-                            </div>}
-
                     </div>
 
-                    <div>
-                        <label>About me</label>
+                    {profile?.lookingForAJob === true &&
+                        <div className={css.profileData_item}>
+                            <label className={css.wrapper__profileData_title}>It's name:</label>
+                            <Field
+                                className={css.wrapper__profileData_field}
+                                name="lookingForAJobDescription"
+                                component="textarea"
+                                type="text"
+                                placeholder={'job description'}/>
+                        </div>}
+                    <div className={css.profileData_item}>
+                        <label className={css.wrapper__profileData_title}>About me</label>
                         <Field
+                            className={css.wrapper__profileData_field}
                             name="aboutMe"
                             component="textarea"
                             placeholder="About me"/>
@@ -97,7 +87,16 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 
                     </div>*/}
 
-                    <pre>{JSON.stringify(values)}</pre>
+                   {/* <pre>{JSON.stringify(values)}</pre>*/}
+
+                    {myProfileId &&
+                        <div className={css.wrapper__profileData_btnBlock}>
+
+                        <button className={css.wrapper__profileData_btn} type="submit">
+                            Save
+                        </button>
+
+                    </div>}
                 </form>
             )
 

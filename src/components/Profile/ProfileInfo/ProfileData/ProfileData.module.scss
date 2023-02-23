@@ -1,0 +1,42 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+.wrapper__profileData {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .wrapper__profileData_name {
+    @include text(18px, 600, $main-text-color);
+    margin-bottom: 10px;
+  }
+
+  .profileData_item {
+    display: flex;
+
+    .wrapper__profileData_title {
+      @include text(16px, 500, #f96630);
+      width: 180px;
+    }
+
+    .wrapper__profileData_desc {
+      @include text(16px, 400, $main-text-color);
+    }
+  }
+
+  .wrapper__profileData_btnBlock {
+    align-self: end;
+    margin-top: 50px;
+    margin-right: 20px;
+
+
+    .wrapper__profileData_btn {
+      padding: 5px 30px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f56f34;
+      @include text(18px, 500, #F8F8F8);
+    }
+  }
+
+}

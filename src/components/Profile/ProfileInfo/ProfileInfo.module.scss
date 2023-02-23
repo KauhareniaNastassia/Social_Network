@@ -8,45 +8,14 @@
   gap: 10px;
 
 
-  .profile_wrapper {
+  .wrapper_info {
     display: flex;
-    align-items: flex-end;
-    bottom: 5px;
+    flex-direction: column;
+    gap: 20px;
     padding: 10px 10px;
     box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
     border-radius: 10px;
-
-
-    .wrapper__changePhoto {
-      position: absolute;
-      margin-bottom: 5px;
-      margin-left: 5px;
-
-      label {
-        cursor: pointer;
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        border: 1px dashed #ffffff;
-        background-color: transparent;
-        border-radius: 5px;
-        padding: 0 5px 3px 5px;
-        @include text(16px, 400, #ffffff);
-
-        input {
-          position: absolute;
-          opacity: 0;
-          height: 50%;
-          width: 100%;
-        }
-      }
-    }
-
-    .userImg {
-      height: 300px;
-      border-radius: 10px;
-    }
-
+    width: 100%;
   }
 
 

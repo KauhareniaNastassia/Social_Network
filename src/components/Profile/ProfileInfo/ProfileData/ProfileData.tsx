@@ -1,9 +1,7 @@
 import React from 'react';
 import {ProfileDataType} from "../../../../api/profileAPI";
-import {Contact} from "../Contact/Contact";
-import {ContactsType} from "../../../../types/types";
-import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../../hoc/useAppSelector";
+import css from './ProfileData.module.scss'
 
 
 const ProfileData: React.FC<ProfileDataPropsType> = ({
@@ -14,29 +12,28 @@ const ProfileData: React.FC<ProfileDataPropsType> = ({
     const myProfileId = useAppSelector((state) => state.auth.authId)
 
     return (
-        <div>
+        <div className={css.wrapper__profileData}>
 
-            {myProfileId && <div>
-                <button onClick={goToEditMode}>Edit</button>
-            </div>}
-
-            <div>
+            <div className={css.wrapper__profileData_name}>
                 {profile?.fullName}
             </div>
 
-            <div>
-                <b>Looking for a job:</b> {profile?.lookingForAJob ? 'yes' : 'no'}
+            <div className={css.profileData_item}>
+                <div className={css.wrapper__profileData_title}>Do you have a pet?:</div>
+                <div className={css.wrapper__profileData_desc}>{profile?.lookingForAJob ? 'yes' : 'no'}</div>
             </div>
 
             {
                 profile?.lookingForAJob &&
-                <div>
-                    <b>My professional skills:</b> {profile?.lookingForAJobDescription}
+                <div className={css.profileData_item}>
+                    <div className={css.wrapper__profileData_title}>It's name:</div>
+                    <div className={css.wrapper__profileData_desc}>{profile?.lookingForAJobDescription}</div>
                 </div>
             }
 
-            <div>
-                <b>About me:</b> {profile?.aboutMe}
+            <div className={css.profileData_item}>
+                <div className={css.wrapper__profileData_title}>About me:</div>
+                <div className={css.wrapper__profileData_desc}>{profile?.aboutMe}</div>
             </div>
 
             {/*<div>
@@ -50,6 +47,11 @@ const ProfileData: React.FC<ProfileDataPropsType> = ({
                             contactValue={profile.contacts[key as keyof ContactsType]}/>
                     })}
             </div>*/}
+
+            {myProfileId &&
+                <div className={css.wrapper__profileData_btnBlock}>
+                    <button className={css.wrapper__profileData_btn} onClick={goToEditMode}>Edit</button>
+                </div>}
 
         </div>
     );

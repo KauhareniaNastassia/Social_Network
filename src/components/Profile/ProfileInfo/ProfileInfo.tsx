@@ -1,14 +1,13 @@
 import React, {ChangeEvent, useState} from "react";
 import css from "./ProfileInfo.module.scss"
 import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat";
-import userImg from '../../../assets/img/profileAvatar.svg'
-import {ProfileStatusWithHooks} from "./ProfileStatus/ProfileStatusWithHooks/ProfileStatusWithHooks";
 import ProfileData from "./ProfileData/ProfileData";
 import {ProfileDataForm} from "./ProfileDataForm/ProfileDataForm";
 import {useAppDispatch, useAppSelector} from "../../../hoc/useAppSelector";
 import {savePhotoThunkCreator, saveProfileThunkCreator} from "../../../redux/profilePageReducer";
 import {ProfileDataType, UpdateProfileType} from "../../../api/profileAPI";
 import {ProfilePhoto} from "./ProfilePhoto/ProfilePhoto";
+import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
@@ -43,7 +42,12 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                 myProfileId={myProfileId}
                 photo={profile?.photos}/>
 
-            <div>
+            <div className={css.wrapper_info}>
+
+                <ProfileStatus
+                    status={status}
+                />
+
                 {
                     editMode
                         ? <ProfileDataForm
@@ -56,10 +60,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                         />
                 }
 
-                <ProfileStatusWithHooks
-                    status={status}
 
-                />
             </div>
 
         </div>
