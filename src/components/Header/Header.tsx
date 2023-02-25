@@ -2,23 +2,31 @@ import React from "react";
 import logo from '../../assets/img/logo.png'
 import petsville from '../../assets/img/Petsville.svg'
 import css from "./Header.module.scss"
-import {Navigate, NavLink,} from "react-router-dom";
+import {Navigate, NavLink, useNavigate,} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hoc/useAppSelector";
 import {logoutThunkCreator} from "../../redux/authReducer";
 
 
 export const Header: React.FC = () => {
 
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const login = useAppSelector(state => state.auth.login)
+    const authId = useAppSelector(state => state.auth.authId)
+    const ava = useAppSelector(state => state.profilePage.profile?.photos?.small)
+    const id = useAppSelector(state => state.profilePage.profile?.userId)
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const isAuth = useAppSelector((state) => state.auth.isAuth)
-    const login = useAppSelector((state) => state.auth.login)
-    const authId = useAppSelector((state) => state.auth.authId)
-    const ava = useAppSelector((state) => state.profilePage.profile?.photos?.small)
-    const id = useAppSelector((state) => state.profilePage.profile?.userId)
 
     const onClickLogoutHandler = () => {
-        dispatch(logoutThunkCreator())
+        console.log('logout')
+        dispatch(logoutThunkCreator(navigateToLogin))
+        // navigate('/login')
     }
+
+    const navigateToLogin = () => {
+        navigate('/login')
+    }
+    // if(!isAuth)navigate('/login')
 
     return (
         <header className={css.header__wrapper}>
@@ -47,7 +55,7 @@ export const Header: React.FC = () => {
                         </div>
                     </div>
 
-                    : <Navigate to={'/login'}/>
+                    : /*<Navigate to={'/login'}/>*/ null
                 }
             </div>
         </header>

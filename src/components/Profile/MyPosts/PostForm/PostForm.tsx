@@ -3,6 +3,7 @@ import css from './PostForm.module.scss'
 import {SubmitHandler, useForm} from "react-hook-form";
 import {profilePageActions} from "../../../../redux/profilePageReducer";
 import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../../../hoc/useAppSelector";
 
 
 export type PostData = {
@@ -13,7 +14,7 @@ export type PostData = {
 export const PostForm: React.FC = () => {
 
     const [post, setPost] = useState('')
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
 
     const {register, handleSubmit, formState: {errors}} = useForm<{ post: string }>({
@@ -67,7 +68,7 @@ export const PostForm: React.FC = () => {
                                 message: "Your friends really wanna know what you think, so leave a comment please!"
                             },
                             maxLength: {
-                                value: 5,
+                                value: 280,
                                 message: "Don't overdo it, 280 characters should be more than enough!"
                             }
                         })}

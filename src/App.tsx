@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Navigate, Route, Routes} from 'react-router-dom'
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom'
 import {Care} from "./components/Care/Care";
 import {initializeAppThunkCreator} from "./redux/appReducer";
 import {PreloaderDog} from "./common/preloader/PreloaderDog/PreloaderDog";
@@ -18,42 +18,51 @@ import {ChatPage} from "./pages/chatpage/ChatPage";
 
 export const App: React.FC = () => {
 
-    const initialized = useAppSelector((state) => state.app.initialized)
+    const initialized = useAppSelector(state => state.app.initialized)
     const dispatch = useAppDispatch()
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(initializeAppThunkCreator())
+        console.log('initialization')
     }, [])
 
+
+    if (!initialized) {
+        return <PreloaderDog/>
+    }
+    // if (!isAuth) {
+    //     // navigate('login')
+    //     return<Navigate to={'/login'}/>
+    // }
 
     return (
         <div className="app-wrapper">
 
-            {!initialized ? <PreloaderDog/> : null}
-
             <Header/>
 
-
             <div className='app-wrapper-content'>
-                    <Routes>
 
-                        <Route element={<Layout/>}>
+                <Routes>
 
-                            <Route path='/' element={<Navigate to={'/profile'}/>}/>
-                            <Route path='/profile/:userId?' element={<Profile/>}/>
-                            <Route path='/dialogs' element={<DialogsPage/>}/>
-                            <Route path='/users' element={<Users/>}/>
-                            <Route path='/care' element={<Care/>}/>
-                            <Route path='/forum' element={<ChatPage/>}/>
+                    <Route element={<Layout/>}>
 
-                        </Route>
+                        <Route path='/' element={<Navigate to={'/profile'}/>}/>
+                        <Route path='/profile/:userId?' element={<Profile/>}/>
+                        <Route path='/dialogs' element={<DialogsPage/>}/>
+                        <Route path='/users' element={<Users/>}/>
+                        <Route path='/care' element={<Care/>}/>
+                        <Route path='/forum' element={<ChatPage/>}/>
 
-                        <Route path='/login' element={<Login/>}/>
+                    </Route>
 
-                        <Route path='*' element={<div>
-                            <Button>OK</Button>
-                            404 NOT FOUND</div>}/>
-                    </Routes>
+                    <Route path='/login' element={<Login/>}/>
+
+                    <Route path='*' element={<div>
+                        <Button>OK</Button>
+                        404 NOT FOUND</div>}/>
+                </Routes>
             </div>
         </div>
     );

@@ -38,7 +38,7 @@ export const profilePageReducer = (state: initialStateProfilePageType = initialS
             const newPost: PostType = {
                 postId: 5,
                 message: state.newPostText,
-                likesCount: 5,
+                likesCount: 0,
             }
             let stateCopy = {
                 ...state,

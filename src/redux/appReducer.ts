@@ -1,5 +1,6 @@
 import {ActionType, AppDispatchType, AppThunkType, InferActionsTypes} from "./redux-store";
-import {getAuthUserThunkCreator} from "./authReducer";
+import {authActions, getAuthUserThunkCreator} from "./authReducer";
+import {authAPI, ResultCodeEnum} from "../api/authAPI";
 
 
 let initialAppState: InitialAppStateType = {
@@ -12,7 +13,7 @@ export const appReducer = (state = initialAppState, action: ActionType): Initial
 
     switch (action.type) {
         case 'app/SET-INITIALIZED':
-            return {...state, initialized: true}
+            return {...state, initialized: action.value}
 
         case 'app/SET-ERROR':
             return {...state, error: action.error}
@@ -29,8 +30,9 @@ export const appReducer = (state = initialAppState, action: ActionType): Initial
 //=======ACTIONS======
 
 export const appActions = {
-    setInitializedSuccessAC: () => ({
+    setInitializedSuccessAC: (value: boolean) => ({
         type: 'app/SET-INITIALIZED',
+        value
     } as const),
 
     setAppErrorAC: (error: ErrorAppType) => ({
@@ -41,8 +43,12 @@ export const appActions = {
     setAppStatusAC: (status: AppStatusType) => ({
         type: 'app/SET-STATUS',
         status
-    } as const)
+    } as const),
 
+    setProfileIdAC: (userId: number) =>( {
+        type: 'app/SET-PROFILE-ID',
+        userId
+    } as const),
 }
 
 //=======THUNK======
@@ -55,11 +61,15 @@ export const initializeAppThunkCreator = (): AppThunkType =>
 
             Promise.all([promise])
                 .then(() => {
-                    dispatch(appActions.setInitializedSuccessAC())
+                    dispatch(appActions.setInitializedSuccessAC(true))
                 })
         } catch (e) {
         }
     }
+
+
+
+
 
 
 //=======ACTION TYPES======

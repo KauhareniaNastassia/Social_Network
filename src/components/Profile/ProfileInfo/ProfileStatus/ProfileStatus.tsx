@@ -1,11 +1,12 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {useAppDispatch} from "../../../../hoc/useAppSelector";
+import {useAppDispatch, useAppSelector} from "../../../../hoc/useAppSelector";
 import {updateStatusThunkCreator} from "../../../../redux/profilePageReducer";
 import css from './ProfileStatus.module.scss'
 
 
-export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({status}) => {
+export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({myProfileId}) => {
 
+    const status = useAppSelector(state => state.profilePage.status)
     const [editMode, setEditMode] = useState(false)
     const [inputValue, setInputValue] = useState(status)
     const dispatch = useAppDispatch()
@@ -15,13 +16,16 @@ export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({status}) => {
     }
 
     const updateStatusHandler = () => {
-        setEditMode(false)
         dispatch(updateStatusThunkCreator(inputValue))
+        setInputValue(status)
+        setEditMode(false)
     }
 
     useEffect(() => {
         setInputValue(status)
+        console.log('status')
     }, [status])
+
 
     return (
         <div className={css.wrapper__status}>
@@ -53,5 +57,5 @@ export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({status}) => {
 //===========TYPE================
 
 type ProfileStatusPropsType = {
-    status: string
+    myProfileId: number | null,
 }

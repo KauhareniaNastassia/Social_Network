@@ -1,16 +1,11 @@
 import React, {useState} from "react";
 import css from './Pagination.module.scss'
 
-export const Pagination: React.FC<PaginatorPropsType> = ({
-                                                             totalUsersCount,
-                                                             pageSize,
-                                                             currentPage,
-                                                             onPageChanged
-                                                         }) => {
+export const Pagination = React.memo((props: PaginatorPropsType) => {
 
     let portionSize = 10
 
-    let pagesCount = Math.ceil(totalUsersCount / pageSize)
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
@@ -36,13 +31,16 @@ export const Pagination: React.FC<PaginatorPropsType> = ({
 
             <div className={css.pagination_pages}>
                 {pages
-                    .filter(page => page >= leftPortionPageNumber && page <= rightPortionNumber)
+                    .filter(page => {
+                        return page >= leftPortionPageNumber && page <= rightPortionNumber
+                    })
                     .map(page => {
                         return <span
-                            onClick={(e) => {
-                                onPageChanged(page)
+                            key={page}
+                            onClick={() => {
+                                props.onPageChanged(page)
                             }}
-                            className={currentPage === page ? css.selectedPage : css.page}>
+                            className={props.currentPage === page ? css.selectedPage : css.page}>
                             {page} </span>
                     })}
             </div>
@@ -52,12 +50,10 @@ export const Pagination: React.FC<PaginatorPropsType> = ({
                 {portionCount > portionNumber &&
                     <button className={css.pagination_btn} onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}
             </div>
-
-
         </div>
 
     )
-}
+})
 
 //===========TYPE================
 

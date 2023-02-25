@@ -29,12 +29,12 @@ export const Navbar: React.FC = () => {
                 </NavLink>
             </div>
 
-            <div className={css.nav__item_block}>
+            {/*<div className={css.nav__item_block}>
                 <NavLink to='/care'
                          className={({isActive}) => isActive ? css.nav__item_activeLink : css.nav__item}>
                     Care
                 </NavLink>
-            </div>
+            </div>*/}
 
             <div className={css.nav__item_block}>
                 <NavLink to='/forum'

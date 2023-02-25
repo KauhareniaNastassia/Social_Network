@@ -12,8 +12,7 @@ import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                                                                 profile,
-                                                                status,
-                                                            }) => {
+                                                                                                                            }) => {
 
     const [editMode, setEditMode] = useState(false)
     const myProfileId = useAppSelector((state) => state.auth.authId)
@@ -38,7 +37,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
             <div className={css.wrapper_info}>
 
                 <ProfileStatus
-                    status={status}
+                    myProfileId={myProfileId}
                 />
 
                 {
@@ -62,7 +61,6 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
 
 type ProfileInfoPropsType = {
     profile: ProfileDataType | null
-    status: string
     isOwner: boolean
 
 }

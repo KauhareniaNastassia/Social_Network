@@ -36,6 +36,7 @@ export const LoginForm = (props: LoginFormPropsType) => {
         },
         validate,
         onSubmit: (values: LoginDataType) => {
+            console.log(values)
             dispatch(loginThunkCreator(values))
         },
     });

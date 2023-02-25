@@ -12,6 +12,7 @@ export const Login = () => {
 
 
     if (isAuth) {
+        console.log(isAuth)
         return <Navigate to={`/profile`}/>
     }
 
@@ -25,6 +26,7 @@ export const Login = () => {
             </div>
 
             <div className={css.wrapper__login}>
+
                 <h1 className={css.wrapper__login_title}>LOGIN</h1>
                 <LoginForm captchaURL={captchaURL}/>
 

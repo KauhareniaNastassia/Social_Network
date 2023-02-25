@@ -2,11 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {Message} from "./message/Message";
 import {useAppSelector} from "../../../hoc/useAppSelector";
+import {message} from "antd";
 
 
 export const Messages: React.FC = () => {
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const messages = useAppSelector(state => state.chat.messages)
+
 
     const [isAutoScroll, setIsAutoScroll] = useState(true)
 
@@ -24,6 +26,7 @@ export const Messages: React.FC = () => {
         if (isAutoScroll) {
             messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
         }
+        console.log(messages)
     }, [messages])
 
     return (

@@ -110,13 +110,14 @@ export const loginThunkCreator = (data: LoginDataType): AppThunkType =>
     }
 
 
-export const logoutThunkCreator = (): AppThunkType =>
+export const logoutThunkCreator = (cb?: () => void): AppThunkType =>
     async (dispatch) => {
         dispatch(appActions.setAppStatusAC('loading'))
         try {
             let res = await authAPI.logout()
             if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(authActions.setAuthUserDataAC(null, null, null, false))
+                cb && cb()
                 dispatch(appActions.setAppStatusAC('success'))
             } else {
                 handleServerAppError(res, dispatch)

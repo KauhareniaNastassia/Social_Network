@@ -7,22 +7,24 @@ import {MyPosts} from "./MyPosts/MyPosts";
 
 
 export const Profile:React.FC = () => {
-    const profile = useAppSelector((state) => state.profilePage.profile)
-    const status = useAppSelector((state) => state.profilePage.status)
-    const authorizedUserId = useAppSelector((state) => state.auth.authId)
-    const isAuth = useAppSelector((state) => state.auth.isAuth)
+    const profile = useAppSelector(state => state.profilePage.profile)
+    const status = useAppSelector(state => state.profilePage.status)
+    const authorizedUserId = useAppSelector(state => state.auth.authId)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
     const history = useNavigate()
     const dispatch = useAppDispatch()
 
     let {userId} = useParams()
-    let profileId: number | null = Number(userId)
 
-    useEffect( () => {
+
+    /*useEffect( () => {
+        let profileId: number | null = Number(userId)
+
         if (!profileId) {
             profileId = authorizedUserId
-            /*if(!userId) {
+            /!*if(!userId) {
                history('/login')
-            }*/
+            }*!/
         }
 
         if (!profileId) {
@@ -31,24 +33,29 @@ export const Profile:React.FC = () => {
             dispatch(getUserProfileThunkCreator(profileId))
             dispatch(getStatusThunkCreator(profileId))
         }
-    }, [profileId] )
+    }, [userId, authorizedUserId, dispatch] )*/
 
+    useEffect( () => {
+        let profileId: number | null = Number(userId)
 
-
-   /* useEffect( () => {
-        if(userId) {
-            dispatch(getUserProfileThunkCreator(+userId))
-            dispatch(getStatusThunkCreator(+userId))
+        if (profileId) {
+            dispatch(getUserProfileThunkCreator(profileId))
+            dispatch(getStatusThunkCreator(profileId))
+            console.log('profileId')
+        } else {
+            if(isAuth && authorizedUserId) {
+                dispatch(getUserProfileThunkCreator(authorizedUserId))
+                dispatch(getStatusThunkCreator(authorizedUserId))
+                console.log('authorizedUserId')
+            }
         }
 
-    }, [userId] )*/
-
+    }, [userId, isAuth, authorizedUserId] )
 
     return (
         <div>
             <ProfileInfo
                 profile={profile}
-                status={status}
                 isOwner={!userId}
 
 
@@ -157,3 +164,10 @@ type PathParamsType = {
     userId: number
 }*/
 
+/* useEffect( () => {
+      if(userId) {
+          dispatch(getUserProfileThunkCreator(+userId))
+          dispatch(getStatusThunkCreator(+userId))
+      }
+
+  }, [userId] )*/

@@ -3,7 +3,6 @@ import css from "./Post.module.scss"
 import ava1 from '../../../../assets/img/ava1.jpg'
 import like from '../../../../assets/img/unActiveLike.svg'
 import activeLike from '../../../../assets/img/activeLike.svg'
-import {PhotosType} from "../../../../api/usersAPI";
 import {ProfilePhotosResponseType} from "../../../../api/profileAPI";
 
 
@@ -30,8 +29,6 @@ export const Post: React.FC<PostPropsType> = ({
         } else {
             setLikes(likes + 1)
         }
-
-
     }
 
 

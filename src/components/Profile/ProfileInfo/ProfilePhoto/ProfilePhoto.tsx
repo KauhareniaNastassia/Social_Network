@@ -24,7 +24,7 @@ export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
     return (
         <div className={css.profile_wrapper}>
 
-            {myProfileId &&
+            {myProfileId ?
                 <div className={css.wrapper__changePhoto}>
                     <label htmlFor="inputTag">
                         Change
@@ -35,6 +35,7 @@ export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
                         />
                     </label>
                 </div>
+                : ""
             }
 
             <img src={photo?.large ? photo.large : userImg} className={css.userImg}/>
