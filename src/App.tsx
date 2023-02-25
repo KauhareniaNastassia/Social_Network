@@ -14,6 +14,7 @@ import {Users} from "./components/Users/Users";
 import {Profile} from "./components/Profile/Profile";
 import {DialogsPage} from "./components/Dialogs/DialogsPage";
 import {ChatPage} from "./pages/chatpage/ChatPage";
+import PageNotFound from "./components/PageNotFoung/PageNotFound";
 
 
 export const App: React.FC = () => {
@@ -59,9 +60,7 @@ export const App: React.FC = () => {
 
                     <Route path='/login' element={<Login/>}/>
 
-                    <Route path='*' element={<div>
-                        <Button>OK</Button>
-                        404 NOT FOUND</div>}/>
+                    <Route path='*' element={<PageNotFound/>}/>
                 </Routes>
             </div>
         </div>

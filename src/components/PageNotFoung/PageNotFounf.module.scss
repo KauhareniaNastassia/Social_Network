@@ -1,0 +1,26 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+.wrapper_notFound {
+  display: flex;
+
+  justify-content: space-around;
+
+  .notFound_img {
+    height: 90vh;
+  }
+
+  .notFound_info {
+    align-self: center;
+
+    .notFound_info_button {
+      margin-right: 50px;
+      align-self: center;
+      padding: 30px 60px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f56f34;
+      @include text(22px, 700, #F8F8F8);
+    }
+  }
+}
