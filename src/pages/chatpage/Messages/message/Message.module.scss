@@ -1,0 +1,29 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+
+.wrapper__message {
+  display: flex;
+  flex-direction: row;
+  margin: 30px 20px;
+  gap: 20px;
+
+  .message__userPhoto {
+    height: 50px;
+    border-radius: 30px;
+  }
+
+  .wrapper__message_block {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    .wrapper__message_name {
+      @include text(18px, 600, #f56f34)
+    }
+
+    .wrapper__message_message {
+      @include text(16px, 400, $main-text-color)
+    }
+  }
+}

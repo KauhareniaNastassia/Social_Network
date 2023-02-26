@@ -7,9 +7,9 @@ import css from './ProfileData.module.scss'
 const ProfileData: React.FC<ProfileDataPropsType> = ({
                                                          goToEditMode,
                                                          profile,
+                                                         isOwner
                                                      }) => {
 
-    const myProfileId = useAppSelector((state) => state.auth.authId)
 
     return (
         <div className={css.wrapper__profileData}>
@@ -31,24 +31,15 @@ const ProfileData: React.FC<ProfileDataPropsType> = ({
                 </div>
             }
 
-            <div className={css.profileData_item}>
-                <div className={css.wrapper__profileData_title}>About me:</div>
-                <div className={css.wrapper__profileData_desc}>{profile?.aboutMe}</div>
-            </div>
+            {
+                profile?.aboutMe && <div className={css.profileData_item}>
+                    <div className={css.wrapper__profileData_title}>About me:</div>
+                    <div className={css.wrapper__profileData_desc}>{profile?.aboutMe}</div>
+                </div>
+            }
 
-            {/*<div>
-                <b>Contacts</b>: {
-                Object
-                    .keys(profile.contacts)
-                    .map((key) => {
-                        return <Contact
-                            key={key}
-                            contactTitle={key}
-                            contactValue={profile.contacts[key as keyof ContactsType]}/>
-                    })}
-            </div>*/}
 
-            {myProfileId &&
+            {isOwner &&
                 <div className={css.wrapper__profileData_btnBlock}>
                     <button className={css.wrapper__profileData_btn} onClick={goToEditMode}>Edit</button>
                 </div>}
@@ -64,4 +55,5 @@ export default ProfileData;
 type ProfileDataPropsType = {
     profile: ProfileDataType
     goToEditMode: () => void
+    isOwner: boolean
 }

@@ -8,7 +8,9 @@ import {ProfilePhotosResponseType} from "../../../../api/profileAPI";
 
 
 export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
-                                                                  myProfileId, photo}) => {
+                                                                  photo,
+                                                                  isOwner
+                                                              }) => {
 
 
     const dispatch = useAppDispatch()
@@ -24,7 +26,7 @@ export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
     return (
         <div className={css.profile_wrapper}>
 
-            {myProfileId ?
+            {isOwner &&
                 <div className={css.wrapper__changePhoto}>
                     <label htmlFor="inputTag">
                         Change
@@ -35,7 +37,6 @@ export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
                         />
                     </label>
                 </div>
-                : ""
             }
 
             <img src={photo?.large ? photo.large : userImg} className={css.userImg}/>
@@ -49,9 +50,8 @@ export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
 //===========TYPE================
 
 type ProfilePhotoPropsType = {
-    myProfileId: number | null,
     photo?: ProfilePhotosResponseType
-
+    isOwner: boolean
 }
 
 

@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {startChatMessagesThunkCreator, stopChatMessagesThunkCreator} from "../../redux/chatReducer";
 import {Messages} from "./Messages/Messages";
 import {useAppDispatch, useAppSelector} from "../../hoc/useAppSelector";
+import css from './ChatPage.module.scss'
 
 export const ChatPage: React.FC = () => {
 
@@ -21,12 +22,12 @@ export const ChatPage: React.FC = () => {
 
 
     return (
-        <div>
+        <div className={css.wrapper__chatPage}>
             {status === 'error' && <div>Some error occured. Please refresh page</div>}
-                 <>
+                 <div >
                     <Messages />
                     <AddMessageForm />
-                </>
+                </div>
         </div>
     );
 };

@@ -12,10 +12,10 @@ import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                                                                 profile,
-                                                                                                                            }) => {
+                                                                isOwner
+                                                            }) => {
 
     const [editMode, setEditMode] = useState(false)
-    const myProfileId = useAppSelector((state) => state.auth.authId)
     const dispatch = useAppDispatch()
 
     const onSubmitData = (formData: UpdateProfileType) => {
@@ -31,13 +31,13 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
         <div className={css.wrapper}>
 
             <ProfilePhoto
-                myProfileId={myProfileId}
-                photo={profile?.photos}/>
+                photo={profile?.photos}
+                isOwner={isOwner}/>
 
             <div className={css.wrapper_info}>
 
                 <ProfileStatus
-                    myProfileId={myProfileId}
+                    isOwner={isOwner}
                 />
 
                 {
@@ -46,9 +46,11 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                             profile={profile}
                             onSubmitData={onSubmitData}
                         />
+
                         : <ProfileData
                             profile={profile}
                             goToEditMode={() => setEditMode(true)}
+                            isOwner={isOwner}
                         />
                 }
             </div>

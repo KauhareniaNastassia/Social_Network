@@ -1,16 +1,10 @@
 import React, {useState} from "react";
 import css from "./Post.module.scss"
-import ava1 from '../../../../assets/img/ava1.jpg'
+import defaultAva from '../../../../assets/img/profileAvatar.svg'
 import like from '../../../../assets/img/unActiveLike.svg'
 import activeLike from '../../../../assets/img/activeLike.svg'
 import {ProfilePhotosResponseType} from "../../../../api/profileAPI";
 
-
-type PostPropsType = {
-    message: string
-    likesCount: number
-    userPhoto: ProfilePhotosResponseType | undefined
-}
 
 export const Post: React.FC<PostPropsType> = ({
                                                   userPhoto,
@@ -36,7 +30,7 @@ export const Post: React.FC<PostPropsType> = ({
         <div className={css.item}>
             <div className={css.postInfo}>
                 <img
-                    src={userPhoto?.small ? userPhoto.small : ava1}
+                    src={userPhoto?.small ? userPhoto.small : defaultAva}
                     alt='userPhoto'
                     className={css.postInfo_img}
                 />
@@ -50,21 +44,25 @@ export const Post: React.FC<PostPropsType> = ({
                 <button
                     className={!likeBTN ? css.post__likeBtn : `${css.post__likeBtn} ${css.post__likeBtn_active}`}
                     onClick={onClickLikedBTNHandler}
-
                 >
 
                     <img className={css.post__likeBtn_img} src={!likeBTN ? like : activeLike}/>
                     <span>
                         {likes}
                     </span>
-
-
                 </button>
-
             </div>
-
-
         </div>
 
     )
+}
+
+
+
+//===================TYPES============
+
+type PostPropsType = {
+    message: string
+    likesCount: number
+    userPhoto: ProfilePhotosResponseType | undefined
 }

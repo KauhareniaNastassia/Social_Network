@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../../assets/img/logo.png'
 import petsville from '../../assets/img/Petsville.svg'
 import css from "./Header.module.scss"
-import {Navigate, NavLink, useNavigate,} from "react-router-dom";
+import {Navigate, NavLink, useNavigate, useParams,} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hoc/useAppSelector";
 import {logoutThunkCreator} from "../../redux/authReducer";
 
@@ -13,20 +13,20 @@ export const Header: React.FC = () => {
     const login = useAppSelector(state => state.auth.login)
     const authId = useAppSelector(state => state.auth.authId)
     const ava = useAppSelector(state => state.profilePage.profile?.photos?.small)
-    const id = useAppSelector(state => state.profilePage.profile?.userId)
+
+
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    let {userId} = useParams()
 
     const onClickLogoutHandler = () => {
         console.log('logout')
         dispatch(logoutThunkCreator(navigateToLogin))
-        // navigate('/login')
     }
 
     const navigateToLogin = () => {
         navigate('/login')
     }
-    // if(!isAuth)navigate('/login')
 
     return (
         <header className={css.header__wrapper}>
@@ -38,24 +38,21 @@ export const Header: React.FC = () => {
             </NavLink>
 
             <div className={css.header__loginBlock}>
-                {isAuth
-                    ? <div className={css.header__userBlock}>
+                {isAuth && <div className={css.header__userBlock}>
                         <div className={css.header__userInfo}>
                             <div className={css.header__userBlock_login}>
                                 {login}
                             </div>
-                            <button onClick={onClickLogoutHandler} className={css.header__userBlock_logoutBTN}>Log Out</button>
+                            <button onClick={onClickLogoutHandler} className={css.header__userBlock_logoutBTN}>Log Out
+                            </button>
                         </div>
                         <div>
-                            {authId &&
-                                <NavLink to='/profile'>
-                                    <img src={ava} className={css.header_userPhoto}/>
-                                </NavLink>
-                                }
+                            <NavLink to='/profile'>
+                                <img src={ava} className={css.header_userPhoto}/>
+                            </NavLink>
+
                         </div>
                     </div>
-
-                    : /*<Navigate to={'/login'}/>*/ null
                 }
             </div>
         </header>

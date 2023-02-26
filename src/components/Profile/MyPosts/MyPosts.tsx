@@ -5,7 +5,7 @@ import {Post} from "./Post/Post";
 import {useAppSelector} from "../../../hoc/useAppSelector";
 import {PostForm} from "./PostForm/PostForm";
 
-export const MyPosts: React.FC = () => {
+export const MyPosts: React.FC<MyPostsPropsType> = ({isOwner}) => {
 
 
     const posts = useAppSelector((state) => state.profilePage.posts)
@@ -13,10 +13,11 @@ export const MyPosts: React.FC = () => {
 
     return (
         <div className={css.wrapper__posts}>
-            <div className={css.wrapper__addPosts_block}>
-                    <PostForm />
-            </div>
-
+            {isOwner &&
+                <div className={css.wrapper__addPosts_block}>
+                    <PostForm/>
+                </div>
+            }
             <div className={css.posts}>
                 {posts.map(post => <Post
                     key={post.postId}
@@ -28,3 +29,9 @@ export const MyPosts: React.FC = () => {
     )
 }
 
+
+//===================TYPES============
+
+type MyPostsPropsType = {
+    isOwner: boolean
+}

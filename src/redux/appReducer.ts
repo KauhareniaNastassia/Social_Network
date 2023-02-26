@@ -1,12 +1,14 @@
 import {ActionType, AppDispatchType, AppThunkType, InferActionsTypes} from "./redux-store";
 import {authActions, getAuthUserThunkCreator} from "./authReducer";
 import {authAPI, ResultCodeEnum} from "../api/authAPI";
+import {handleServerNetworkError} from "../utils/errorHandler";
 
 
 let initialAppState: InitialAppStateType = {
     initialized: false,
     error: null,
-    status: 'idle' as AppStatusType
+    status: 'idle' as AppStatusType,
+    profileId: 0 as number
 }
 
 export const appReducer = (state = initialAppState, action: ActionType): InitialAppStateType => {
@@ -20,6 +22,9 @@ export const appReducer = (state = initialAppState, action: ActionType): Initial
 
         case 'app/SET-STATUS':
             return {...state, status: action.status}
+
+        case 'app/SET-PROFILE-ID':
+            return {...state, profileId: action.id}
 
         default:
             return state
@@ -45,9 +50,9 @@ export const appActions = {
         status
     } as const),
 
-    setProfileIdAC: (userId: number) =>( {
+    setProfileIdAC: (id: number) =>( {
         type: 'app/SET-PROFILE-ID',
-        userId
+        id
     } as const),
 }
 
@@ -64,6 +69,7 @@ export const initializeAppThunkCreator = (): AppThunkType =>
                     dispatch(appActions.setInitializedSuccessAC(true))
                 })
         } catch (e) {
+            handleServerNetworkError(e, dispatch)
         }
     }
 
@@ -82,6 +88,7 @@ export type InitialAppStateType = {
     initialized: boolean
     error: ErrorAppType | null
     status: AppStatusType
+    profileId: number
 }
 
 export type AppStatusType = 'idle' | 'loading' | 'success' | 'error'

@@ -6,7 +6,6 @@ import {initializeAppThunkCreator} from "./redux/appReducer";
 import {PreloaderDog} from "./common/preloader/PreloaderDog/PreloaderDog";
 import {Login} from "./components/Login/Login";
 import 'antd/dist/reset.css';
-import {Button} from "antd";
 import {useAppDispatch, useAppSelector} from "./hoc/useAppSelector";
 import {Layout} from "./components/Layout/Layout";
 import {Header} from "./components/Header/Header";
@@ -21,8 +20,6 @@ export const App: React.FC = () => {
 
     const initialized = useAppSelector(state => state.app.initialized)
     const dispatch = useAppDispatch()
-    const isAuth = useAppSelector(state => state.auth.isAuth)
-    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(initializeAppThunkCreator())
@@ -33,10 +30,7 @@ export const App: React.FC = () => {
     if (!initialized) {
         return <PreloaderDog/>
     }
-    // if (!isAuth) {
-    //     // navigate('login')
-    //     return<Navigate to={'/login'}/>
-    // }
+
 
     return (
         <div className="app-wrapper">

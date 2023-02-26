@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {Message} from "./message/Message";
 import {useAppSelector} from "../../../hoc/useAppSelector";
-import {message} from "antd";
+import css from './Messages.module.scss'
 
 
 export const Messages: React.FC = () => {
@@ -31,7 +31,8 @@ export const Messages: React.FC = () => {
 
     return (
         <div
-            style={{height: '600px', overflowY: 'auto'}}
+            className={css.wrapper__messages}
+
             onScroll={onScrollHandler}>
             {messages.map((m, index) =>
                 <Message key={m.id} message={m}/>)}

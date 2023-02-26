@@ -1,0 +1,49 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+
+.wrapper__addMessageForm {
+
+  &::before {
+    content: '';
+    display: block;
+    margin-top: 8px;
+    height: 1px;
+    width: 100%;
+    background-image: linear-gradient(231.58deg, #F83600 -53.35%, #F9D423 297.76%);
+  }
+
+  .wrapper__content {
+    display: flex;
+    margin: 20px 20px;
+align-items: end;
+    justify-content: space-between;
+
+    .addMessageForm__textarea {
+      @include text(16px, 400, $main-text-color);
+      width: 80%;
+      height: 80px;
+      border: none;
+      border-bottom: 1px solid #ffbc8b;
+      caret-color: #f96630;
+      background-color: #F8F8F8;
+      @include borderBlock;
+
+      &:focus {
+        outline: none !important;
+        background-color: #F8F8F8;
+        box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18), 0px 1px 5px rgba(191, 196, 201, 0.24);
+      }
+    }
+
+    .addMessageForm__button {
+      padding: 5px 30px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f56f34;
+      @include text(18px, 500, #F8F8F8);
+    }
+  }
+
+
+}

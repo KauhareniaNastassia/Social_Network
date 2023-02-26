@@ -3,6 +3,8 @@ import {ActionType, AppDispatchType, AppThunkType, InferActionsTypes} from "./re
 import {updateObjectInArray} from "../utils/helpers/object-helper";
 import {FilterType, usersAPI, UserType} from "../api/usersAPI";
 import {ResponseType} from "../api/authAPI";
+import {appActions} from "./appReducer";
+import {handleServerNetworkError} from "../utils/errorHandler";
 
 
 let initialStateUsersPage: initialStateUsersPageType = {
@@ -128,7 +130,7 @@ export const usersPageActions = {
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType): AppThunkType =>
     async (dispatch) => {
-
+        dispatch(appActions.setAppStatusAC('loading'))
         try {
             dispatch(usersPageActions.toggleIsFetchingActionCreator(true))
             dispatch(usersPageActions.setFilterActionCreator(filter))
@@ -138,8 +140,9 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number, filt
             dispatch(usersPageActions.toggleIsFetchingActionCreator(false))
             dispatch(usersPageActions.setUsersActionCreator(data.items))
             dispatch(usersPageActions.setUsersTotalCountActionCreator(data.totalCount))
-
+            dispatch(appActions.setAppStatusAC('success'))
         } catch (e) {
+            handleServerNetworkError(e, dispatch)
         }
     }
 

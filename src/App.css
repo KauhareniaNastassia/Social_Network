@@ -3,20 +3,11 @@
     width: 1200px;
     margin: 0 auto;
     flex-direction:column;
-    min-height: 100vh;
-
-    /*grid-template-areas:
-        'h h'
-        'n c';
-    grid-template-rows: 60px 1fr;
-    grid-template-columns: 2fr 10fr;
-    grid-gap: 5px;
-    overflow: auto;*/
+    min-height: 80vh;
 }
 
 .app-wrapper-content {
-  /*  grid-area: c;*/
-    min-height: 100vh;
+    min-height: 90vh;
     background-color: #F8F8F8;
 }
 

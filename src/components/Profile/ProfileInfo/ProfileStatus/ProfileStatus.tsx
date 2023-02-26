@@ -4,7 +4,7 @@ import {updateStatusThunkCreator} from "../../../../redux/profilePageReducer";
 import css from './ProfileStatus.module.scss'
 
 
-export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({myProfileId}) => {
+export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({isOwner}) => {
 
     const status = useAppSelector(state => state.profilePage.status)
     const [editMode, setEditMode] = useState(false)
@@ -25,6 +25,16 @@ export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({myProfileId}) =
         setInputValue(status)
         console.log('status')
     }, [status])
+
+
+    if(!isOwner) {
+        return <div  className={css.wrapper__status}>
+            <b className={css.status_unEdit_title}>Status: </b>
+            <span className={css.status_unEdit}>
+                            {status || 'User hasn\'t posted status yet'}
+                        </span>
+        </div>
+    }
 
 
     return (
@@ -57,5 +67,5 @@ export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({myProfileId}) =
 //===========TYPE================
 
 type ProfileStatusPropsType = {
-    myProfileId: number | null,
+    isOwner:boolean
 }

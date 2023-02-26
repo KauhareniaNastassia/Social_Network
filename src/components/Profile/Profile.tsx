@@ -57,10 +57,9 @@ export const Profile:React.FC = () => {
             <ProfileInfo
                 profile={profile}
                 isOwner={!userId}
-
-
             />
-            <MyPosts />
+            <MyPosts
+                isOwner={!userId}/>
         </div>
     )
 }

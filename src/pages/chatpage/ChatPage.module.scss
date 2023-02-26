@@ -1,0 +1,8 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+.wrapper__chatPage {
+  width: 80%;
+  background-color: #ffffff;
+  @include borderBlock;
+}

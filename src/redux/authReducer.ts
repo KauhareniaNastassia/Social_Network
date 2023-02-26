@@ -1,12 +1,8 @@
 import {ActionType, AppThunkType, InferActionsTypes} from "./redux-store";
-
-import {usersPageActions} from "./usersPageReducer";
 import {authAPI, LoginDataType, ResultCodeEnum} from "../api/authAPI";
 import {securityAPI} from "../api/securityAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorHandler";
 import {appActions} from "./appReducer";
-import {profilePageActions} from "./profilePageReducer";
-import {AxiosError} from "axios";
 
 
 let initialState: initialStateAuthType = {
@@ -81,13 +77,14 @@ export const getAuthUserThunkCreator = (): AppThunkType =>
             if (data.resultCode === ResultCodeEnum.Success) {
                 let {id, login, email} = data.data
                 dispatch(authActions.setAuthUserDataAC(id, login, email, true))
+                dispatch(appActions.setProfileIdAC(id))
                 dispatch(appActions.setAppStatusAC('success'))
+            } else {
+                handleServerAppError(data, dispatch)
             }
         } catch (e) {
-
+            handleServerNetworkError(e, dispatch)
         }
-
-
     }
 
 export const loginThunkCreator = (data: LoginDataType): AppThunkType =>
@@ -125,21 +122,21 @@ export const logoutThunkCreator = (cb?: () => void): AppThunkType =>
         } catch (e) {
             handleServerNetworkError(e, dispatch)
         }
-
     }
 
 export const getCaptchaURLThunkCreator = (): AppThunkType =>
     async (dispatch) => {
-
+        dispatch(appActions.setAppStatusAC('loading'))
         try {
             let res = await securityAPI.getCaptchaUrl()
             let captchaURL = res.url
 
             dispatch(authActions.getCaptchaURLSuccessAC(captchaURL))
+            dispatch(appActions.setAppStatusAC('success'))
 
         } catch (e) {
+            handleServerNetworkError(e, dispatch)
         }
-
     }
 
 
