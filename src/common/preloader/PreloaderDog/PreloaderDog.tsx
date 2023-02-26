@@ -5,7 +5,7 @@ import preloader from "../../../assets/img/preloaderDog.png";
 export const PreloaderDog = () => {
     return (
         <div className={css.preloader}>
-            <img src={preloader}/>
+            <img src={preloader} className={css.preloader_img}/>
         </div>
 )
 }

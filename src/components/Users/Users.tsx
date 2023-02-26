@@ -80,18 +80,17 @@ export const Users: React.FC = () => {
     }, [filter, currentPage])//comeback after refactoring to functional components 16
 
 
-
     return (
         <div>
-            {isFetching ? <PreloaderDog /> : null}
-
             <div className={css.users__wrapper}>
-                    <div>
-                        <UsersSearchForm
-                            onFilterChanged={onFilterChanged}/>
-                    </div>
+                <div>
+                    <UsersSearchForm
+                        onFilterChanged={onFilterChanged}/>
+                </div>
 
-                    <div className={css.usersBlock}>
+                {isFetching
+                    ? <PreloaderDog/>
+                    : <div className={css.usersBlock}>
                         {users.map(user =>
                             <User
                                 key={user.id}
@@ -102,16 +101,18 @@ export const Users: React.FC = () => {
                             />
                         )}
                     </div>
+                }
 
-                    <div>
-                        <Pagination
-                            totalUsersCount={totalUsersCount}
-                            pageSize={pageSize}
-                            currentPage={currentPage}
-                            onPageChanged={onPageChanged}
-                        />
-                    </div>
+
+                <div>
+                    <Pagination
+                        totalUsersCount={totalUsersCount}
+                        pageSize={pageSize}
+                        currentPage={currentPage}
+                        onPageChanged={onPageChanged}
+                    />
                 </div>
+            </div>
         </div>
     )
 }

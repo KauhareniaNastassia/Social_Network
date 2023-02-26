@@ -1,5 +1,12 @@
 .preloader {
-  position: center;
-  align-items: center;
+  display: flex;
   margin-top: 10px;
+  margin-left: 330px;
+
+  .preloader_img {
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+  }
 }
