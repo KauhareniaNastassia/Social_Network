@@ -112,21 +112,6 @@ export const usersPageActions = {
 
 //=======THUNK======
 
-/*export const getUsersThunkCreator = (params: GetUsersParamsType): AppThunkType =>
-    async (dispatch) => {
-
-        try {
-            dispatch(toggleIsFetchingActionCreator(true))
-            dispatch(setFilterActionCreator(params.filter))
-
-            let data = await usersAPI.getUsers(params)
-            dispatch(toggleIsFetchingActionCreator(false))
-            dispatch(setUsersActionCreator(data.items))
-            dispatch(setUsersTotalCountActionCreator(data.totalCount))
-        } catch (e) {
-
-        }
-    }*/
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType): AppThunkType =>
     async (dispatch) => {

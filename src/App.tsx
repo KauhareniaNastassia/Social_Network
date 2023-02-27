@@ -29,7 +29,7 @@ export const App: React.FC = () => {
 
 
     if (!initialized) {
-        return <PreloaderDog/>
+        return <div className='app-preloader'><PreloaderDog/></div>
     }
 
 

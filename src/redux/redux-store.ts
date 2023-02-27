@@ -12,7 +12,7 @@ import {
     usersPageReducer
 } from "./usersPageReducer";
 
-import {siderbarPageReducer} from "./sidebarPageReducer";
+import {SidebarUsersPageActionsType, siderbarPageReducer} from "./sidebarPageReducer";
 import {
     AuthActionsType,
     authReducer,
@@ -47,7 +47,8 @@ export type ActionType =
     AuthActionsType |
     DialogsPageActionsType |
     UsersPageActionsType |
-    ChatActionsType
+    ChatActionsType |
+    SidebarUsersPageActionsType
 
 export type AppDispatchType = ThunkDispatch<AppStateType, unknown, ActionType>
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType,

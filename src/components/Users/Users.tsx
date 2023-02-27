@@ -4,7 +4,7 @@ import {Pagination} from "../../common/Pagination/Pagination";
 import {User} from "./User/User";
 import {FilterType} from "../../api/usersAPI";
 import {UsersSearchForm} from "../Forms/UsersSearchForm/UsersSearchForm";
-import {useAppSelector} from "../../hoc/useAppSelector";
+import {useAppDispatch, useAppSelector} from "../../hoc/useAppSelector";
 import {useDispatch} from "react-redux";
 import {followUsersThunkCreator, getUsersThunkCreator, unFollowUsersThunkCreator} from "../../redux/usersPageReducer";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -19,7 +19,7 @@ export const Users: React.FC = () => {
     const users = useAppSelector(state => state.usersPage.users)
     const filter = useAppSelector(state => state.usersPage.filter)
     const followingProgress = useAppSelector(state => state.usersPage.followingInProgress)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()
 

@@ -1,54 +1,48 @@
 import friendFromBar1 from "../assets/img/friendFromBar1.jpg";
 import friendFromBar2 from "../assets/img/friendFromBar2.jpg";
 import friendFromBar3 from "../assets/img/friendFromBar3.jpg";
-import {ActionType} from "./redux-store";
+import {ActionType, AppThunkType, InferActionsTypes} from "./redux-store";
+import {FilterType, usersAPI, UserType} from "../api/usersAPI";
+import {usersPageActions} from "./usersPageReducer";
+import {appActions} from "./appReducer";
+import {handleServerNetworkError} from "../utils/errorHandler";
 
 let initialStateSidebarPage: initialStateSidebarPageType = {
-    sidebarUsers: [
-        {
-            id: '1',
-            followed: true,
-            photos: friendFromBar1,
-            name: 'Andrew',
-            status: 'ololo',
-            location:
-                {
-                    city: 'Minsk',
-                    country: 'Belarus'
-                }
-        },
-        {
-            id: '2',
-            followed: true,
-            photos: friendFromBar2,
-            name: 'Kate',
-            status: 'ololo',
-            location:
-                {
-                    city: 'Minsk',
-                    country: 'Belarus'
-                }
-        },
-        {
-            id: '3',
-            followed: false,
-            photos: friendFromBar3,
-            name: 'Lena',
-            status: 'ololo',
-            location:
-                {
-                    city: 'Minsk',
-                    country: 'Belarus'
-                }
-        }
-    ]
+    sidebarUsers: []
 }
 
 export const siderbarPageReducer = (state: initialStateSidebarPageType = initialStateSidebarPage, action: ActionType): initialStateSidebarPageType => {
+    switch (action.type) {
+        case 'sidebar/SET-SIDEBAR-USERS': {
+            return {...state, sidebarUsers: action.users.filter(user => user.followed === true)}
+        }
 
+        default:
             return state
     }
+}
 
+
+//=======ACTION ==========
+
+export const sidebarUsersPageActions = {
+
+    getSidebarUsers: (users: UserType[]) => ({
+        type: 'sidebar/SET-SIDEBAR-USERS',
+        users
+    } as const)
+
+
+}
+
+
+//==========THUNK=============
+
+
+
+//=======ACTION TYPES======
+
+export type SidebarUsersPageActionsType = InferActionsTypes<typeof sidebarUsersPageActions>
 
 //===========TYPES=========
 
@@ -65,5 +59,5 @@ export type SidebarUserType = {
 }
 
 export type initialStateSidebarPageType = {
-    sidebarUsers: SidebarUserType[]
+    sidebarUsers: UserType[]
 }
