@@ -10,14 +10,11 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                                                                         onSubmitData,
                                                                         profile
                                                                     }) => {
-
-
     const myProfileId = useAppSelector((state) => state.auth.authId)
 
     const onSubmit = (values: UpdateProfileType) => {
         onSubmitData(values)
         console.log(values)
-        /*window.alert(JSON.stringify(values))*/
     }
 
     return (
@@ -73,23 +70,6 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                             placeholder="About me"/>
                     </div>
 
-                    {/*<div>
-                        <b>Contacts</b>: {Object
-                        .keys(profile.contacts)
-                        .map((key) => {
-                            return <div key={key}>
-                                <b>{key}: <Field
-                                    name="Contacts"
-                                    component="input"
-                                    type="text"
-                                /></b>
-                            </div>
-                        })}
-
-                    </div>*/}
-
-                    {/* <pre>{JSON.stringify(values)}</pre>*/}
-
                     {myProfileId &&
                         <div className={css.wrapper__profileData_btnBlock}>
 
@@ -100,7 +80,6 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                         </div>}
                 </form>
             )
-
             }
         />
     )

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {AddMessageForm} from "./AddMessageForm/AddMessageForm";
-import {useDispatch} from "react-redux";
 import {startChatMessagesThunkCreator, stopChatMessagesThunkCreator} from "../../redux/chatReducer";
 import {Messages} from "./Messages/Messages";
 import {useAppDispatch, useAppSelector} from "../../hoc/useAppSelector";
@@ -17,7 +16,6 @@ export const ChatPage: React.FC = () => {
         return () => {
             stopChatMessagesThunkCreator()
         }
-        console.log("chat")
     }, [])
 
 

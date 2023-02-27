@@ -124,7 +124,6 @@ export const getUserProfileThunkCreator = (profileId: number): AppThunkType =>
         try {
             const res = await profileAPI.getProfile(profileId)
             dispatch(profilePageActions.setUserProfileAC(res))
-            console.log('getUserProfileThunkCreator', res)
             dispatch(appActions.setAppStatusAC('idle'))
         } catch (e) {
             handleServerNetworkError(e, dispatch)
@@ -183,7 +182,6 @@ export const saveProfileThunkCreator = (profile: UpdateProfileType): AppThunkTyp
         const profileId = getState().auth.authId
         try {
             let res = await profileAPI.saveProfile(profile)
-            console.log(res)
             if (res.resultCode === 0 && profileId) {
                 dispatch(getUserProfileThunkCreator(profileId))
                 dispatch(appActions.setAppSuccessMessageAC('Profile info has been successfully changed'))

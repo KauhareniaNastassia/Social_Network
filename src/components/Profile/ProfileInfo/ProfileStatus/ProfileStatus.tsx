@@ -23,7 +23,6 @@ export const ProfileStatus: React.FC<ProfileStatusPropsType> = ({isOwner}) => {
 
     useEffect(() => {
         setInputValue(status)
-        console.log('status')
     }, [status])
 
 

@@ -45,7 +45,6 @@ export const Pagination = React.memo((props: PaginatorPropsType) => {
                     })}
             </div>
 
-
             <div>
                 {portionCount > portionNumber &&
                     <button className={css.pagination_btn} onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}

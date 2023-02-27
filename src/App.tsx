@@ -24,7 +24,6 @@ export const App: React.FC = () => {
 
     useEffect(() => {
         dispatch(initializeAppThunkCreator())
-        console.log('initialization')
     }, [])
 
 
@@ -54,7 +53,6 @@ export const App: React.FC = () => {
                     </Route>
 
                     <Route path='/login' element={<Login/>}/>
-
                     <Route path='*' element={<PageNotFound/>}/>
                 </Routes>
 
@@ -62,6 +60,5 @@ export const App: React.FC = () => {
 
         </div>
     );
-
 }
 

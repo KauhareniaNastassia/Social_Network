@@ -25,7 +25,6 @@ export const Post: React.FC<PostPropsType> = ({
         }
     }
 
-
     return (
         <div className={css.item}>
             <div className={css.postInfo}>

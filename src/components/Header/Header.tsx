@@ -11,13 +11,11 @@ export const Header: React.FC = () => {
 
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const login = useAppSelector(state => state.auth.login)
-    const authId = useAppSelector(state => state.auth.authId)
     const ava = useAppSelector(state => state.profilePage.profile?.photos?.small)
 
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    let {userId} = useParams()
 
     const onClickLogoutHandler = () => {
         console.log('logout')

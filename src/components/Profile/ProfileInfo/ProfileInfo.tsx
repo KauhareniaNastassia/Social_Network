@@ -1,10 +1,10 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {useState} from "react";
 import css from "./ProfileInfo.module.scss"
 import {PreloaderCat} from "../../../common/preloader/PreloaderCat/PreloaderCat";
 import ProfileData from "./ProfileData/ProfileData";
 import {ProfileDataForm} from "./ProfileDataForm/ProfileDataForm";
-import {useAppDispatch, useAppSelector} from "../../../hoc/useAppSelector";
-import {savePhotoThunkCreator, saveProfileThunkCreator} from "../../../redux/profilePageReducer";
+import {useAppDispatch} from "../../../hoc/useAppSelector";
+import {saveProfileThunkCreator} from "../../../redux/profilePageReducer";
 import {ProfileDataType, UpdateProfileType} from "../../../api/profileAPI";
 import {ProfilePhoto} from "./ProfilePhoto/ProfilePhoto";
 import {ProfileStatus} from "./ProfileStatus/ProfileStatus";

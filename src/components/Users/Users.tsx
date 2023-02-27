@@ -21,7 +21,6 @@ export const Users: React.FC = () => {
     const followingProgress = useAppSelector(state => state.usersPage.followingInProgress)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const location = useLocation()
 
 
     const followUsers = (userId: number) => {
@@ -33,8 +32,6 @@ export const Users: React.FC = () => {
     }
 
     const onPageChanged = (page: number) => {
-        /*dispatch(usersPageActions.setCurrentPageActionCreator(page))*/
-        console.log('new page', page)
         dispatch(getUsersThunkCreator(page, pageSize, filter))
     }
 
@@ -65,7 +62,6 @@ export const Users: React.FC = () => {
         }*/
 
         dispatch(getUsersThunkCreator(currentPage, pageSize, filter))
-        console.log('current', currentPage)
 
     }, [])
 
@@ -75,9 +71,7 @@ export const Users: React.FC = () => {
             pathname: '/users',
             search: `&term=${filter.term}&friend=${filter.term}&page=${currentPage}`
         })
-        console.log(filter)
-
-    }, [filter, currentPage])//comeback after refactoring to functional components 16
+    }, [filter, currentPage])
 
 
     return (
@@ -102,7 +96,6 @@ export const Users: React.FC = () => {
                         )}
                     </div>
                 }
-
 
                 <div>
                     <Pagination

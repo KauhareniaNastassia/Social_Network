@@ -2,6 +2,7 @@
 import React from "react";
 import {ChatMessageAPIType} from "../../../../api/chatAPI";
 import css from './Message.module.scss'
+import defaultAva from '../../../../assets/img/profileAvatar.svg'
 
 
 type MessagePropsType = {
@@ -12,7 +13,7 @@ export const Message:React.FC<MessagePropsType> = React.memo(({message}) => {
 
     return <div className={css.wrapper__message}>
         <img
-            src={message.photo}
+            src={message.photo ? message.photo : defaultAva}
             alt='message url'
             className={css.message__userPhoto}
            />

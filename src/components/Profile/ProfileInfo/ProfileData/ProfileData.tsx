@@ -1,6 +1,5 @@
 import React from 'react';
 import {ProfileDataType} from "../../../../api/profileAPI";
-import {useAppSelector} from "../../../../hoc/useAppSelector";
 import css from './ProfileData.module.scss'
 
 

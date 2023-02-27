@@ -12,9 +12,7 @@ export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
                                                                   isOwner
                                                               }) => {
 
-
     const dispatch = useAppDispatch()
-
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.files) {
@@ -38,11 +36,8 @@ export const ProfilePhoto: React.FC<ProfilePhotoPropsType> = ({
                     </label>
                 </div>
             }
-
             <img src={photo?.large ? photo.large : userImg} className={css.userImg}/>
         </div>
-
-
     )
 }
 

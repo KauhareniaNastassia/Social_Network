@@ -47,12 +47,7 @@ export const PostForm: React.FC = () => {
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={css.postFormWrapper}
-                /*onKeyPress={(e) => {
-                    if (e.code === 'Enter') {
-                        onEnterPress(e.key)
-                    }
-                }}*/>
+                className={css.postFormWrapper}>
 
                 <div className={css.postFormMessage}>
 
@@ -78,8 +73,6 @@ export const PostForm: React.FC = () => {
                         className={css.postForm__textarea}
                     />
                 </div>
-
-
 
                 <div className={css.postForm__BTN_block}>
                     <label></label>

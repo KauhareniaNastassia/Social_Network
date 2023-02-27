@@ -26,7 +26,6 @@ export const Messages: React.FC = () => {
         if (isAutoScroll) {
             messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
         }
-        console.log(messages)
     }, [messages])
 
     return (
