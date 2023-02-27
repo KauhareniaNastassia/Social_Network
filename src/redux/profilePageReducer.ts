@@ -153,6 +153,7 @@ export const updateStatusThunkCreator = (status: string): AppThunkType =>
             if (res.resultCode === 0) {
                 dispatch(profilePageActions.setStatusAC(status))
                 dispatch(appActions.setAppStatusAC('idle'))
+                dispatch(appActions.setAppSuccessMessageAC('Status has been successfully changed'))
             }
         } catch (e) {
             handleServerNetworkError(e, dispatch)
@@ -165,10 +166,11 @@ export const savePhotoThunkCreator = (file: File): AppThunkType =>
         dispatch(appActions.setAppStatusAC('loading'))
         try {
             let res = await profileAPI.savePhoto(file)
-            if (res.resultCode === 0)
+            if (res.resultCode === 0) {
                 dispatch(profilePageActions.savePhotoAC(res.data.photos))
-            dispatch(appActions.setAppStatusAC('idle'))
-            /*dispatch(getUserProfileThunkCreator(userId))*/
+                dispatch(appActions.setAppStatusAC('idle'))
+                dispatch(appActions.setAppSuccessMessageAC('Photo has been successfully changed'))
+            }
         } catch (e) {
             handleServerNetworkError(e, dispatch)
         }
@@ -179,13 +181,12 @@ export const saveProfileThunkCreator = (profile: UpdateProfileType): AppThunkTyp
     async (dispatch, getState) => {
         dispatch(appActions.setAppStatusAC('loading'))
         const profileId = getState().auth.authId
-        console.log('authId', getState().auth.authId)
         try {
             let res = await profileAPI.saveProfile(profile)
             console.log(res)
             if (res.resultCode === 0 && profileId) {
-                console.log('saveProfileThunkCreator', profileId)
                 dispatch(getUserProfileThunkCreator(profileId))
+                dispatch(appActions.setAppSuccessMessageAC('Profile info has been successfully changed'))
             }
         } catch (e) {
             dispatch(appActions.setAppStatusAC('idle'))

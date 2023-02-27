@@ -7,6 +7,7 @@ import {handleServerNetworkError} from "../utils/errorHandler";
 let initialAppState: InitialAppStateType = {
     initialized: false,
     error: null,
+    successMessage: null,
     status: 'idle' as AppStatusType,
     profileId: 0 as number
 }
@@ -19,6 +20,9 @@ export const appReducer = (state = initialAppState, action: ActionType): Initial
 
         case 'app/SET-ERROR':
             return {...state, error: action.error}
+
+        case 'app/SET-SUCCESS-MESSAGE':
+            return {...state, successMessage: action.successMessage}
 
         case 'app/SET-STATUS':
             return {...state, status: action.status}
@@ -40,9 +44,14 @@ export const appActions = {
         value
     } as const),
 
-    setAppErrorAC: (error: ErrorAppType) => ({
+    setAppErrorAC: (error: string | null) => ({
         type: 'app/SET-ERROR',
         error
+    } as const),
+
+    setAppSuccessMessageAC: (successMessage: string | null) => ({
+        type: 'app/SET-SUCCESS-MESSAGE',
+        successMessage
     } as const),
 
     setAppStatusAC: (status: AppStatusType) => ({
@@ -86,7 +95,8 @@ export type AppActionsType = InferActionsTypes<typeof appActions>
 
 export type InitialAppStateType = {
     initialized: boolean
-    error: ErrorAppType | null
+    error: string | null
+    successMessage: string | null
     status: AppStatusType
     profileId: number
 }

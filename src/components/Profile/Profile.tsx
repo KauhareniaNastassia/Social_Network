@@ -8,10 +8,8 @@ import {MyPosts} from "./MyPosts/MyPosts";
 
 export const Profile:React.FC = () => {
     const profile = useAppSelector(state => state.profilePage.profile)
-    const status = useAppSelector(state => state.profilePage.status)
     const authorizedUserId = useAppSelector(state => state.auth.authId)
     const isAuth = useAppSelector(state => state.auth.isAuth)
-    const history = useNavigate()
     const dispatch = useAppDispatch()
 
     let {userId} = useParams()

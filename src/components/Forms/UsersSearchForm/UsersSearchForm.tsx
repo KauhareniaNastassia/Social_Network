@@ -14,6 +14,15 @@ export const UsersSearchForm = React.memo((props: UsersSearchFormType) => {
 
     const filter = useAppSelector((state) => state.usersPage.filter)
 
+
+    const onKeyPressSendMessage = (event: any, values: FormType,
+                                   {setSubmitting}: { setSubmitting: (setSubmitting: boolean) => void }) => {
+        if (event.code === 'Enter') {
+            submit(values,{setSubmitting} )
+        }
+    }
+
+
     const submit = (
         values: FormType,
         {setSubmitting}: { setSubmitting: (setSubmitting: boolean) => void }
@@ -38,16 +47,18 @@ export const UsersSearchForm = React.memo((props: UsersSearchFormType) => {
                 onSubmit={submit}
             >
                 {({isSubmitting}) => (
-                    <Form className={css.filterBar}>
+                    <Form className={css.filterBar} >
                         <Field
                             type="search"
                             name="term"
-                            placeholder='Search...'
-                            className={css.search_input}/>
+                            placeholder='For search press Enter or Send button'
+                            className={css.search_input}
+                        onKeyPress={onKeyPressSendMessage}/>
                         <Field
                             name="friend"
                             as="select"
-                            className={css.search_select}>
+                            className={css.search_select}
+                            onKeyPress={onKeyPressSendMessage}>
                             <option className={css.search_select_option} value="null">All</option>
                             <option className={css.search_select_option} value="true">Only followed</option>
                             <option className={css.search_select_option} value="false">Only unfollowed</option>
@@ -55,7 +66,8 @@ export const UsersSearchForm = React.memo((props: UsersSearchFormType) => {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className={css.search_btn}>
+                            className={css.search_btn}
+                        >
                             Find
                         </button>
                     </Form>

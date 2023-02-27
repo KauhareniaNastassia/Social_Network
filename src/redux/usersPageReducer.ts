@@ -163,6 +163,7 @@ const followUnfollowFlow = async (dispatch: AppDispatchType, userId: number, api
 export const unFollowUsersThunkCreator = (userId: number): AppThunkType => {
     return async (dispatch: AppDispatchType) => {
         await followUnfollowFlow(dispatch, userId, usersAPI.unFollowUser.bind(usersAPI), usersPageActions.unfollowActionCreator)
+        dispatch(appActions.setAppSuccessMessageAC('User has been successfully unfollowed'))
     }
 }
 
@@ -170,6 +171,7 @@ export const followUsersThunkCreator = (userId: number): AppThunkType => {
     return async (dispatch: AppDispatchType) => {
 
         await followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), usersPageActions.followActionCreator)
+        dispatch(appActions.setAppSuccessMessageAC('User has been successfully followed'))
     }
 }
 

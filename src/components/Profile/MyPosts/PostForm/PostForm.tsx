@@ -4,6 +4,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {profilePageActions} from "../../../../redux/profilePageReducer";
 import {useDispatch} from "react-redux";
 import {useAppDispatch} from "../../../../hoc/useAppSelector";
+import {appActions} from "../../../../redux/appReducer";
 
 
 export type PostData = {
@@ -28,7 +29,7 @@ export const PostForm: React.FC = () => {
     const onSubmit: SubmitHandler<PostData> = ({post}) => {
         dispatch(profilePageActions.addPostAC(post))
         setPost('')
-
+        dispatch(appActions.setAppSuccessMessageAC('Post has been successfully published'))
     }
 
     const onEnterPress = (key: string) => {

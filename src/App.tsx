@@ -14,6 +14,7 @@ import {Profile} from "./components/Profile/Profile";
 import {DialogsPage} from "./components/Dialogs/DialogsPage";
 import {ChatPage} from "./pages/chatpage/ChatPage";
 import PageNotFound from "./components/PageNotFoung/PageNotFound";
+import {NotificationAlert} from "./components/NotificationAlert/NotificationAlert";
 
 
 export const App: React.FC = () => {
@@ -36,7 +37,7 @@ export const App: React.FC = () => {
         <div className="app-wrapper">
 
             <Header/>
-
+            <NotificationAlert/>
             <div className='app-wrapper-content'>
 
                 <Routes>
@@ -56,7 +57,9 @@ export const App: React.FC = () => {
 
                     <Route path='*' element={<PageNotFound/>}/>
                 </Routes>
+
             </div>
+
         </div>
     );
 

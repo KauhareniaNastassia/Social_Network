@@ -1,0 +1,26 @@
+@import "src/common/styles/mixins/mixins";
+@import "src/common/styles/variables/variables";
+
+.wrapper_alert {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+
+  .wrapper_alert_success {
+    padding: 10px;
+    @include text(15px, 400, $main-text-color);
+    background-color: #e9ffcd;
+    border: 1px solid #569605;
+  }
+
+  .wrapper_alert_error {
+    padding: 10px;
+    @include text(15px, 400, $main-text-color);
+    background-color: #fda7a3;
+    border: 1px solid #f31109;
+  }
+}

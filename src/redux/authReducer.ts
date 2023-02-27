@@ -3,6 +3,7 @@ import {authAPI, LoginDataType, ResultCodeEnum} from "../api/authAPI";
 import {securityAPI} from "../api/securityAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorHandler";
 import {appActions} from "./appReducer";
+import {profilePageActions} from "./profilePageReducer";
 
 
 let initialState: initialStateAuthType = {
@@ -98,6 +99,7 @@ export const loginThunkCreator = (data: LoginDataType): AppThunkType =>
             if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(getAuthUserThunkCreator())
                 dispatch(appActions.setAppStatusAC('success'))
+                dispatch(appActions.setAppSuccessMessageAC('You successfully login'))
             } else {
                 handleServerAppError(res, dispatch)
             }
@@ -115,6 +117,7 @@ export const logoutThunkCreator = (cb?: () => void): AppThunkType =>
             if (res.resultCode === ResultCodeEnum.Success) {
                 dispatch(authActions.setAuthUserDataAC(null, null, null, false))
                 cb && cb()
+                dispatch(appActions.setAppSuccessMessageAC('You successfully logout'))
                 dispatch(appActions.setAppStatusAC('success'))
             } else {
                 handleServerAppError(res, dispatch)
