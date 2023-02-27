@@ -16,6 +16,7 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 
     const onSubmit = (values: UpdateProfileType) => {
         onSubmitData(values)
+        console.log(values)
         /*window.alert(JSON.stringify(values))*/
     }
 
@@ -53,16 +54,16 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
                         />
                     </div>
 
-                    {profile?.lookingForAJob === true &&
-                        <div className={css.profileData_item}>
-                            <label className={css.wrapper__profileData_title}>It's name:</label>
-                            <Field
-                                className={css.wrapper__profileData_field}
-                                name="lookingForAJobDescription"
-                                component="textarea"
-                                type="text"
-                                placeholder={'job description'}/>
-                        </div>}
+                    <div className={css.profileData_item}>
+                        <label className={css.wrapper__profileData_title}>It's name:</label>
+                        <Field
+
+                            className={css.wrapper__profileData_field}
+                            name="lookingForAJobDescription"
+                            component="textarea"
+                            type="text"
+                            placeholder={'job description'}/>
+                    </div>
                     <div className={css.profileData_item}>
                         <label className={css.wrapper__profileData_title}>About me</label>
                         <Field
@@ -87,16 +88,16 @@ export const ProfileDataForm: React.FC<ProfileDataFormPropsType> = ({
 
                     </div>*/}
 
-                   {/* <pre>{JSON.stringify(values)}</pre>*/}
+                    {/* <pre>{JSON.stringify(values)}</pre>*/}
 
                     {myProfileId &&
                         <div className={css.wrapper__profileData_btnBlock}>
 
-                        <button className={css.wrapper__profileData_btn} type="submit">
-                            Save
-                        </button>
+                            <button className={css.wrapper__profileData_btn} type="submit">
+                                Save
+                            </button>
 
-                    </div>}
+                        </div>}
                 </form>
             )
 

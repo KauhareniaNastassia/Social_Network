@@ -20,6 +20,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
 
     const onSubmitData = (formData: UpdateProfileType) => {
         dispatch(saveProfileThunkCreator(formData))
+        console.log('onSubmitData', formData)
         setEditMode(false)
     }
 
