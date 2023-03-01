@@ -18,18 +18,18 @@ import {NotificationAlert} from "./components/NotificationAlert/NotificationAler
 
 
 export const App: React.FC = () => {
-
+    const navigate = useNavigate()
     const initialized = useAppSelector(state => state.app.initialized)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(initializeAppThunkCreator())
+
+        if (!initialized) {
+            navigate ('/login')
+        }
+
     }, [])
-
-
-    if (!initialized) {
-        return <div className='app-preloader'><PreloaderDog/></div>
-    }
 
 
     return (
